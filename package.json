@@ -1,0 +1,35 @@
+{
+  "name": "webpackTest",
+  "version": "1.0.0",
+  "description": "```\r mkdir webpack-demo\r cd webpack-demo\r npm init -y\r npm install webpack webpack-cli --save-dev\r ```\r #####2 install babel\r Most of new features of ES6 or JSX of React cannot be understood\r by most browser and also webpack. Thus, we need **loader** to\r help webpack translate.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./node_modules/mocha/bin/mocha",
+    "mocha": "node ./node_modules/mocha/bin/mocha",
+    "start": "webpack-dev-server --open --mode development",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "css-loader": "^1.0.0",
+    "file-loader": "^2.0.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mocha": "^5.2.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.8"
+  }
+}
