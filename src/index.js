@@ -4,6 +4,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Window} from "./js/Window";
+import "./main.css";
 class Main extends React.Component{
     constructor(props){
         super(props);
