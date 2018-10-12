@@ -14,7 +14,14 @@ export class Window extends React.Component{
             showHeader: ! this.state.showHeader
         });
     };
+    fn = async() => {
+        const result = await new Promise(resolve => {
+            setTimeout(() => resolve("hello world"), 2000);
+        });
+        return `${result}, I am good`;
+    };
     render(){
+        this.fn().then(res => console.log(res));
         return (
             <div>
                 <h1 style={{display: this.state.showHeader ? "block" : "none"}}>Hello</h1>
