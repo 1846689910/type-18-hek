@@ -25,7 +25,7 @@ module.exports = {
             },{
                 test: /\.html$/,
                 use: [{
-                    loader: "html-loader",
+                    loader: "underscore-template-loader",
                     options: { minimize: true }
                 }]
             },{
