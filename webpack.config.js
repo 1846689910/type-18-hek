@@ -2,7 +2,7 @@
  *  reference: https://github.com/jantimon/html-webpack-plugin
  *  根据template.html生成所需的index.html, 并且引用合适的bundle.js
  * */
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 /**
  * reference: https://github.com/johnagan/clean-webpack-plugin
  * 在build bundle.js时，清理原有的文件
@@ -59,9 +59,9 @@ module.exports = {
             exclude: [],
             verbose: false
         }),
-        new HtmlWebPackPlugin({
-            template: "./template/template.html",
+        new HtmlWebpackPlugin({
             title: "Webpack Test",
+            template: "./template/template.html",
             filename: "./index.html"
         })
     ]
