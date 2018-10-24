@@ -2,12 +2,17 @@
  * Created by Eric on 9/6/2018.
  */
 import React from "react";
+import {tileToBBox} from "global-mercator";
 export class Window extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             showHeader: false
         };
+    }
+    componentDidMount(){
+        const [minLng, minLat, maxLng, maxLat] = tileToBBox([6963, 5003, 13]);
+        console.log([minLng, minLat, maxLng, maxLat]);
     }
     clickHandler = () => {
         this.setState({

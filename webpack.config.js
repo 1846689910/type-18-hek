@@ -1,9 +1,18 @@
+/**
+ *  reference: https://github.com/jantimon/html-webpack-plugin
+ *  根据template.html生成所需的index.html, 并且引用合适的bundle.js
+ * */
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+/**
+ * reference: https://github.com/johnagan/clean-webpack-plugin
+ * 在build bundle.js时，清理原有的文件
+ * */
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 module.exports = {
     entry: ["babel-polyfill", `${__dirname}/src/index.js`],
     output: {
         path: `${__dirname}/dist`,
-        filename: "bundle.js"
+        filename: "bundle.[hash].js"
     },
     module: {
         rules: [
@@ -43,8 +52,16 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin([  // the path(s) that should be cleaned
+            "dist/*.*"
+        ], {  // the clean options to use
+            root: `${__dirname}`,
+            exclude: [],
+            verbose: false
+        }),  // clean the path when build the bundle.js
         new HtmlWebPackPlugin({
-            template: "./src/index.html",
+            template: "./template/template.html",
+            title: "Webpack Test",
             filename: "./index.html"
         })
     ]
