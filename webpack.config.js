@@ -58,7 +58,7 @@ module.exports = {
             root: `${__dirname}`,
             exclude: [],
             verbose: false
-        }),  // clean the path when build the bundle.js
+        }),
         new HtmlWebPackPlugin({
             template: "./template/template.html",
             title: "Webpack Test",
