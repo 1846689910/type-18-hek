@@ -31,6 +31,7 @@ export class Window extends React.Component{
             <div>
                 <h1 style={{display: this.state.showHeader ? "block" : "none"}}>Hello</h1>
                 <button onClick={this.clickHandler}>toggle header</button>
+                <button className="fa fa-mail-forward" aria-hidden="true"/>
             </div>
         );
     }
