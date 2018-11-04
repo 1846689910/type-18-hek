@@ -16,10 +16,14 @@ class Main extends React.Component{
         super(props);
         this.state = {};
     }
+    componentDidMount(){
+        console.log(this._windowComp.div);
+        console.log(this._windowComp.setState());
+    }
     render(){
         return (
             <div>
-                <Window/>
+                <Window ref={r => this[`_windowComp`] = r}/>
             </div>
         );
     }

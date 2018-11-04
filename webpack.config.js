@@ -16,7 +16,7 @@ module.exports = {
     ],
     output: {
         path: `${__dirname}/dist`,  // packed file directory
-        filename: "bundle.[hash].js"  // name of packed file
+        filename: "bundle.[contenthash].js"  // name of packed file
     },
     optimization: {
         runtimeChunk: 'single',
