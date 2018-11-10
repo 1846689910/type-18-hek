@@ -10,12 +10,92 @@
 </head>
 <body>
 
-
+<div></div>
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/babel">
 
+class Keyboard{
+    static _keySet = new Set();
+    static _keyCode2KeyName = keyCode => {
+        let key;
+        if (keyCode >= 65 && keyCode <= 90 || keyCode >= 48 && keyCode <= 57) {  // letter keys || numeric keys
+            key = String.fromCharCode(keyCode);
+        } else if (e.keyCode === 13) {
+            key = "ENTER";
+        }
+        return key;
+    };
+    static keyDown = e => {
+        if (e && e.keyCode) {
+            const key = Keyboard._keyCode2KeyName(e.keyCode);
+            if (! Keyboard._keySet.has(key)) Keyboard._keySet.add(key);
+        }
+    };
+    static keyUp = e => {
+        if (e && e.keyCode) {
+            const key = Keyboard._keyCode2KeyName(e.keyCode);
+            if (Keyboard._keySet.has(key)) Keyboard._keySet.delete(key);
+        }
+    };
+    static checkPressed = key => {
+        if (typeof key === "string") {
+            return Keyboard._keySet.has(key);
+        } else if (Array.isArray(key)) {
+            return key.every(k => Keyboard._keySet.has(k));
+        } else {  // unsupported
+            return false;
+        }
+    };
+}
+window.addEventListener("click", e => {
+    if(Keyboard.checkPressed(["A", "S", "D"])) {
+        console.log("clicked");
+    }
+}, false);
+window.addEventListener("keydown", Keyboard.keyDown, false);
+window.addEventListener("keyup", Keyboard.keyUp, false);
+
+class Spinner{
+   static spinner = null;
+   static interval = 5;  // 5ms / deg
+   static _icon = null;
+   static spin = (callback) => {  // create and show a spinner on the screen
+       if (! Spinner.isRunning()) {
+           let deg = 1;
+           const icon = document.createElement("i");
+           icon.setAttribute("aria-hidden", "true");
+           icon.classList.add("fa","fa-spinner");
+           document.body.appendChild(icon);
+           Spinner._icon = icon;
+           Object.entries({
+               position: "absolute",
+               top: "50%",
+               left: "50%"
+           }).forEach(([key, value]) => Spinner._icon.style[key] = value);
+           Spinner.spinner = setInterval(() => {
+               icon.style.transform = `rotate(${deg ++}deg)`;
+           }, Spinner.interval);
+           
+           if (typeof callback === "function") callback();
+       }
+   };
+   static stop = (callback) => {
+       if (Spinner.isRunning()) {
+           clearInterval(Spinner.spinner);
+           document.body.removeChild(Spinner._icon);
+           Spinner.spinner = null;
+           Spinner._icon = null;
+           if (typeof callback === "function") callback();
+       }
+   };
+   static isRunning = () => Spinner.spinner !== null && Spinner._icon !== null;
+}
+
+Spinner.spin(() => console.log("spinner started"));
+console.log(Spinner.isRunning())
+setTimeout(() => Spinner.stop(() => console.log("spinner stopped")), 3000);
 
 </script>
 </body>

@@ -64,6 +64,13 @@ module.exports = {
                 test: /\.css$/,
                 use: ["style-loader", "css-loader"]
             },{
+                test: /\.scss$/,  // 之后就可以在js中直接import ".../xxx.scss"文件作为css的替代品
+                use: [
+                    "style-loader",  // creates style nodes from JS strings
+                     "css-loader",  // translates CSS into CommonJS
+                      "sass-loader"  // compiles Sass to CSS
+                ]
+            },{
                 test: /\.(png|jpg|gif)$/,
                 use: [{
                     loader: "url-loader?limit=100000",  // 文件大小超过 100000 bytes, 会自动使用file-loader
