@@ -4,6 +4,8 @@
 import React from "react";
 import {tileToBBox} from "global-mercator";
 import {ActionWatcher} from "./utils";
+import $ from "jquery";
+import M from "./Messenger";
 export class Window extends React.Component{
     constructor(props){
         super(props);
@@ -23,6 +25,7 @@ export class Window extends React.Component{
     componentDidMount(){
         const [minLng, minLat, maxLng, maxLat] = tileToBBox([6963, 5003, 13]);
         console.log([minLng, minLat, maxLng, maxLat]);
+        console.log(M.Map.prop1);
     }
     clickHandler = () => {
         this.setState({
