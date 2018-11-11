@@ -1,56 +1,38 @@
-const http = require("http");
 const urlParser = require("url");
-const url = "http://localhost:3000/dog/food";
-const {hostname, port, pathname: path} = urlParser.parse(url);
-console.log(urlParser.parse(url))
-const request = http.request({
-    hostname, port, path,
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
+const http = require("http");
+const https = require("https");
+class Client{
+    constructor(url){
+        this._parsedUrl = urlParser.parse(url);
+        this._utility = this._parsedUrl.protocol.startsWith("https:") ? https : http;
+        this.request = this.request.bind(this);
     }
-}, res =>{
-    console.log('STATUS: ' + res.statusCode);
-    console.log('HEADERS: ' + JSON.stringify(res.headers));
-    const data = [];
-    res.on('data', chunk => data.push(chunk));
-    res.on('end', () => console.log(Buffer.concat(data).toString()));
-}).on("error", err => console.log(err));
-request.write(JSON.stringify({abc: 123}));
-request.end();
+    /**
+     * method: "GET", "POST",
+     * headers: {"Content-Type", "application/json"},
+     * body: JSON.stringify({abc: 123})
+     */
+    request(method, headers, body){
+        return new Promise((resolve, reject) => {
+            const {hostname, port, pathname: path} = this._parsedUrl;
+            const request = this._utility.request({
+                hostname, port, path, method, headers
+            }, res => {
+                console.log(`status: ${res.statusCode}`);
+                console.log(`headers: ${JSON.stringify(res.headers)}`);
+                const data = [];
+                res.on("data", chunk => data.push(chunk))
+                .on("end", () => resolve({res, body: Buffer.concat(data).toString()}));
+            });
+            request.on("error", err => reject(err));
+            if(body) request.write(body);
+            request.end();
+        });
+    }
+}
+new Client("https://jsonmock.hackerrank.com/api/movies/search/?Title=spiderman")
+    .request("GET").then(res => console.log(JSON.parse(res.body)), err => console.log(err));
 
-
-
-
-
-
-
-// https.request({
-//     hostname: "www.google.com",
-//     port: 80,
-//     path: "/",
-//     method: "GET"
-// }, res => console.log(res));
-
-
-// https.get(s, res => {
-//     const data = [];
-//     // A chunk of data has been received.
-//     res.on('data', (chunk) => {
-//         data.push(chunk);
-//     });
-//     // The whole response has been received. Print out the result.
-//     res.on('end', () => {
-//         console.log(Buffer.concat(data).toString());
-//     });
-// }).on("error", err => {
-//     console.log(err.message);
-// });
-
-// https.request({
-//     hostname: "i9.ytimg.com",
-//     path: "/sb/T4SimnaiktU/storyboard3_L1/M0.jpg?sqp=ovOX_wMGCLTtlMMF&sigh=rs%24AOn4CLDF_M2qTJg0nNUc1Fs-Wjeki0I46w",
-//     method: "GET"
-// }, res => console.log(res));
-
-
+new Client("http://localhost:3000/upload").request("POST", {
+    "Content-Type": "application/json"
+}, JSON.stringify({abc: 123})).then(res => console.log(res.body), err => console.log(err));
