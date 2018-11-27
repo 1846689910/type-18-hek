@@ -13,7 +13,7 @@ app.use(bodyParser.text());  // parse text/plain
 
 app.get("/", (req, res) => {  // app.get  .put  .post  .delete  .options
     console.log(req.body);
-    res.status(status.OK).send("this is start page");
+    res.status(status.OK).header("Access-Control-Allow-Origin", "*").send("this is start page");
 });
 app.get("/upload", (req, res) => {
     res.status(status.BAD_REQUEST).send("please use post");
@@ -37,6 +37,9 @@ app.get("/test", (req, res) => {
 app.get("/user/:id", (req, res) => {
     res.status(status.OK).send(req.params.id);
 });
+app.get("/delay", (req, res) => {
+    setTimeout(() => res.header("Access-Control-Allow-Origin", "*").status(status.NOT_FOUND).send("this is a delay response"), 2000);
+});
 app.options("/*", (req, res) => {
     res.header("Access-Control-Allow-Origin", "*")
         .header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
@@ -46,7 +49,7 @@ app.options("/*", (req, res) => {
 });
 app.use("/dog", dog);  // then the GET /dog and POST /dog/food are handled by a separated router dog.js, which will make app modular
 app.use((req, res) => {
-    res.status(status.NOT_FOUND).send();
+    res.header("Access-Control-Allow-Origin", "*").status(status.NOT_FOUND).send();
 });
 app.listen(3000, () => {
     console.log("Express App Started");

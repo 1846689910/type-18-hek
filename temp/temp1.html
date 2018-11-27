@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style>
+
+    </style>
+</head>
+<body>
+
+<input type="text">
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/babel">
+let _timer = null;
+let _promise = null;
+function myFetch1(url, options, ctrlOptions){
+    if (Window.prototype.TimeoutError === undefined) {
+        function TimeoutError(msg){this.message = msg;}
+        TimeoutError.prototype = new Error();  // because in ES6, the check instanceof for subclass of builtins class like Array, Error,... is no longer suppoted, 
+        // so we need to use legacy way: prototype chain
+        Window.prototype.TimeoutError = TimeoutError;
+    }
+    if (!_promise) {
+        _promise = new Promise((resolve, reject) => {
+            if(! _timer) {
+                _timer = setTimeout(() => reject(new TimeoutError("timeout")), ctrlOptions.timeout);
+            }
+        });
+    }
+    return Promise.race([
+        fetch(url, options).then(res => {
+            if (res.ok) {
+                return res;
+            } 
+            else {
+                const retry = typeof ctrlOptions.retry === "number" && ctrlOptions.retry;
+                if (retry > 0) {
+                    console.log(retry);
+                    return myFetch1(url, options, {...ctrlOptions, retry: retry - 1});
+                } else {
+                    if (_timer) {
+                        clearTimeout(_timer);
+                        _timer = null;
+                    }
+                    return res;
+                }
+            }
+        }),
+        _promise
+    ])
+}
+myFetch1("http://localhost:3000/delay", null, {timeout: 10000, retry: 3})
+    .then(res => {
+        if (res.ok) {
+            return res.text();
+        } else {
+            throw new Error(res.statusText);
+        }
+    }).then(text => console.log(text))
+    .catch(err => {
+        if (err instanceof TimeoutError) {
+            console.log(`${err.message} 53`);
+        } else {
+            console.log(`${err} 55`);
+        }
+    });
+
+</script>
+</body>
+</html>

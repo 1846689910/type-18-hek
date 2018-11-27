@@ -10,92 +10,175 @@
 </head>
 <body>
 
-<div></div>
+<input type="text">
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/babel">
+    let _timer = null;
+    let _timeoutErr = null;
+    const myFetch = async(url, options, ctrlOptions) => {
+        if (Window.prototype.TimeoutError === undefined) {
+            function TimeoutError(msg){ this.message = msg;}
+            TimeoutError.prototype = new Error();  // because in ES6, the check instanceof for subclass of builtins class like Array, Error,... is no longer suppoted, 
+            // so we need to use legacy way: prototype chain
+            Window.prototype.TimeoutError = TimeoutError;
+        }
+        if (Window.prototype.RetryExpireError === undefined) {
+            function RetryExpireError(msg){ this.message = msg;}
+            RetryExpireError.prototype = new Error();
+            Window.prototype.RetryExpireError = RetryExpireError;
+        }
+        return new Promise((resolve, reject) => {
+            if (ctrlOptions && typeof ctrlOptions.timeout === "number") {
+                if (! _timer) {
+                    _timer = setTimeout(() => {
+                        const err = new TimeoutError();
+                        console.log("timeout up here");
+                        reject(err);
+                    }, ctrlOptions.timeout);
+                }
+            }
+            const retry = ctrlOptions && ctrlOptions.retry;
+            if (typeof retry === "number" && retry > 0) {
+                fetch(url, options).then(res => {
+                    if (! res.ok) {
+                        if (_timeoutErr) {
+                            console.log("got here1");
+                            throw _timeoutErr;
+                        } else {
+                            const o = {...options, ...{retry: options.retry - 1}};
+                            
+                        }
+                    } else {
+                        resolve(res);
+                    }
+                }).catch(err => {
+                    if (err instanceof RetryError) {
+                        const o = {...options, ...{retry: options.retry - 1}};
+                        // if (o.retry === 0) {
+                        //     console.log("here")
+                        //     reject(err);
+                        //     if (_timer) {
+                        //         clearTimeout(_timer);
+                        //         _timer = null;
+                        //     }
+                        // } else {
+                            myFetch(url, o);
+                        // }
+                    } else {
+                        console.log("got here2");
+                        reject(_timeoutErr);
+                    }
+                });
 
-class Keyboard{
-    static _keySet = new Set();
-    static _keyCode2KeyName = keyCode => {
-        let key;
-        if (keyCode >= 65 && keyCode <= 90 || keyCode >= 48 && keyCode <= 57) {  // letter keys || numeric keys
-            key = String.fromCharCode(keyCode);
-        } else if (e.keyCode === 13) {
-            key = "ENTER";
-        }
-        return key;
+            }
+
+        });
     };
-    static keyDown = e => {
-        if (e && e.keyCode) {
-            const key = Keyboard._keyCode2KeyName(e.keyCode);
-            if (! Keyboard._keySet.has(key)) Keyboard._keySet.add(key);
+</script>
+<script type="text/babel">
+    let _timer = null;
+    const myFetch = async(url, options) => {
+        if (Window.prototype.TimeoutError === undefined) {
+            function TimeoutError(){}
+            TimeoutError.prototype = new Error();  // because in ES6, the check instanceof for subclass of builtins class like Array, Error,... is no longer suppoted, 
+            // so we need to use legacy way: prototype chain
+            Window.prototype.TimeoutError = TimeoutError;
         }
-    };
-    static keyUp = e => {
-        if (e && e.keyCode) {
-            const key = Keyboard._keyCode2KeyName(e.keyCode);
-            if (Keyboard._keySet.has(key)) Keyboard._keySet.delete(key);
+        if (Window.prototype.RetryError === undefined) {
+            function RetryError(){}
+            RetryError.prototype = new Error();
+            Window.prototype.RetryError = RetryError;
         }
-    };
-    static checkPressed = key => {
-        if (typeof key === "string") {
-            return Keyboard._keySet.has(key);
-        } else if (Array.isArray(key)) {
-            return key.every(k => Keyboard._keySet.has(k));
-        } else {  // unsupported
-            return false;
-        }
-    };
-}
-window.addEventListener("click", e => {
-    if(Keyboard.checkPressed(["A", "S", "D"])) {
-        console.log("clicked");
+        return new Promise((resolve, reject) => {
+            let _timeoutErr = null;
+            const getTimeoutErr = () => _timeoutErr;
+            if(options && typeof options.timeout === "number") {
+                // if (_timer) {
+                //     clearTimeout(_timer);
+                //     _timer = null;
+                // }
+                // _timer = setTimeout(() => {
+                //     const err = new TimeoutError();
+                //     console.log("timeout up here")
+                //     _timeoutErr = err;
+                //     reject(err);
+                // }, options.timeout);
+                if (! _timer) {
+                    _timer = setTimeout(() => {
+                        const err = new TimeoutError();
+                        console.log("timeout up here")
+                        _timeoutErr = err;
+                        reject(err);
+                    }, options.timeout);
+                }
+            }
+            const retry = options && options.retry;
+            if (typeof retry === "number" && retry > 0) {
+                fetch(url, options).then(res => {
+                    if (! res.ok) {
+                        if (_timeoutErr) {
+                            console.log("got here1");
+                            throw _timeoutErr;
+                        } else {
+                            throw new RetryError();
+                        }
+                    } else {
+                        resolve(res);
+                    }
+                }).catch(err => {
+                    if (err instanceof RetryError) {
+                        const o = {...options, ...{retry: options.retry - 1}};
+                        // if (o.retry === 0) {
+                        //     console.log("here")
+                        //     reject(err);
+                        //     if (_timer) {
+                        //         clearTimeout(_timer);
+                        //         _timer = null;
+                        //     }
+                        // } else {
+                            myFetch(url, o);
+                        // }
+                    } else {
+                        console.log("got here2");
+                        reject(_timeoutErr);
+                    }
+                });
+            } else if (typeof retry === "number"){
+                console.log("here");
+                if (_timer) {
+                    clearTimeout(_timer);
+                    _timer = null;
+                }
+                reject(new Error("retry expired"));
+            } else {
+                fetch(url, options).then(res => resolve(res));
+            }
+            // fetch(url, options).then(res => resolve(res));
+        });
     }
-}, false);
-window.addEventListener("keydown", Keyboard.keyDown, false);
-window.addEventListener("keyup", Keyboard.keyUp, false);
 
-class Spinner{
-   static spinner = null;
-   static interval = 5;  // 5ms / deg
-   static _icon = null;
-   static spin = (callback) => {  // create and show a spinner on the screen
-       if (! Spinner.isRunning()) {
-           let deg = 1;
-           const icon = document.createElement("i");
-           icon.setAttribute("aria-hidden", "true");
-           icon.classList.add("fa","fa-spinner");
-           document.body.appendChild(icon);
-           Spinner._icon = icon;
-           Object.entries({
-               position: "absolute",
-               top: "50%",
-               left: "50%"
-           }).forEach(([key, value]) => Spinner._icon.style[key] = value);
-           Spinner.spinner = setInterval(() => {
-               icon.style.transform = `rotate(${deg ++}deg)`;
-           }, Spinner.interval);
-           
-           if (typeof callback === "function") callback();
-       }
-   };
-   static stop = (callback) => {
-       if (Spinner.isRunning()) {
-           clearInterval(Spinner.spinner);
-           document.body.removeChild(Spinner._icon);
-           Spinner.spinner = null;
-           Spinner._icon = null;
-           if (typeof callback === "function") callback();
-       }
-   };
-   static isRunning = () => Spinner.spinner !== null && Spinner._icon !== null;
-}
-
-Spinner.spin(() => console.log("spinner started"));
-console.log(Spinner.isRunning())
-setTimeout(() => Spinner.stop(() => console.log("spinner stopped")), 3000);
+    const url = "http://localhost:3000/delay";
+    myFetch(url, {retry: 3, timeout: 7000}).then(res => {
+        if (res.ok) {
+            return res.text();
+        } else if (res instanceof TimeoutError){
+            throw res;
+        } else {
+            throw new Error(res.status);
+        }
+    }).then(text => console.log(text)).catch(err => {
+        if (err instanceof TimeoutError) {
+            console.log("oops, you are timed out");
+        } else if (err instanceof RetryError) {
+            console.log(err.message);
+        } else if (err.message === "404"){
+            console.log("Not Found");
+        } else {
+            console.log(`${err.name}: ${err.message}`);
+        }
+    });
 
 </script>
 </body>
