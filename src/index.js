@@ -3,6 +3,7 @@
  */
 import React from "react";
 import ReactDOM from "react-dom";
+import {BrowserRouter as Router, Route, Switch, Link, Redirect} from "react-router-dom";
 import "../node_modules/leaflet/dist/leaflet.css";
 import "../node_modules/leaflet/dist/images/marker-icon.png";
 import "../node_modules/leaflet/dist/images/marker-icon-2x.png";
@@ -14,10 +15,33 @@ import "leaflet-measure";
 import {Window} from "./js/Window";
 import {app} from "./js/Container";
 import "./main.css";
+import $ from "jquery";
+import "../node_modules/jquery-ui-dist/jquery-ui.min.css";
+import "../node_modules/jquery-ui-dist/jquery-ui.structure.min.css";
+import "../node_modules/jquery-ui-dist/jquery-ui.theme.min.css";
+import "../node_modules/jquery-ui-dist/jquery-ui.min";
+import "../node_modules/jquery-ui-dist/jquery-ui.structure.min.css";
+
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/bootstrap/dist/js/bootstrap.min";
+import {People} from "./js/People.ts";
+console.log(People);
+const StatelessComp = props => {
+    return (<div></div>);
+};
+class StatedComp extends React.Component{
+    constructor(props){super(props)}
+    render(){
+        return (<div></div>);
+    }
+}
 class Main extends React.Component{
     constructor(props){
         super(props);
         this.state = {};
+    }
+    static get defaultProps(){
+        return {};
     }
     componentDidMount(){
         console.log(this._windowComp.div);
@@ -31,6 +55,8 @@ class Main extends React.Component{
         return (
             <div>
                 <Window ref={r => this[`_windowComp`] = r}/>
+                <StatelessComp/>
+                <StatedComp ref={r => this[`_statedComp`] = r}/>
             </div>
         );
     }

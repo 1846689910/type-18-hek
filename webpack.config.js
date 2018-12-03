@@ -89,7 +89,11 @@ module.exports = {
                         name: `./fonts/[name].[ext]`
                     }
                 }]
-            }
+            },{
+                test: /\.(tsx|ts)?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
+            } 
         ]
     },
     plugins: [
