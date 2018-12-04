@@ -21,10 +21,15 @@ import "../../node_modules/jquery-ui-dist/jquery-ui.structure.min.css";
 import "../../node_modules/jquery-ui-dist/jquery-ui.theme.min.css";
 import "../../node_modules/jquery-ui-dist/jquery-ui.min";
 import "../../node_modules/jquery-ui-dist/jquery-ui.structure.min.css";
-
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.min";
 import {People} from "./People.ts";
+import store from "./Store";
+import ReduxConcise from "./redux/ReduxConcise";
+import ReactReduxConcise from "./react-redux/ReactReduxConcise";
+import {Provider} from "react-redux";
+
+
 console.log(People);
 const StatelessComp = props => {
     return (<div></div>);
@@ -57,8 +62,25 @@ class Main extends React.Component{
                 <Window ref={r => this[`_windowComp`] = r}/>
                 <StatelessComp/>
                 <StatedComp ref={r => this[`_statedComp`] = r}/>
+                <div style={{display: "flex", justifyContent: "flex-start"}}>
+                    <Link to="/redux"><button className="btn btn-primary">to /redux</button></Link>
+                    <Link to="/react-redux"><button className="btn btn-primary">to /react-redux</button></Link>
+                </div>
             </div>
         );
     }
 }
-ReactDOM.render(<Main />, document.querySelector("#root"));
+// ReactDOM.render(<Main />, document.querySelector("#root"));
+const render = () => ReactDOM.render(
+    <Router>
+        <Switch>
+            <Route path="/redux"><ReduxConcise store={store}/></Route>
+            <Route path="/react-redux">
+                <Provider store={store}><ReactReduxConcise/></Provider>
+            </Route>
+            <Route path="/" component={Main}/>
+        </Switch>
+    </Router>,document.querySelector("#root")
+);
+render();
+store.subscribe(render);
