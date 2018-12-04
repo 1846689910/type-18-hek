@@ -27,6 +27,7 @@ import {People} from "./People.ts";
 import store from "./Store";
 import ReduxConcise from "./redux/ReduxConcise";
 import ReactReduxConcise from "./react-redux/ReactReduxConcise";
+import ReselectConcise from "./reselect/ReselectConcise";
 import {Provider} from "react-redux";
 
 
@@ -65,6 +66,7 @@ class Main extends React.Component{
                 <div style={{display: "flex", justifyContent: "flex-start"}}>
                     <Link to="/redux"><button className="btn btn-primary">to /redux</button></Link>
                     <Link to="/react-redux"><button className="btn btn-primary">to /react-redux</button></Link>
+                    <Link to="/reselect"><button className="btn btn-primary">to /reselect</button></Link>
                 </div>
             </div>
         );
@@ -77,6 +79,9 @@ const render = () => ReactDOM.render(
             <Route path="/redux"><ReduxConcise store={store}/></Route>
             <Route path="/react-redux">
                 <Provider store={store}><ReactReduxConcise/></Provider>
+            </Route>
+            <Route path="/reselect">
+                <Provider store={store}><ReselectConcise/></Provider>
             </Route>
             <Route path="/" component={Main}/>
         </Switch>

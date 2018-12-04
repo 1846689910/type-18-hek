@@ -2,6 +2,7 @@ import React from 'react';
 import {createSelector} from  'reselect';
 import { connect } from "react-redux";
 import { ActionTypes, Action } from '../Store';
+import {Link} from "react-router-dom";
 
 /**
  * reselect的作用
@@ -13,11 +14,11 @@ import { ActionTypes, Action } from '../Store';
 const getVisibleTasks = state => {  // 根据sotre中的state.filterText的变化来决定我们要看的tasks的子集
     switch(state.filterText){
         case ActionTypes.SHOW_ALL:
-            return tasks;
+            return state.tasks;
         case ActionTypes.SHOW_COMPLETED:
-            return tasks.filter(task => task.status === "completed");
+            return state.tasks.filter(task => task.status === "completed");
         case ActionTypes.SHOW_ACTIVE:
-            return tasks.filter(task => task.status === "active");
+            return state.tasks.filter(task => task.status === "active");
     }
 };
 
@@ -41,37 +42,18 @@ const selector2 = () => createSelector(
  * */
 const VisibleTasksPC = props => {
     return (<div>
-        <p style={{textAlign: "center"}}><b><i>Reselect Display</i></b></p>
+        <p style={{textAlign: "center"}}><b><i>Reselect Display(combined with React-Redux)</i></b></p>
         <p>tasks: </p>
         <ul>{
             props.tasks.map((task, i) => <li key={i}>{task.name}: {task.status}</li>)
         }</ul>
         <div style={{display: "flex", justifyContent: "space-evenly"}}>
-            <button className="btn btn-primary" onClick={() => {}}>All</button>
-            <button className="btn btn-primary" onClick={() => {}}>Completed</button>
-            <button className="btn btn-primary" onClick={() => {}}>Active</button>
+            <button className="btn btn-primary" onClick={props.showAll}>All</button>
+            <button className="btn btn-primary" onClick={props.showCompleted}>Completed</button>
+            <button className="btn btn-primary" onClick={props.showActive}>Active</button>
+            <Link to="/"><button className="btn btn-primary">to /</button></Link>
         </div>
     </div>);
-};
-const VisibleTasksPC = (props) => {
-    return (
-        <div style={props.eachDisplayStyle}>
-            <p style={{textAlign: "center"}}><b><i>Reselect Display</i></b></p>
-            <div>
-                <div>tasks</div>
-                <ul>
-                    {
-                        props.tasks.map((task, i) => <li key={i}>{Object.keys(task)[0]} : {Object.values(task)[0]}</li>)
-                    }
-                </ul>
-                <div style={{display: "flex", justifyContent: "space-evenly"}}>
-                    <button className="btn btn-primary" style={buttonStyle} onClick={props.showAll}>All</button>
-                    <button className="btn btn-primary" style={buttonStyle} onClick={props.showCompleted}>Completed</button>
-                    <button className="btn btn-primary" style={buttonStyle} onClick={props.showActive}>Active</button>
-                </div>
-            </div>
-        </div>
-    );
 };
 /**
  * Reselect 的用法1:
@@ -113,4 +95,19 @@ const mapDispatchToProps = (dispatch, props) => {
         showActive: () =>  dispatch(Action(ActionTypes.SHOW_ACTIVE))
     };
 };
+/**
+ * VisibleTasks is the Container Component of VisibleTasksPC
+ * 建议使用方法2，对于mapStateToProps进行了包裹
+ * */
+//const VisibleTasks = connect(mapStateToProps, mapDispatchToProps)(VisibleTasksPC);
+const VisibleTasksCC = connect(
+    mapStateToProps2,
+    mapDispatchToProps
+)(VisibleTasksPC);
 
+const ReselectConcise = props => {
+    return (<div>
+        <VisibleTasksCC />
+    </div>)
+};
+export default ReselectConcise;
