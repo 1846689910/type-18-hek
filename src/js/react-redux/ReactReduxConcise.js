@@ -46,12 +46,8 @@ const mapDispatchToProps1 = (dispatch, props) => {
  * 写法2：作为object, 每个键值对都会返回一个函数，内部返回一个Action
  * */
 const mapDispatchToProps2 = {
-    increase: () => {
-        return Action(ActionTypes.INCREASE);
-    },
-    decrease: () => {
-        return Action(ActionTypes.DECREASE);
-    }
+    increase: () => Action(ActionTypes.INCREASE),
+    decrease: () => Action(ActionTypes.DECREASE)
 };
 
 
