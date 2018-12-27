@@ -7,6 +7,8 @@ import {ActionWatcher} from "./utils";
 import $ from "jquery";
 import M from "./Messenger";
 import {app} from "./Container";
+import {TopComp, TopComp1} from "./context/ContextShow";
+import {Box} from "./mobx/mob1";
 export class Window extends React.Component{
     constructor(props){
         super(props);
@@ -82,6 +84,10 @@ export class Window extends React.Component{
                     }
                     <div>content: <i>{this.state.content}</i></div>
                 </div>
+                {/* <hr/>
+                <TopComp myMessage={"hello world"} />
+                <TopComp1/> */}
+                <hr/>
             </div>
         );
     }

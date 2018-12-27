@@ -3,69 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello World</title>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 <body>
-    <button>popup</button>
+    <div style="width: 100px; height: 100px; background: red;"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
-    <script type="text/babel">
+<script type="text/babel">
 class MyWindow{
-    static _opened = false;
-    static isOpen = () => MyWindow._opened;
-    static setStyle = (dom, style) => {
-        if (typeof dom === "object" && dom !== null && typeof style === "object" && style !== null) {
-            Object.entries(style).forEach(([k, v]) => dom.style[k] = v);
-        }
-    };
-    static _window = (() => {
-        const div = document.createElement("div");
-        MyWindow.setStyle(div, {
-            width: "500px",
-            height: "350px",
-            border: "0.5px solid rgba(0,0,0,0.2)",
-            display: "flex",
-            flexFlow: "column",
-            position: "relative",
-            borderRadius: "10px",
-            padding: "3px 0 0 0"
-        });
-        div.innerHTML = `
-            <div style="height: 20px; text-align: center;">My Window</div>
-            <div style="height: 100%; margin: 10px; display: flex; background: blue">
-                ... ...
-            </div>
-            <div style="position: absolute; display: flex; flex-direction: row; width: 70px; justify-content: space-evenly; height: 20px; line-height: 20px;">
-                <i class="fa fa-circle close" aria-hidden="true" style="color: red; font-size: 14px;"></i>
-                <i class="fa fa-circle" aria-hidden="true" style="color: #FFD662; font-size: 14px;"></i>
-                <i class="fa fa-circle" aria-hidden="true" style="color: #79C753; font-size: 14px;"></i>
-            </div>
-        `;
-        return div;
-    })();
-    static _bindEvents = () => {
-        const div = MyWindow._window;
-        if (MyWindow.isOpen && div) {
-            console.log(`bind events`);
-        }
-    };
-    static open = () => {
-        if (! MyWindow.isOpen() && MyWindow._window) {
-            document.body.appendChild(MyWindow._window);
-            MyWindow._opened = true;
-            MyWindow._bindEvents();
-        }
-    };
-    static close = () => {
-        if (MyWindow.isOpen() && MyWindow._window) {
-            document.body.removeChild(MyWindow._window);
-            MyWindow._opened = false;
-        }
-    };
+    /**Do Not forget jquery, jquery-ui.min.js, jquery-ui.css*/
+   static _opened = false;
+   static isOpen = () => MyWindow._opened;
+   static setStyle = (dom, style) => {
+       if (typeof dom === "object" && dom !== null && typeof style === "object" && style !== null) {
+           Object.entries(style).forEach(([k, v]) => dom.style[k] = v);
+       }
+   };
+   static _windowDefaultStyle = {
+        width: "500px",
+        height: "350px",
+        border: "0.5px solid rgba(0,0,0,0.2)",
+        display: "flex",
+        flexFlow: "column",
+        position: "absolute",
+        borderRadius: "10px",
+        padding: "3px 0 0 0",
+        background: "white",
+        marginLeft: "-250px",
+        marginTop: "-175px",
+        top: "50%",
+        left: "50%"
+   };
+   static _window = (() => {
+       const div = document.createElement("div");
+       MyWindow.setStyle(div, MyWindow._windowDefaultStyle);
+       div.innerHTML = `
+           <div id="myWindowHandle" style="height: 20px; text-align: center;">My Window</div>
+           <div style="height: 100%; margin: 10px; display: flex; border: 0.5px solid rgba(0, 0, 0, 0.1); flex-flow: row wrap;">
+                <h2 style="align-self: center; text-align: center; flex: 1;">...Amazing Here ...</h2>
+           </div>
+           <div style="position: absolute; display: flex; flex-direction: row; width: 70px; justify-content: space-evenly; height: 20px; line-height: 20px;">
+               <i class="fa fa-circle close" aria-hidden="true" style="color: red; font-size: 14px;"></i>
+               <i class="fa fa-circle minimize" aria-hidden="true" style="color: #FFD662; font-size: 14px;"></i>
+               <i class="fa fa-circle maximize" aria-hidden="true" style="color: #79C753; font-size: 14px;"></i>
+           </div>
+       `;
+       return div;
+   })();
+   static _bindEvents = () => {
+       const div = MyWindow._window;
+       if (MyWindow.isOpen && div) {
+           console.log(`bind events`);
+           div.querySelector(".close").addEventListener("click", MyWindow.close, false);
+           div.querySelector(".minimize").addEventListener("click", e => {
+               div.style.width = "450px";
+               div.style.height = "300px";
+           }, false);
+           div.querySelector(".maximize").addEventListener("click", e => {
+               div.style.width = "600px";
+               div.style.height = "450px";
+           }, false);
+       }
+   };
+   static open = () => {
+       if (! MyWindow.isOpen() && MyWindow._window) {
+           document.body.appendChild(MyWindow._window);
+           MyWindow._opened = true;
+           MyWindow._bindEvents();
+           $(MyWindow._window).draggable({
+               handle: "#myWindowHandle"
+           }).resizable({
+                handles: "n, e, s, w",
+                minHeight: 300,
+                minWidth: 450,
+                maxHeight: 450,
+                maxWidth: 600
+           });
+       }
+   };
+   static close = () => {
+       if (MyWindow.isOpen() && MyWindow._window) {
+           document.body.removeChild(MyWindow._window);
+           MyWindow._opened = false;
+       }
+   };
 }
-        MyWindow.open();
-        // setTimeout(() => MyWindow.open(), 1000);
-        // setTimeout(() => MyWindow.close(), 3000);
-    </script>
+MyWindow.open();
+
+</script>
 </body>
 </html>
