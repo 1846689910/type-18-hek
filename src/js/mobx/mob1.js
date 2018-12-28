@@ -1,4 +1,6 @@
 import {observable, autorun, action, computed, configure, decorate} from "mobx";
+import {person} from "./observable1";
+import {Reactions} from "./reactions";
 configure({  // 开启了strict mode, 等同于useStrict(true), 必须使用action来更新被观测变量，否则会报错
     enforceActions: 'observed'  // never, observed, always
 });

@@ -41,10 +41,10 @@ export class BottomComp1 extends React.Component {
     }
     static contextType = MessageContext;
     componentDidMount(){
-        console.log(this.context);
+        // console.log(this.context);
     }
     render(){
-        console.log(this.context);
+        // console.log(this.context);
         return (
             <MCConsumer>
                 {context => console.log(context)}

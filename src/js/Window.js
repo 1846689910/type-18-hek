@@ -9,6 +9,8 @@ import M from "./Messenger";
 import {app} from "./Container";
 import {TopComp, TopComp1} from "./context/ContextShow";
 import {Box} from "./mobx/mob1";
+import {observable, computed, decorate, comparer, autorun, reaction, action} from "mobx";
+import {MyTimer} from "./mobx/reactions";
 export class Window extends React.Component{
     constructor(props){
         super(props);
@@ -87,6 +89,7 @@ export class Window extends React.Component{
                 {/* <hr/>
                 <TopComp myMessage={"hello world"} />
                 <TopComp1/> */}
+                <MyTimer/>
                 <hr/>
             </div>
         );
