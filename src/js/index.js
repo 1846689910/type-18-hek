@@ -28,6 +28,7 @@ import store from "./Store";
 import ReduxConcise from "./redux/ReduxConcise";
 import ReactReduxConcise from "./react-redux/ReactReduxConcise";
 import ReselectConcise from "./reselect/ReselectConcise";
+import MobXConcise from "./mobx/MobXConcise";
 import {Provider} from "react-redux";
 
 
@@ -67,6 +68,7 @@ class Main extends React.Component{
                     <Link to="/redux"><button className="btn btn-primary">to /redux</button></Link>
                     <Link to="/react-redux"><button className="btn btn-primary">to /react-redux</button></Link>
                     <Link to="/reselect"><button className="btn btn-primary">to /reselect</button></Link>
+                    <Link to="/mobx"><button className="btn btn-primary">to /mobx</button></Link>
                 </div>
             </div>
         );
@@ -83,6 +85,7 @@ const render = () => ReactDOM.render(
             <Route path="/reselect">
                 <Provider store={store}><ReselectConcise/></Provider>
             </Route>
+            <Route path="/mobx" component={MobXConcise}/>
             <Route path="/" component={Main}/>
         </Switch>
     </Router>,document.querySelector("#root")
