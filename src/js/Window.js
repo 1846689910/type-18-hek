@@ -5,6 +5,7 @@ import React from "react";
 import {tileToBBox, pointToTileFraction, googleToTile} from "global-mercator";
 import {ActionWatcher} from "./utils";
 import {TopComp, TopComp1} from "./context/ContextShow";
+import {ValidationWrapper} from "./ValidationTemp";
 export class Window extends React.Component{
     constructor(props){
         super(props);
@@ -80,6 +81,8 @@ export class Window extends React.Component{
                     }
                     <div>content: <i>{this.state.content}</i></div>
                 </div>
+                <hr/>
+                <ValidationWrapper/>
                 <hr/>
                 <TopComp myMessage={"hello world"} />
                 <TopComp1/>
