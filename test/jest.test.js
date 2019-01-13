@@ -1,7 +1,7 @@
 /**
  * Created by Eric on 9/6/2018.
  */
-const assert = require('assert');
+import assert from "assert";
 import fetch from "node-fetch";
 import renderer from "react-test-renderer";
 import React from "react";
