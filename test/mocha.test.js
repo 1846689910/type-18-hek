@@ -28,7 +28,7 @@ describe("Mocha Test", () => {
         throw new Error();
     };
 
-    const asyncFn = async() => {
+    const asyncFn = async () => {
         throw asyncFnError;
     };
 
@@ -36,14 +36,12 @@ describe("Mocha Test", () => {
         expect(syncFn).to.throw();
     });
 
-    it("should throw error in async fn", async() => {
-        return new Promise(async(resolve, reject) => {
-            try {
-                await asyncFn();
-                resolve();
-            } catch (e){
-                reject(e);
-            }
-        }).catch(e => expect(e).to.equal(asyncFnError));
+    it("should throw error in async fn", async () => {
+        return await asyncFn().catch(e => {
+            expect(e).to.equal(asyncFnError);
+            expect(e).to.exist;
+            expect({}).to.be.empty;
+            expect({ a: 123 }).to.not.be.empty;
+        });
     });
 });
