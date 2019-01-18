@@ -7,9 +7,7 @@ export const ActionTypes = {
     SHOW_ACTIVE: "SHOW_ACTIVE"
 };
 /** 一个自定义的ActionBuilder */
-export const Action = (type, otherProps) => {
-    return {...otherProps, type};
-}
+export const Action = (type, otherProps) => ({...otherProps, type});
 /**
  * 一个APP只有一个store, 管理一个state
  * 每个state属性要有相应的handler并且要传入reducer, 然后react-redux才可以看到该state的属性

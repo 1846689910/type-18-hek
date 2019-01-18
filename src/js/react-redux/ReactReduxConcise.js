@@ -8,14 +8,15 @@ import {Link} from "react-router-dom";
  * pc (for UI only, no state mgmt, all data from props, no redux api)
  * */
 const CounterPC = (props) => {
+    const {dispatch, value} = props;
     return (
         <div>
             <p style={{textAlign: "center"}}><b><i>React-Redux Display</i></b></p>
             <div style={{padding: 0}}>
-                <h3 style={{textAlign: "center"}}>{props.value}</h3>
+                <h3 style={{textAlign: "center"}}>{value}</h3>
                 <div style={{textAlign: "center"}}>
-                    <button className="btn btn-success" onClick={props.increase}>increase</button>
-                    <button className="btn btn-danger" onClick={props.decrease}>decrease</button>
+                    <button className="btn btn-success" onClick={() => dispatch(Action(ActionTypes.INCREASE))}>increase</button>
+                    <button className="btn btn-danger" onClick={() => dispatch(Action(ActionTypes.DECREASE))}>decrease</button>
                     <Link to="/"><button className="btn btn-primary">to /</button></Link>
                 </div>
             </div>
@@ -49,8 +50,10 @@ const mapDispatchToProps2 = {
     increase: () => Action(ActionTypes.INCREASE),
     decrease: () => Action(ActionTypes.DECREASE)
 };
-
-
+/** 
+ * 写法3： 基本同写法1，更简化(推荐).但是发送事件需要具体实现，如dispath(Action(ActionType.INCREASE))
+ */
+const mapDispatchToProps3 = (dispatch, props) => ({ dispatch });
 /**
  * CounterCC is CounterPC's container component(cc)
  * cc (manage state and logic, no UI, use redux api)
@@ -58,7 +61,7 @@ const mapDispatchToProps2 = {
  * */
 const CounterCC = connect(
     mapStateToProps,
-    mapDispatchToProps2
+    (dispatch, props) => ({ dispatch })  // 使用了写法3
 )(CounterPC);
 
 

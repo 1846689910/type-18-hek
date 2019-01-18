@@ -2,6 +2,7 @@ const express = require("express");
 const status = require("http-status");
 const path = require("path");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const dog = require("./dog");
 
 const app = express();
@@ -10,9 +11,19 @@ app.use(bodyParser.urlencoded({extended: true}));  // check Content-Type and par
 app.use(bodyParser.json());  // parse application/json
 app.use(bodyParser.raw());  // check Content-Type and parse body as a buffer
 app.use(bodyParser.text());  // parse text/plain
+app.use(cookieParser());
 
+app.use((req, res, next) => {
+    const cookie1 = req.cookies.cookie1; // check if client sent a cookie
+    if (cookie1) {
+        console.log(cookie1); // cookie exists
+    } else {
+        console.log("set cookie1");
+        res.cookie("cookie1", "I am cookie", {maxAge: 30000});
+    }
+    next();
+});
 app.get("/", (req, res) => {  // app.get  .put  .post  .delete  .options
-    console.log(req.body);
     res.status(status.OK).header("Access-Control-Allow-Origin", "*").send("this is start page");
 });
 app.get("/upload", (req, res) => {
