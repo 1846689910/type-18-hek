@@ -12,7 +12,7 @@ const webpack = require('webpack');
 module.exports = {
     entry: [
         "babel-polyfill",
-        `${__dirname}/src/js/index.js`
+        `${__dirname}/src/js/index.jsx`
     ],
     output: {
         path: `${__dirname}/dist`,  // packed file directory
