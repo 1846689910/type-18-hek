@@ -96,6 +96,7 @@ module.exports = {
             } 
         ]
     },
+    resolve: { "extensions": [".js", ".jsx", ".ts"] }, // 引入js相关文件可以省略扩展名
     plugins: [
         new CleanWebpackPlugin([  // the path(s) that should be cleaned
             "dist/*.*"

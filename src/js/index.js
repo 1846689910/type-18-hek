@@ -23,7 +23,7 @@ import "../../node_modules/jquery-ui-dist/jquery-ui.min";
 import "../../node_modules/jquery-ui-dist/jquery-ui.structure.min.css";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.min";
-import {People} from "./People.ts";
+import {People} from "./People";
 import store from "./settings/store";
 import ReduxConcise from "./redux/ReduxConcise";
 import ReactReduxConcise from "./react-redux/ReactReduxConcise";
