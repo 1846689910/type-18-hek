@@ -1,7 +1,7 @@
 import React from 'react';
 import {createSelector} from  'reselect';
 import { connect } from "react-redux";
-import { ActionTypes, Action } from '../Store';
+import { showAll, showActive, showCompleted, ActionTypes } from '../settings/actions';
 import {Link} from "react-router-dom";
 
 /**
@@ -71,30 +71,23 @@ const VisibleTasksPC = props => {
     使用方法2：将mapStateToProps再包裹一层函数，使得构造每个容器层组件实例的connect方法都会用不同的mapStateToProps,这样就相当于每个实例
  都会自己保存自己的listId, 不会只有一个listId
  * */
-const mapStateToProps1 = (state, props) => {
-    return {
-        tasks: getVisibleTasks(state)
-    }
-};
+const mapStateToProps1 = (state, props) => ({
+    tasks: getVisibleTasks(state)
+});
 /**
  * Reselect 的用法2:
  * 将mapStateToProps再包裹一层，并使用selector. 在connect中传入mapStateToPropsBuilder
  * */
-const mapStateToProps2 = () => {
-    return (state, props) => {
-        return {
-            tasks: selector1()(state, props)  // 区别于getVisibleTasks方法，我们传入的state, props来生成getVisibleTasks方法
-        }
-    };
-};
+const mapStateToProps2 = () => ((state, props) => ({
+    tasks: selector1()(state, props)  // 区别于getVisibleTasks方法，我们传入的state, props来生成getVisibleTasks方法
+}));
 
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        showAll: () => dispatch(Action(ActionTypes.SHOW_ALL)),
-        showCompleted: () => dispatch(Action(ActionTypes.SHOW_COMPLETED)),
-        showActive: () =>  dispatch(Action(ActionTypes.SHOW_ACTIVE))
-    };
-};
+const mapDispatchToProps = (dispatch, props) => ({
+    showAll: () => dispatch(showAll()),
+    showCompleted: () => dispatch(showCompleted()),
+    showActive: () =>  dispatch(showActive())
+});
+const mapDispatchToProps2 = (dispatch, props) => ({ dispatch }); // 这样props里只能使用dispatch
 /**
  * VisibleTasks is the Container Component of VisibleTasksPC
  * 建议使用方法2，对于mapStateToProps进行了包裹

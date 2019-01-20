@@ -1,19 +1,20 @@
 import React from "react";
-import {ActionTypes, Action} from "../Store";
+import {increase, decrease} from "../settings/actions";
 import {Link} from "react-router-dom";
 
 const Counter = (props) => {
     const divStyle = {
         padding: 0,
     };
+    const {store} = props;
     return (
         <div>
             <p style={{textAlign: "center"}}><b><i>pure Redux Display</i></b></p>
             <div style={divStyle}>
-                <h3 style={{textAlign: "center"}}>{props.store.getState().value}</h3>
+                <h3 style={{textAlign: "center"}}>{store.getState().value}</h3>
                 <div style={{textAlign: "center"}}>
-                    <button className="btn btn-success" onClick={() => props.store.dispatch(Action(ActionTypes.INCREASE))}>increase</button>
-                    <button className="btn btn-danger" onClick={() => props.store.dispatch(Action(ActionTypes.DECREASE))}>decrease</button>
+                    <button className="btn btn-success" onClick={() => store.dispatch(increase())}>increase</button>
+                    <button className="btn btn-danger" onClick={() => store.dispatch(decrease())}>decrease</button>
                     <Link to="/"><button className="btn btn-primary">to /</button></Link>
                 </div>
             </div>

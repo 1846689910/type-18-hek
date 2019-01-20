@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {ActionTypes, Action} from "../Store";
+import {increase, decrease} from "../settings/actions";
 import {Link} from "react-router-dom";
 
 /**
@@ -15,8 +15,8 @@ const CounterPC = (props) => {
             <div style={{padding: 0}}>
                 <h3 style={{textAlign: "center"}}>{value}</h3>
                 <div style={{textAlign: "center"}}>
-                    <button className="btn btn-success" onClick={() => dispatch(Action(ActionTypes.INCREASE))}>increase</button>
-                    <button className="btn btn-danger" onClick={() => dispatch(Action(ActionTypes.DECREASE))}>decrease</button>
+                    <button className="btn btn-success" onClick={() => dispatch(increase())}>increase</button>
+                    <button className="btn btn-danger" onClick={() => dispatch(decrease())}>decrease</button>
                     <Link to="/"><button className="btn btn-primary">to /</button></Link>
                 </div>
             </div>
@@ -39,16 +39,16 @@ const mapStateToProps = (state, props) => {
  * */
 const mapDispatchToProps1 = (dispatch, props) => {
     return {
-        increase: () => dispatch(Action(ActionTypes.INCREASE)),
-        decrease: () => dispatch(Action(ActionTypes.DECREASE))
+        increase: () => dispatch(increase()),
+        decrease: () => dispatch(decrease())
     };
 };
 /**
  * 写法2：作为object, 每个键值对都会返回一个函数，内部返回一个Action
  * */
 const mapDispatchToProps2 = {
-    increase: () => Action(ActionTypes.INCREASE),
-    decrease: () => Action(ActionTypes.DECREASE)
+    increase: () => increase(),
+    decrease: () => decrease()
 };
 /** 
  * 写法3： 基本同写法1，更简化(推荐).但是发送事件需要具体实现，如dispath(Action(ActionType.INCREASE))
