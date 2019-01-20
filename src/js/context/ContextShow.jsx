@@ -16,7 +16,7 @@ export const BottomComp = props => {
     </div>);        
 }
 
-import MessageContext, {MCProvider, MCConsumer} from "./MessageContext";
+import MessageContext, {Provider as MCProvider, Consumer as MCConsumer} from "./MessageContext";
 export class TopComp1 extends React.Component{
     render(){
         return (
