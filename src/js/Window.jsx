@@ -17,8 +17,8 @@ export class Window extends React.Component{
         this.inputWatcher = new ActionWatcher(e => this.setState({
             content: "",
             onInput: true
-        }), eTarget => this.setState({
-            content: eTarget.value,
+        }), e => this.setState({
+            content: e.target.value,
             onInput: false
         }), 500);
     }

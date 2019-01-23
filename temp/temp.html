@@ -8,43 +8,39 @@
 </head>
 <body>
     <div style="width: 100px; height: 100px; background: red;"></div>
+    <input type="text">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
 <script type="text/babel">
-class RTWorker {
-    /**
-     * @description: RTWorker - Retry and Timeout Worker. Implement async function
-     * @param task: async function, the task needs to be run
-     * @param options: including `timeout` and `retry` means the task will be timed out in timeout ms and how many times will it retry
-     */
-    constructor(task, options) {
-        this.task = task;
-        this.options = options;
-        this.__time = 0;
-        this.run = this.run.bind(this);
-    }
-    async run() {
-        return new Promise(async (resolve, reject) => {
-            if (typeof this.options.timeout === "number")setTimeout(reject, this.options.timeout, new Error("timeout"));
-            this.task().then(resolve);
-        }).catch(e => {
-            if (this.__time === this.options.retry) {
-                throw new Error("timeout");
-            } else {
-                this.__time++;
-                return this.run();
-            }
-        });
-    }
+class ActionWatcher {
+   constructor(onAction, afterAction, timeout) {
+       this._timer = null;
+       this._timeout = timeout;
+       this._onAction = typeof onAction === "function" ? onAction : null;
+       this._afterAction = typeof afterAction === "function" ? afterAction : null;
+       this._event = null;
+   }
+   watch = e => {
+       this._event = e;
+       if (e.persist) e.persis();
+       if (this._onAction) {
+           this._onAction(this._event);
+       }
+       if (this._timer) {
+           clearTimeout(this._timer);
+           this._timer = null;
+       }
+       this._timer = setTimeout(() => {
+           if (this._afterAction) {
+               this._afterAction(this._event);
+               this._event = null;
+           }
+       }, this._timeout);
+   };
 }
-const getNum = num => new Promise(resolve => setTimeout(resolve, 10, num));
-const getImg = () => fetch("https://lh3.googleusercontent.com/-HKu4AqCtDAE/AAAAAAAAAAI/AAAAAAAAAAA/ACevoQMweJPz7iozm_bzhjiGW3jqOnLqgQ/s48-c-mo/photo.jpg")
-const worker = new RTWorker(() => getImg(), { timeout: 5, retry: 3 });
-worker
-    .run()
-    .then(console.log)
-    .catch(e => console.log(e.message));
+const inputWatcher = new ActionWatcher(e => console.log("inputting"), e => console.log(e.target.value), 500);
+   $("input").on("input", e => inputWatcher.watch(e));
 
 
 </script>

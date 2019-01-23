@@ -1,19 +1,26 @@
-export class ActionWatcher{
-    constructor(onAction, afterAction, timeout){
+export class ActionWatcher {
+    constructor(onAction, afterAction, timeout) {
         this._timer = null;
         this._timeout = timeout;
         this._onAction = typeof onAction === "function" ? onAction : null;
         this._afterAction = typeof afterAction === "function" ? afterAction : null;
+        this._event = null;
     }
-    watch = (e) => {
-        if (this._onAction) this._onAction(e);
-        if (this._timer){
+    watch = e => {
+        this._event = e;
+        if (e.persist) e.persis();
+        if (this._onAction) {
+            this._onAction(this._event);
+        }
+        if (this._timer) {
             clearTimeout(this._timer);
             this._timer = null;
         }
-        const eTarget = e.target;
         this._timer = setTimeout(() => {
-            if (this._afterAction) this._afterAction(eTarget);
+            if (this._afterAction) {
+                this._afterAction(this._event);
+                this._event = null;
+            }
         }, this._timeout);
     };
 }
