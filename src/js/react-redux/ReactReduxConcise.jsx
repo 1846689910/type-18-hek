@@ -65,7 +65,8 @@ const CounterCC = connect(
 )(CounterPC);
 
 
-const ReactReduxConcise = () => {
+const ReactReduxConcise = props => {
+    console.log(props.route);
     return (
         <div>
             <CounterCC />

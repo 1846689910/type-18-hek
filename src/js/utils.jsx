@@ -1,4 +1,13 @@
-export class ActionWatcher {
+import Big from "big.js";
+const Double = {
+   "MIN_VALUE": Big("-1.7976931348623157E308"),
+   "MAX_VALUE": Big("1.7976931348623157E308")
+};
+const Long = {
+   "MIN_VALUE": Big(-2).pow(63),
+   "MAX_VALUE": Big(2).pow(63).minus(1)
+};
+class ActionWatcher {
     constructor(onAction, afterAction, timeout) {
         this._timer = null;
         this._timeout = timeout;
@@ -24,3 +33,4 @@ export class ActionWatcher {
         }, this._timeout);
     };
 }
+export {Double, Long, ActionWatcher};

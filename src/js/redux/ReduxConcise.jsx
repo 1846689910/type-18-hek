@@ -25,10 +25,14 @@ export default class ReduxConcise extends React.Component {
     constructor(props){
         super(props);
     }
+    componentDidMount(){
+        console.log(this.props);
+        console.log(this.props.route);
+    }
     render() {
         return (
             <div>
-                <Counter store={this.props.store}/>
+                <Counter store={this.props.route.store}/>
             </div>
         );
     }
