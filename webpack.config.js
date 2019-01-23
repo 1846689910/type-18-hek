@@ -81,6 +81,15 @@ module.exports = {
                     }
                 }]
             },{
+                test: /\.ico$/,
+                use: [{
+                    loader: "file-loader",
+                    options: {
+                        emitFile: true,
+                        name: './[name].[ext]', // 这个相对路径是基于`${__dirname}/dist/...`
+                    }
+                }]
+            },{
                 test: /\.(woff|woff2|eot|ttf|svg)(\?v=.*)?$/,
                 use: [{
                     loader: 'url-loader?limit=100000',

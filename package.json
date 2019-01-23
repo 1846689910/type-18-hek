@@ -8,6 +8,7 @@
     "mocha": "node ./node_modules/mocha/bin/mocha",
     "jest": "jest",
     "start": "webpack-dev-server --open --mode development",
+    "prod": "webpack-dev-server --open --mode production",
     "dev": "webpack --mode development",
     "build": "webpack --mode production"
   },

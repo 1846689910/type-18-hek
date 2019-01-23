@@ -4,6 +4,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter as Router, Route, Switch, Link, Redirect} from "react-router-dom";
+import "../images/favicon.ico";
 import "../../node_modules/leaflet/dist/leaflet.css";
 import "../../node_modules/leaflet/dist/images/marker-icon.png";
 import "../../node_modules/leaflet/dist/images/marker-icon-2x.png";
