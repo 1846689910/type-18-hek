@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { ActionTypes } from "./actions";
+import { ActionTypes, Action } from "./actions";
 /**
  * 一个APP只有一个store, 管理一个state
  * 每个state属性要有相应的handler并且要传入reducer, 然后react-redux才可以看到该state的属性
@@ -13,7 +13,8 @@ const initialState = {
         { name: "task3", status: "active" },
         { name: "task4", status: "completed" }
     ],
-    filterText: ActionTypes.SHOW_ALL // "SHOW_COMPLETED", "SHOW_ACTIVE"
+    filterText: ActionTypes.SHOW_ALL, // "SHOW_COMPLETED", "SHOW_ACTIVE"
+    message: ""
 };
 const valueHandler = (value = initialState.value, action) => {
     switch (action.type) {
@@ -46,6 +47,20 @@ const filterTextHandler = (filterText = initialState.filterText, action) => {
 const tasksHandler = (tasks = initialState.tasks, action) => {
     return tasks;
 };
+const message = (message = initialState.message, action) => {
+    switch(action.type) {
+        case ActionTypes.CLEAR_FIELD:
+            message = "";
+            break;
+        case ActionTypes.DATA_FETCH_RECEIVED:
+            message = action.message;
+            break;
+        case ActionTypes.DATA_FETCH_FAILED:
+            message = action.err.message;
+            break;
+    }
+    return message;
+}
 /**
  * Reducer所接收的函数都是纯函数pure function, 一个input 对应一个确定的返回值
  * 	    1 不能修改参数
@@ -61,6 +76,7 @@ export const reducer1 = (state = initialState, action) => {
     state.value2 = value2Handler(state.value2, action);
     state.filterText = filterTextHandler(state.filterText, action);
     state.tasks = tasksHandler(state.tasks, action);
+    state.message = message(state.message, action);
     return { ...state };
 };
 
@@ -75,7 +91,8 @@ export const reducer2 = (state = initialState, action) => {
             return value2;
         })(state.value2, action),
         filterText: filterTextHandler(state.filterText, action),
-        tasks: tasksHandler(state.tasks, action)
+        tasks: tasksHandler(state.tasks, action),
+        message: message(state.message, action)
     };
 };
 
@@ -88,5 +105,6 @@ export const reducer3 = combineReducers({
     value: valueHandler, // 如果valueHandler的名字为value和state.value属性的名字一样，就可以只写{value, value2}
     value2: value2Handler,
     filterText: filterTextHandler,
-    tasks: tasksHandler
+    tasks: tasksHandler,
+    message
 });

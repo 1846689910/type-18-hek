@@ -1,7 +1,7 @@
 import React from 'react';
 import {createSelector} from  'reselect';
 import { connect } from "react-redux";
-import { showAll, showActive, showCompleted, ActionTypes } from '../settings/actions';
+import { showAll, showActive, showCompleted, ActionTypes, fetchData } from '../settings/actions';
 import {Link} from "react-router-dom";
 
 /**
@@ -21,7 +21,7 @@ const getVisibleTasks = state => {  // 根据sotre中的state.filterText的变�
             return state.tasks.filter(task => task.status === "active");
     }
 };
-
+const getMessage = state => state.message;
 /**
  * 对于这个VisibleTasks, 他所需要的属性tasks, 是来源于APP的state中的state.tasks和state.filterText算出来的。他自己只负责渲染这个
  * tasks的计算结果
@@ -36,7 +36,9 @@ const selector2 = () => createSelector(
     (state, props) => state,
     getVisibleTasks
 );
-
+const messageSelector = () => createSelector([
+    (state, props) => state,
+], getMessage);
 /**
  * the presentational component of VisibleTasks
  * */
@@ -55,6 +57,10 @@ const VisibleTasksPC = props => {
         </div>
     </div>);
 };
+const MessengerPC = ({dispatch, message}) => (<div style={{textAlign: "center"}}>
+    <input type="text" disabled value={message}/>
+    <button className="btn btn-primary" onClick={() => dispatch(fetchData())}>fetch</button>
+</div>);
 /**
  * Reselect 的用法1:
  * 在mapStateToProps中直接使用  myState: getMyState(state.aaa, state.bbb, ...)
@@ -72,7 +78,8 @@ const VisibleTasksPC = props => {
  都会自己保存自己的listId, 不会只有一个listId
  * */
 const mapStateToProps1 = (state, props) => ({
-    tasks: getVisibleTasks(state)
+    tasks: getVisibleTasks(state),
+    message: getMessage(state)
 });
 /**
  * Reselect 的用法2:
@@ -81,6 +88,9 @@ const mapStateToProps1 = (state, props) => ({
 const mapStateToProps2 = () => ((state, props) => ({
     tasks: selector1()(state, props)  // 区别于getVisibleTasks方法，我们传入的state, props来生成getVisibleTasks方法
 }));
+const mapStateToProps2_1 = () => ((state, props) => ({
+    message: messageSelector()(state, props)
+}))
 
 const mapDispatchToProps = (dispatch, props) => ({
     showAll: () => dispatch(showAll()),
@@ -97,10 +107,16 @@ const VisibleTasksCC = connect(
     mapStateToProps2,
     mapDispatchToProps
 )(VisibleTasksPC);
+const Messenger = connect(
+    mapStateToProps2_1,
+    (dispatch, props) => ({dispatch})
+)(MessengerPC);
 
 const ReselectConcise = props => {
     return (<div>
-        <VisibleTasksCC />
+        <VisibleTasksCC/>
+        <hr/>
+        <Messenger/>
     </div>)
 };
 export default ReselectConcise;
