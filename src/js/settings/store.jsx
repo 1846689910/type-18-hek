@@ -7,7 +7,8 @@ import { reducer3 } from "./reducers";
  * the store methods `dispatch` and `getState` as parameters.
  */
 import thunk from "redux-thunk";
+import logger from "../middlewares/logger";
 /**
  * the unique store accepts one reducer of above
  * */
-export default createStore(reducer3, applyMiddleware(thunk));
+export default createStore(reducer3, applyMiddleware(thunk, logger));
