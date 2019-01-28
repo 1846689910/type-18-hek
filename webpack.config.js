@@ -9,21 +9,24 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
  * */
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const webpack = require('webpack');
-module.exports = {
+const path = require("path");
+const preloadedFiles = require("./preloaded-files")(__dirname);
+module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123传入参数就可以在这里用env.xxx获取到. config要改成module.exports=env=>object
     entry: [
         "babel-polyfill",
+        ...preloadedFiles,
         `${__dirname}/src/js/index.jsx`
     ],
     output: {
         path: `${__dirname}/dist`,  // packed file directory
-        filename: "bundle.[contenthash].js"  // name of packed file
+        filename: env.production ? "bundle.[contenthash].js" : "bundle.[hash].js"  // name of packed file
     },
     devtool: 'eval-source-map',
     devServer: {
-        contentBase: "./dist",  // 默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录
+        contentBase: path.join(__dirname, "dist"),  // 默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录
         historyApiFallback: true,  // 在开发单页应用时非常有用，它依赖于HTML5 history API，如果设置为true，所有的跳转将指向index.html
         inline: true,  // 设置为true，当源文件改变时会自动刷新页面
-        port: 8080,  // 设置默认监听端口，如果省略，默认为”8080“
+        port: 8080  // 设置默认监听端口，如果省略，默认为”8080“
     },
     optimization: {
         runtimeChunk: 'single',
@@ -61,14 +64,17 @@ module.exports = {
                     options: { minimize: true }
                 }]
             },{
-                test: /\.css$/,
-                use: ["style-loader", "css-loader"]
-            },{
-                test: /\.scss$/,  // 之后就可以在js中直接import ".../xxx.scss"文件作为css的替代品
+                test: /\.(css|scss)$/,  // 之后就可以在js中直接import ".../xxx.scss"文件作为css的替代品
                 use: [
-                    "style-loader",  // creates style nodes from JS strings
-                     "css-loader",  // translates CSS into CommonJS
-                      "sass-loader"  // compiles Sass to CSS
+                  { loader: 'style-loader' },
+                  {
+                    loader: 'css-loader',
+                    options: {
+                    //   modules: true,
+                    //   localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
+                    },
+                  },
+                  { loader: "sass-loader" }
                 ]
             },{
                 test: /\.(png|jpg|gif)$/,
@@ -105,7 +111,9 @@ module.exports = {
             } 
         ]
     },
-    resolve: { "extensions": [".js", ".jsx", ".ts"] }, // 引入js相关文件可以省略扩展名
+    resolve: { 
+        "extensions": [".js", ".jsx", ".ts"] // 引入js相关文件可以省略扩展名
+    },
     plugins: [
         new CleanWebpackPlugin([  // the path(s) that should be cleaned
             "dist/*.*"
@@ -119,6 +127,11 @@ module.exports = {
             template: "./template/template.html",
             filename: "./index.html"
         }),
-        new webpack.HashedModuleIdsPlugin()
+        new webpack.HashedModuleIdsPlugin(),
+        new webpack.ProvidePlugin({  // 使得在项目各处都可以通过$引用jQuery，并且bootstrap也可以找到jquery
+            $: 'jquery',
+            jQuery: "jquery",
+            jquery: "jquery"
+        })
     ]
-};
+});
