@@ -27,12 +27,15 @@ import {renderRoutes} from "react-router-config";
 //     </Router>,document.querySelector("#root")
 // );
 const App = () => renderRoutes(routes);
-const render = () => ReactDOM.render(
+const render = App => ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <App/>
         </BrowserRouter>
     </Provider>,document.querySelector("#root")
 );
-render();
+render(App);
 store.subscribe(render);
+if (module.hot){ // 开启HMR(Hot Module Replacement)
+    module.hot.accept();
+}
