@@ -3,6 +3,7 @@ import {createSelector} from  'reselect';
 import { connect } from "react-redux";
 import { showAll, showActive, showCompleted, ActionTypes, fetchData } from '../settings/actions';
 import {Link} from "react-router-dom";
+import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 
 /**
  * reselect的作用
@@ -50,16 +51,16 @@ const VisibleTasksPC = props => {
             props.tasks.map((task, i) => <li key={i}>{task.name}: {task.status}</li>)
         }</ul>
         <div style={{display: "flex", justifyContent: "space-evenly"}}>
-            <button className="btn btn-primary" onClick={props.showAll}>All</button>
-            <button className="btn btn-primary" onClick={props.showCompleted}>Completed</button>
-            <button className="btn btn-primary" onClick={props.showActive}>Active</button>
-            <Link to="/"><button className="btn btn-primary">to /</button></Link>
+            <button styleName="bootstrap.btn bootstrap.btn-primary" onClick={props.showAll}>All</button>
+            <button styleName="bootstrap.btn bootstrap.btn-primary" onClick={props.showCompleted}>Completed</button>
+            <button styleName="bootstrap.btn bootstrap.btn-primary" onClick={props.showActive}>Active</button>
+            <Link to="/"><button styleName="bootstrap.btn bootstrap.btn-primary">to /</button></Link>
         </div>
     </div>);
 };
 const MessengerPC = ({dispatch, message}) => (<div style={{textAlign: "center"}}>
     <input type="text" disabled value={message}/>
-    <button className="btn btn-primary" onClick={() => dispatch(fetchData())}>fetch</button>
+    <button styleName="bootstrap.btn bootstrap.btn-primary" onClick={() => dispatch(fetchData())}>fetch</button>
 </div>);
 /**
  * Reselect 的用法1:

@@ -1,5 +1,5 @@
 const bootstrap = dirname => [
-    `${dirname}/node_modules/bootstrap/dist/css/bootstrap.min.css`,
+    // `${dirname}/node_modules/bootstrap/dist/css/bootstrap.min.css`,
     `${dirname}/node_modules/bootstrap/dist/js/bootstrap.min`,
 ]
 const jqueryUI = dirname => [
@@ -21,7 +21,7 @@ const leaflet = dirname => [
 module.exports = dirname => {
     const files = [];
     files.push(...bootstrap(dirname));
-    files.push(`${dirname}/node_modules/font-awesome/css/font-awesome.min.css`);
+    // files.push(`${dirname}/node_modules/font-awesome/css/font-awesome.min.css`);
     files.push(...jqueryUI(dirname));
     files.push(...leaflet(dirname));
     return files;

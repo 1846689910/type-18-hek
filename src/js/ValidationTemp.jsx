@@ -1,5 +1,6 @@
 import React from "react";
 import Big from "big.js";
+import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 const LONG = {
    MIN_VALUE: Big(-2).pow(63),
    MAX_VALUE: Big(2).pow(63).minus(1)
@@ -92,7 +93,7 @@ export default class ValidationTemp extends React.Component{
                     <label>max: <input type="number" ref={r => this[`max_${idx}`] = r} value={item.max} onChange={e => this.fieldChange("max", e.target, idx)}/></label>
                 </div>)
             }
-            <div><button className="btn btn-success" 
+            <div><button styleName="bootstrap.btn bootstrap.btn-success" 
                 disabled={! this.state.valids.every(o => Object.values(o).every(bol => bol))} onClick={this.submit}>submit</button></div>
         </div>);
     }

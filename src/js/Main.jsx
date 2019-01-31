@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {Window} from "./Window";
 import {app} from "./Container";
 import {People} from "./People";
+import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 
 console.log(People);
 const StatelessComp = props => {
@@ -37,10 +38,10 @@ export default class Main extends React.Component{
                 <StatelessComp/>
                 <StatedComp ref={r => this[`_statedComp`] = r}/>
                 <div style={{display: "flex", justifyContent: "flex-start"}}>
-                    <Link to="/redux"><button className="btn btn-primary">to /redux</button></Link>
-                    <Link to="/react-redux"><button className="btn btn-primary">to /react-redux</button></Link>
-                    <Link to="/reselect"><button className="btn btn-primary">to /reselect</button></Link>
-                    <Link to="/mobx"><button className="btn btn-primary">to /mobx</button></Link>
+                    <Link to="/redux"><button styleName="bootstrap.btn bootstrap.btn-primary">to /redux</button></Link>
+                    <Link to="/react-redux"><button styleName="bootstrap.btn bootstrap.btn-primary">to /react-redux</button></Link>
+                    <Link to="/reselect"><button styleName="bootstrap.btn bootstrap.btn-primary">to /reselect</button></Link>
+                    <Link to="/mobx"><button styleName="bootstrap.btn bootstrap.btn-primary">to /mobx</button></Link>
                 </div>
             </div>
         );

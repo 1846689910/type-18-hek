@@ -23,7 +23,7 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
     },
     devtool: 'eval-source-map',
     devServer: {
-        contentBase: path.join(__dirname, "dist"),  // 默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录
+        contentBase: path.resolve(__dirname, "./dist"),  // 默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录
         historyApiFallback: true,  // 在开发单页应用时非常有用，它依赖于HTML5 history API，如果设置为true，所有的跳转将指向index.html
         inline: true,  // 设置为true，当源文件改变时会自动刷新页面
         port: 8080  // 设置默认监听端口，如果省略，默认为”8080“
@@ -55,7 +55,13 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader"
+                    loader: "babel-loader",
+                    options: {
+                        cacheDirectory: true,
+                        plugins: [
+                            ["react-css-modules", { webpackHotModuleReloading: true, generateScopedName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]` }]
+                        ]
+                    }
                 }
             },{
                 test: /\.html$/,
@@ -70,8 +76,8 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                   {
                     loader: 'css-loader',
                     options: {
-                    //   modules: true,
-                    //   localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
+                      modules: true,
+                      localIdentName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]`, //在npm run prod时文档的class会进一步缩减
                     },
                   },
                   { loader: "sass-loader" }

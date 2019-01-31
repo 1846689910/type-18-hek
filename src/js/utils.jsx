@@ -17,7 +17,7 @@ class ActionWatcher {
     }
     watch = e => {
         this._event = e;
-        if (e.persist) e.persis();
+        if (e.persist) e.persist();
         if (this._onAction) {
             this._onAction(this._event);
         }
