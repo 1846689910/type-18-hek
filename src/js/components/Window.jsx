@@ -4,9 +4,9 @@
 import React from "react";
 import {tileToBBox, pointToTileFraction, googleToTile} from "global-mercator";
 import {ActionWatcher} from "./utils";
-import {TopComp, TopComp1} from "./context/ContextShow";
+import {TopComp, TopComp1} from "../context/ContextShow";
 import {ValidationWrapper} from "./ValidationTemp";
-import custom from "../css/main.css";
+import custom from "../../css/main.css";
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 import fontawesome from "font-awesome/css/font-awesome.min.css"
 export class Window extends React.Component{

@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { renderRoutes } from "react-router-config";
 import { withRouter } from "react-router-dom";
-import ReduxConcise from "../redux/ReduxConcise";
-import ReactReduxConcise from "../react-redux/ReactReduxConcise";
-import ReselectConcise from "../reselect/ReselectConcise";
-import MobXConcise from "../mobx/MobXConcise";
-import Main from "../Main";
+import ReduxConcise from "../redux-concise/ReduxConcise";
+import ReactReduxConcise from "../react-redux-concise/ReactReduxConcise";
+import ReselectConcise from "../reselect-concise/ReselectConcise";
+import MobXConcise from "../mobx-concise/MobXConcise";
+import Main from "../components/Main";
 import store from "./store";
 
 const Root = ({ route }) => (
