@@ -4,3 +4,4 @@ node_modules
 .idea/workspace.xml
 ./temp
 temp
+.vscode

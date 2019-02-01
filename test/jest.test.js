@@ -1,6 +1,7 @@
 /**
  * Created by Eric on 9/6/2018.
  */
+import "babel-polyfill";
 import assert from "assert";
 import fetch from "node-fetch";
 import renderer from "react-test-renderer";
@@ -18,7 +19,7 @@ describe("fetch resources", () => {
     beforeAll(() => {
         url = "https://jsonmock.hackerrank.com/api/movies/search/?Title=spiderman";
     });
-    test("fetch resource", async() => {
+    test("should fetch resource", async() => {
         const result = await fetch(url).then(res => res.json());
         expect(result.page).toBeGreaterThan(0);
     });
