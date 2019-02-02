@@ -1,16 +1,19 @@
 {
   "name": "webpack4",
   "version": "1.0.0",
-  "description": "```\r mkdir webpack-demo\r cd webpack-demo\r npm init -y\r npm install webpack webpack-cli --save-dev\r ```\r #####2 install babel\r Most of new features of ES6 or JSX of React cannot be understood\r by most browser and also webpack. Thus, we need **loader** to\r help webpack translate.",
+  "description": "The `webpack project` is a self-defined front-end only project starter which is supported by `React`, `Redux`, `Webpack` and other libraries. The Project starter includes demos for `redux`, `react-redux`, `reselect`, `mobx` and other self-defined classes and components. It has already setup `HMR`, `code-spliting`, `babel-plugin-react-css-modules`. The project also supports tests via `mocha`, `jest` and integration test simulating user activity driven by `selenium` and `chromedriver`",
   "main": "index.js",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha",
-    "mocha": "node ./node_modules/mocha/bin/mocha",
-    "jest": "jest",
     "start": "webpack-dev-server --hot --open --mode development --env.development",
     "prod": "webpack-dev-server --open --mode production --env.production",
     "dev": "webpack --mode development --env.development",
-    "build": "webpack --mode production --env.production"
+    "build": "webpack --mode production --env.production",
+    "test": "node ./node_modules/mocha/bin/mocha",
+    "mocha": "node ./node_modules/mocha/bin/mocha",
+    "jest": "node ./node_modules/jest/bin/jest",
+    "mochas": "node ./node_modules/mocha/bin/mocha test/mochas",
+    "jests": "node ./node_modules/jest/bin/jest test/jests",
+    "integration-tests": "node ./node_modules/mocha/bin/mocha integrationTest"
   },
   "keywords": [],
   "author": "",
