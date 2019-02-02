@@ -19,6 +19,7 @@ const leaflet = dirname => [
 ];
 module.exports = dirname => {
     const files = [];
+    files.push(`${dirname}/src/images/favicon.ico`);
     files.push(...bootstrap(dirname));
     files.push(...jqueryUI(dirname));
     files.push(...leaflet(dirname));
