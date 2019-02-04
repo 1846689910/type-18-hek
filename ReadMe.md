@@ -46,6 +46,21 @@ npm run jest test/mocha.test.js
 ```bash
 npm run mocha integrationTest
 ```
+## **Transpile**
+the project support transpile ES6 to ES5 via `@babel/core`
+```bash
+npm link
+```
+Then, after cli generated
+use
+```bash
+transpile SRC.js TARGET.js
+```
+or use
+```bash
+transpile SRC.js
+```
+will generate a `SRC.transpiled.js` to the same path
 
 ### **Develop**
 the entry file is `index.jsx`. The router and redux store, actions, reducers are defined in `settings`

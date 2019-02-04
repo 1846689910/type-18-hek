@@ -1,2 +1,9 @@
-const o = require("./script2");
-console.log(o.abc);
+class People {
+    constructor() {
+        this.walk = this.walk.bind(this);
+    }
+    run = () => console.log("running");
+    walk() {
+        console.log("walking");
+    }
+}
