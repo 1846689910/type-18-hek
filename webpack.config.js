@@ -8,6 +8,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
  * 在build bundle.js时，清理原有的文件
  * */
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const path = require("path");
 const preloadedFiles = require("./preloaded-files")(__dirname);
@@ -15,11 +16,11 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
     entry: [
         "babel-polyfill",
         ...preloadedFiles,
-        `${__dirname}/src/js/index.jsx`
+        `${__dirname}/src/client/js/index.jsx`
     ],
     output: {
         path: `${__dirname}/dist`,  // packed file directory
-        filename: env.production ? "bundle.[contenthash].js" : "bundle.[hash].js"  // name of packed file
+        filename: env.ssr ? "main.bundle.[contenthash].js" : env.production ? "bundle.[contenthash].js" : "bundle.[hash].js"  // name of packed file
     },
     devtool: 'eval-source-map',
     devServer: {
@@ -28,27 +29,27 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
         inline: true,  // 设置为true，当源文件改变时会自动刷新页面
         port: 8080  // 设置默认监听端口，如果省略，默认为”8080“
     },
-    optimization: {
-        runtimeChunk: 'single',
-        splitChunks: {
-            chunks: 'all',  // split code in app and node_modules into bundle and vendor.bundle.js
-            maxInitialRequests: Infinity,
-            minSize: 0,
-            cacheGroups: {  // keep splitting the node_modules chunks
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name(module) {
-                        // get the name. E.g. node_modules/packageName/not/this/part.js
-                        // or node_modules/packageName
-                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+    // optimization: {
+    //     runtimeChunk: 'single',
+    //     splitChunks: {
+    //         chunks: 'all',  // split code in app and node_modules into bundle and vendor.bundle.js
+    //         maxInitialRequests: Infinity,
+    //         minSize: 0,
+    //         cacheGroups: {  // keep splitting the node_modules chunks
+    //             vendor: {
+    //                 test: /[\\/]node_modules[\\/]/,
+    //                 name(module) {
+    //                     // get the name. E.g. node_modules/packageName/not/this/part.js
+    //                     // or node_modules/packageName
+    //                     const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
 
-                        // npm package names are URL-safe, but some servers don't like @ symbols
-                        return `npm.${packageName.replace('@', '')}`;
-                    },
-                },
-            },
-        },
-    },
+    //                     // npm package names are URL-safe, but some servers don't like @ symbols
+    //                     return `npm.${packageName.replace('@', '')}`;
+    //                 },
+    //             },
+    //         },
+    //     },
+    // },
     module: {
         rules: [
             {
@@ -58,9 +59,9 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                     loader: "babel-loader",
                     options: {
                         cacheDirectory: true,
-                        plugins: [
-                            ["react-css-modules", { webpackHotModuleReloading: true, generateScopedName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]` }]
-                        ]
+                        // plugins: [
+                        //     ["react-css-modules", { webpackHotModuleReloading: true, generateScopedName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]` }]
+                        // ]
                     }
                 }
             },{
@@ -70,18 +71,24 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                     options: { minimize: true }
                 }]
             },{
-                test: /\.(css|scss)$/,  // 之后就可以在js中直接import ".../xxx.scss"文件作为css的替代品
-                use: [
-                  { loader: 'style-loader' },
-                  {
-                    loader: 'css-loader',
-                    options: {
-                      modules: true,
-                      localIdentName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]`, //在npm run prod时文档的class会进一步缩减
-                    },
-                  },
-                  { loader: "sass-loader" }
-                ]
+                // test: /\.(css|scss)$/,  // 之后就可以在js中直接import ".../xxx.scss"文件作为css的替代品
+                // use: [
+                //   { loader: 'style-loader' },
+                //   {
+                //     loader: 'css-loader',
+                //     // options: {
+                //     //   modules: true,
+                //     //   localIdentName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]`, //在npm run prod时文档的class会进一步缩减
+                //     // },
+                //   },
+                //   { loader: "sass-loader" }
+                // ],
+                // use: extractCSS.extract({ fallback: 'style-loader', use: [ 'css-loader' ] })
+            },{
+                test: /\.css$/,
+                use: ExtractTextWebpackPlugin.extract({
+                    use: "css-loader",
+                  })
             },{
                 test: /\.(png|jpg|gif)$/,
                 use: [{
@@ -129,15 +136,16 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
             verbose: false
         }),
         new HtmlWebpackPlugin({
-            title: "Webpack Test",
-            template: "./template/template.html",
-            filename: "./index.html"
+            title: "type-18-ssr",
+            template: "./template/template-ssr.html",
+            filename: "./main.html"
         }),
         new webpack.HashedModuleIdsPlugin(),
         new webpack.ProvidePlugin({  // 使得在项目各处都可以通过$引用jQuery，并且bootstrap也可以找到jquery
             $: 'jquery',
             jQuery: "jquery",
             jquery: "jquery"
-        })
+        }),
+        new ExtractTextWebpackPlugin({filename: "main.bundle.css"})
     ]
 });

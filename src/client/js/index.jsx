@@ -8,6 +8,7 @@ import store from "./settings/store";
 import {Provider} from "react-redux";
 import {routes} from "./settings/routes";
 import {renderRoutes} from "react-router-config";
+import "../css/main.css";
 // ReactDOM.render(<Main />, document.querySelector("#root"));
 // const render = () => ReactDOM.render(
 //     <Router>
@@ -25,12 +26,12 @@ import {renderRoutes} from "react-router-config";
 //     </Router>,document.querySelector("#root")
 // );
 const App = () => renderRoutes(routes);
-const render = App => ReactDOM.render(
+const render = App => ReactDOM.hydrate(
     <Provider store={store}>
         <BrowserRouter>
             <App/>
         </BrowserRouter>
-    </Provider>,document.querySelector("#root")
+    </Provider>, document.querySelector("#root")
 );
 render(App);
 store.subscribe(() => render(App));
