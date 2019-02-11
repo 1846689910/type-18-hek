@@ -20,7 +20,7 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
     ],
     output: {
         path: `${__dirname}/dist`,  // packed file directory
-        filename: env.ssr ? "main.bundle.[contenthash].js" : env.production ? "bundle.[contenthash].js" : "bundle.[hash].js"  // name of packed file
+        filename: env.ssr ? "main.bundle.js" : env.production ? "bundle.[contenthash].js" : "bundle.[hash].js"  // name of packed file
     },
     devtool: 'eval-source-map',
     devServer: {
@@ -29,6 +29,14 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
         inline: true,  // 设置为true，当源文件改变时会自动刷新页面
         port: 8080  // 设置默认监听端口，如果省略，默认为”8080“
     },
+    // watch: true,  // check if rebundle after file changed, but put it in command line `--watch` in package.json
+    // progress: true,  // show the progress bar, but put in command line `--progress` in package.json
+    // watchOptions: {
+    //     aggregateTimeout: 100,  // default 300, how many ms after first file changed then bundle the files again
+    //     poll: 1000  // ms interval to check changes
+    // },
+
+
     // optimization: {
     //     runtimeChunk: 'single',
     //     splitChunks: {
@@ -71,19 +79,18 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                     options: { minimize: true }
                 }]
             },{
-                // test: /\.(css|scss)$/,  // 之后就可以在js中直接import ".../xxx.scss"文件作为css的替代品
-                // use: [
-                //   { loader: 'style-loader' },
-                //   {
-                //     loader: 'css-loader',
-                //     // options: {
-                //     //   modules: true,
-                //     //   localIdentName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]`, //在npm run prod时文档的class会进一步缩减
-                //     // },
-                //   },
-                //   { loader: "sass-loader" }
-                // ],
-                // use: extractCSS.extract({ fallback: 'style-loader', use: [ 'css-loader' ] })
+                test: /\.scss$/,  // 之后就可以在js中直接import ".../xxx.scss"文件作为css的替代品
+                use: [
+                  { loader: 'style-loader' },
+                  {
+                    loader: 'css-loader',
+                    // options: {
+                    //   modules: true,
+                    //   localIdentName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]`, //在npm run prod时文档的class会进一步缩减
+                    // },
+                  },
+                  { loader: "sass-loader" }
+                ]
             },{
                 test: /\.css$/,
                 use: ExtractTextWebpackPlugin.extract({
@@ -119,13 +126,13 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                 }]
             },{
                 test: /\.(tsx|ts)?$/,
-                use: 'ts-loader',
+                use: "ts-loader",
                 exclude: /node_modules/
             }
         ]
     },
     resolve: {
-        "extensions": [".js", ".jsx", ".ts"] // 引入js相关文件可以省略扩展名
+        extensions: [".js", ".jsx", ".ts"] // 引入js相关文件可以省略扩展名
     },
     plugins: [
         new CleanWebpackPlugin([  // the path(s) that should be cleaned

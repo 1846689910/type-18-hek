@@ -4,7 +4,8 @@ require('@babel/register')({
     plugins: [
         ["@babel/plugin-proposal-decorators", { "legacy": true }],
         "@babel/plugin-syntax-dynamic-import",
-        "transform-class-properties"
+        "transform-class-properties",
+        "@babel/plugin-proposal-class-properties"
     ]
 });
 require("babel-polyfill");

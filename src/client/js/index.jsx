@@ -4,10 +4,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
-import store from "./settings/store";
+import configureStore from "./settings/store";
 import {Provider} from "react-redux";
 import {routes} from "./settings/routes";
 import {renderRoutes} from "react-router-config";
+import M from "../js/components/Messenger";
 import "../css/main.css";
 // ReactDOM.render(<Main />, document.querySelector("#root"));
 // const render = () => ReactDOM.render(
@@ -25,6 +26,8 @@ import "../css/main.css";
 //         </Switch>
 //     </Router>,document.querySelector("#root")
 // );
+const store = configureStore(window.__PRELOADED_STATE__);
+M.store = store;
 const App = () => renderRoutes(routes);
 const render = App => ReactDOM.hydrate(
     <Provider store={store}>
@@ -37,4 +40,8 @@ render(App);
 store.subscribe(() => render(App));
 if (module.hot){ // 开启HMR(Hot Module Replacement)
     module.hot.accept();
+    module.hot.accept("./settings/routes", () => {
+        const r = require("./settings/routes");
+        render(() => renderRoutes(r.routes));
+    });
 }

@@ -71,7 +71,7 @@ const message = (message = initialState.message, action) => {
  *  单一的reducer
  * 有initialState, reducer接收两个参数state = initialState和action对象
  * */
-export const reducer1 = (state = initialState, action) => {
+const reducer1 = (state = initialState, action) => {
     state.value = valueHandler(state.value, action);
     state.value2 = value2Handler(state.value2, action);
     state.filterText = filterTextHandler(state.filterText, action);
@@ -83,7 +83,7 @@ export const reducer1 = (state = initialState, action) => {
 /**
  * reducer写法2, 其实和写法1是一样的，只不过把value和value2都放到新的object里
  * */
-export const reducer2 = (state = initialState, action) => {
+const reducer2 = (state = initialState, action) => {
     return {
         value: valueHandler(state.value, action),
         value2: (function(value2, action) {
@@ -101,10 +101,11 @@ export const reducer2 = (state = initialState, action) => {
  * use combineReducers
  * 默认地initialState是空{}, 函数名就是state的属性名
  * */
-export const reducer3 = combineReducers({
+const reducer3 = combineReducers({
     value: valueHandler, // 如果valueHandler的名字为value和state.value属性的名字一样，就可以只写{value, value2}
     value2: value2Handler,
     filterText: filterTextHandler,
     tasks: tasksHandler,
     message
 });
+export { initialState, reducer1, reducer2, reducer3 };

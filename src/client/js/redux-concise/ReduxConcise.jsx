@@ -1,6 +1,7 @@
 import React from "react";
 import { increase, decrease, fetchData } from "../settings/actions";
 import { Link } from "react-router-dom";
+import M from "../components/Messenger";
 // import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 
 const Counter = props => {
@@ -49,7 +50,7 @@ export default class ReduxConcise extends React.Component {
     console.log(this.props.route);
   }
   render() {
-    const { store } = this.props.route;
+    const { store } = M;
     return (
       <div>
         <Counter store={store} />

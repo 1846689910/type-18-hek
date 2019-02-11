@@ -14,8 +14,8 @@
     "mochas": "node ./node_modules/mocha/bin/mocha test/mochas",
     "jests": "node ./node_modules/jest/bin/jest test/jests",
     "integration-tests": "node ./node_modules/mocha/bin/mocha integrationTest",
-    "server": "node ./src/server/index.js",
-    "client": "webpack --mode production --env.ssr",
+    "server": "nodemon ./src/server/index.js",
+    "client": "webpack --mode production --env.ssr --progress --watch",
     "serve": "npm-run-all --parallel client server"
   },
   "bin": {
@@ -27,6 +27,7 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
@@ -98,7 +99,9 @@
     "url-loader": "^1.1.2",
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-middleware": "^3.5.1",
+    "webpack-dev-server": "^3.1.14",
+    "webpack-hot-middleware": "^2.24.3"
   },
   "dependencies": {
     "big.js": "^5.2.2",
