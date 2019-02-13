@@ -14,9 +14,7 @@
     "mochas": "node ./node_modules/mocha/bin/mocha test/mochas",
     "jests": "node ./node_modules/jest/bin/jest test/jests",
     "integration-tests": "node ./node_modules/mocha/bin/mocha integrationTest",
-    "server": "nodemon ./src/server/index.js",
-    "client": "webpack --mode production --env.ssr --progress --watch",
-    "serve": "npm-run-all --parallel client server"
+    "serve": "nodemon --watch src/server --watch webpack.config.js --inspect ./src/server"
   },
   "bin": {
     "transpile": "./clis/transpile.js"
@@ -29,6 +27,7 @@
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
@@ -43,10 +42,12 @@
     "babel-register": "^6.26.0",
     "bluebird": "^3.5.3",
     "chai": "^4.2.0",
+    "chokidar": "^2.1.1",
     "chromedriver": "^2.45.0",
     "clean-webpack-plugin": "^1.0.1",
     "cookie-parser": "^1.4.3",
     "css-loader": "^2.1.0",
+    "css-modules-require-hook": "^4.2.3",
     "detect-browser": "^4.0.4",
     "exceljs": "^1.7.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
@@ -79,6 +80,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-hot-loader": "^4.6.5",
     "react-redux": "^6.0.0",
     "react-router-config": "^4.4.0-beta.6",
     "react-router-dom": "^4.3.1",

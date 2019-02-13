@@ -13,13 +13,16 @@ const webpack = require('webpack');
 const path = require("path");
 const preloadedFiles = require("./preloaded-files")(__dirname);
 module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123传入参数就可以在这里用env.xxx获取到. config要改成module.exports=env=>object
+    mode: env.production ? "production" : "development",
     entry: [
-        "babel-polyfill",
+        "webpack-hot-middleware/client",
+        "@babel/polyfill",
         ...preloadedFiles,
         `${__dirname}/src/client/js/index.jsx`
     ],
     output: {
         path: `${__dirname}/dist`,  // packed file directory
+        publicPath: "/",
         filename: env.ssr ? "main.bundle.js" : env.production ? "bundle.[contenthash].js" : "bundle.[hash].js"  // name of packed file
     },
     devtool: 'eval-source-map',
@@ -29,13 +32,6 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
         inline: true,  // 设置为true，当源文件改变时会自动刷新页面
         port: 8080  // 设置默认监听端口，如果省略，默认为”8080“
     },
-    // watch: true,  // check if rebundle after file changed, but put it in command line `--watch` in package.json
-    // progress: true,  // show the progress bar, but put in command line `--progress` in package.json
-    // watchOptions: {
-    //     aggregateTimeout: 100,  // default 300, how many ms after first file changed then bundle the files again
-    //     poll: 1000  // ms interval to check changes
-    // },
-
 
     // optimization: {
     //     runtimeChunk: 'single',
@@ -63,15 +59,11 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        cacheDirectory: true,
-                        // plugins: [
-                        //     ["react-css-modules", { webpackHotModuleReloading: true, generateScopedName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]` }]
-                        // ]
+                use: [
+                    {
+                        loader: "babel-loader",
                     }
-                }
+                ]
             },{
                 test: /\.html$/,
                 use: [{
@@ -95,7 +87,7 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                 test: /\.css$/,
                 use: ExtractTextWebpackPlugin.extract({
                     use: "css-loader",
-                  })
+                })
             },{
                 test: /\.(png|jpg|gif)$/,
                 use: [{
@@ -153,6 +145,7 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
             jQuery: "jquery",
             jquery: "jquery"
         }),
-        new ExtractTextWebpackPlugin({filename: "main.bundle.css"})
+        new ExtractTextWebpackPlugin({filename: "main.bundle.css"}),
+        new webpack.HotModuleReplacementPlugin(),
     ]
 });
