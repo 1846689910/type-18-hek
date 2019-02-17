@@ -14,7 +14,8 @@
     "mochas": "node ./node_modules/mocha/bin/mocha test/mochas",
     "jests": "node ./node_modules/jest/bin/jest test/jests",
     "integration-tests": "node ./node_modules/mocha/bin/mocha integrationTest",
-    "serve": "nodemon --inspect ./src/server"
+    "express-server-dev": "APP_SERVER=express_dev nodemon --inspect ./src/server",
+    "express-server": "APP_SERVER=express nodemon ./src/server"
   },
   "bin": {
     "transpile": "./clis/transpile.js"

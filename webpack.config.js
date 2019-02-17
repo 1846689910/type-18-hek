@@ -12,6 +12,7 @@ const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const path = require("path");
 const preloadedFiles = require("./preloaded-files")(__dirname);
+const { APP_SERVER } = process.env;
 module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123传入参数就可以在这里用env.xxx获取到. config要改成module.exports=env=>object
     mode: env.production ? "production" : "development",
     entry: [
@@ -66,7 +67,8 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                             presets: ["@babel/preset-env", "@babel/preset-react"],
                             cacheDirectory: true,
                             plugins: [
-                                ["react-css-modules", { webpackHotModuleReloading: true, generateScopedName: `[name]__[local]___[hash:base64:5]` }]
+                                ["react-css-modules", { webpackHotModuleReloading: true, generateScopedName: `${APP_SERVER.endsWith("dev") || env.development ? "[name]__[local]___" : ""}[hash:base64:5]` }],
+                                "@babel/plugin-proposal-class-properties"
                             ]
                         }
                     }
@@ -86,7 +88,7 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                             loader: "css-loader",
                             options: {
                                 modules: true,
-                                localIdentName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]`,
+                                localIdentName: `${APP_SERVER.endsWith("dev") || env.development ? "[name]__[local]___" : ""}[hash:base64:5]`,
                             }
                         },
                     ]

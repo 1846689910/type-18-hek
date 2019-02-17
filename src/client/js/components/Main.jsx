@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Window } from "./Window";
 import { app } from "./Container";
 import M from "./Messenger";
-// import {People} from "./People.ts";
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
+// import {People} from "./People.ts";
 
 // console.log(People);
 const StatelessComp = props => {

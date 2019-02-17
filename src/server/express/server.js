@@ -2,21 +2,21 @@ import express from "express";
 import path from "path";
 import React from "react";
 import { renderToString } from "react-dom/server";
-import {getHtml} from "../../template/template";
+import {getHtml} from "../../../template/template";
 import {Provider} from "react-redux";
-import configureStore from "../client/js/settings/store";
+import configureStore from "../../client/js/settings/store";
 import {StaticRouter} from "react-router-dom";
 import {renderRoutes} from "react-router-config";
-import {initialState} from "../client/js/settings/reducers";
+import {initialState} from "../../client/js/settings/reducers";
 import chokidar from "chokidar";
-import webpackConfig from "../../webpack.config";
+import webpackConfig from "../../../webpack.config";
 import webpack from "webpack";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
-import logger, {FgCyan, FgGreen, Bright, Underscore} from "./utils/logger";
+import logger, {FgCyan, FgGreen, Bright, Underscore} from "../utils/logger";
 
 const app = express();
-const staticPath = path.resolve( __dirname, "../../dist" );
+const staticPath = path.resolve( __dirname, "../../../dist" );
 const config = webpackConfig({ssr: true});
 const port = config.devServer && config.devServer.port || 3000;
 const compiler = webpack(config);
@@ -51,7 +51,7 @@ app.use(express.static(staticPath));
 
 app.get("/*", (req, res) => {
     const store = configureStore(initialState);
-    const {routes} = require("../client/js/settings/routes");
+    const {routes} = require("../../client/js/settings/routes");
     const App = () => renderRoutes(routes);
     const reactDom = renderToString(<Provider store={store}>
         <StaticRouter context={{}} location={ req.url }>

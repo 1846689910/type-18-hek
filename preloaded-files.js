@@ -1,5 +1,5 @@
 const bootstrap = dirname => [
-    `bootstrap/dist/js/bootstrap.min`,
+    // `bootstrap/dist/js/bootstrap.min`,
     `bootstrap/dist/css/bootstrap.min.css`
 ]
 const jqueryUI = dirname => [
@@ -24,6 +24,7 @@ module.exports = dirname => {
     files.push(`${dirname}/src/client/images/favicon.ico`);
     files.push(...bootstrap(dirname));
     files.push(`${dirname}/src/client/css/main.css`);
+    // files.push(`${dirname}/src/client/js/components/People.ts`);
     // files.push(...jqueryUI(dirname));
     // files.push(...leaflet(dirname));
     return files;

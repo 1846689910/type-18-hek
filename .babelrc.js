@@ -1,3 +1,4 @@
+const { APP_SERVER } = process.env;
 module.exports = {
     presets: ["@babel/preset-env", "@babel/preset-react"],
     plugins: [
@@ -7,7 +8,8 @@ module.exports = {
         "css-modules-transform",
         ["react-css-modules", {
             webpackHotModuleReloading: true,
-            generateScopedName: `[name]__[local]___[hash:base64:5]`
-        }]
+            generateScopedName: `${APP_SERVER.endsWith("dev") ? "[name]__[local]___" : ""}[hash:base64:5]`
+        }],
+        "@babel/plugin-proposal-class-properties"
     ]
 }
