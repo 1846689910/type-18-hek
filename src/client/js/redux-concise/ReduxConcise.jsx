@@ -2,7 +2,7 @@ import React from "react";
 import { increase, decrease, fetchData } from "../settings/actions";
 import { Link } from "react-router-dom";
 import M from "../components/Messenger";
-// import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
+import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 
 const Counter = props => {
   const divStyle = {
@@ -19,14 +19,14 @@ const Counter = props => {
       <div style={divStyle}>
         <h3 style={{ textAlign: "center" }}>{store.getState().value}</h3>
         <div style={{ textAlign: "center" }}>
-          <button className="btn btn-success" onClick={() => store.dispatch(increase())}>
+          <button styleName="bootstrap.btn bootstrap.btn-success" onClick={() => store.dispatch(increase())}>
             increase
           </button>
-          <button className="btn btn-danger" onClick={() => store.dispatch(decrease())}>
+          <button styleName="bootstrap.btn bootstrap.btn-danger" onClick={() => store.dispatch(decrease())}>
             decrease
           </button>
           <Link to="/">
-            <button className="btn btn-primary">to /</button>
+            <button styleName="bootstrap.btn bootstrap.btn-primary">to /</button>
           </Link>
         </div>
       </div>
@@ -36,7 +36,7 @@ const Counter = props => {
 const Messenger = ({ store }) => (
   <div style={{ textAlign: "center" }}>
     <input type="text" disabled value={store.getState().message} />
-    <button className="btn btn-primary" onClick={() => store.dispatch(fetchData())}>
+    <button styleName="bootstrap.btn bootstrap.btn-primary" onClick={() => store.dispatch(fetchData())}>
       fetch
     </button>
   </div>

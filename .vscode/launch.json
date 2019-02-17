@@ -18,6 +18,14 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/temp/temp1.js"
+        },
+        {
+            "name": "Attach",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "url": "http://localhost:8080/",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }

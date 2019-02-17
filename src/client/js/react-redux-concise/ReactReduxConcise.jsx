@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { increase, decrease, fetchData } from "../settings/actions";
 import { Link } from "react-router-dom";
-// import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
+import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 
 /**
  * Counter is a presentational component(pc)
@@ -20,14 +20,14 @@ const CounterPC = props => {
       <div style={{ padding: 0 }}>
         <h3 style={{ textAlign: "center" }}>{value}</h3>
         <div style={{ textAlign: "center" }}>
-          <button className="btn btn-success" onClick={() => dispatch(increase())}>
+          <button styleName="bootstrap.btn bootstrap.btn-success" onClick={() => dispatch(increase())}>
             increase
           </button>
-          <button className="btn btn-danger" onClick={() => dispatch(decrease())}>
+          <button styleName="bootstrap.btn bootstrap.btn-danger" onClick={() => dispatch(decrease())}>
             decrease
           </button>
           <Link to="/">
-            <button className="btn btn-primary">to /</button>
+            <button styleName="bootstrap.btn bootstrap.btn-primary">to /</button>
           </Link>
         </div>
       </div>
@@ -37,7 +37,7 @@ const CounterPC = props => {
 const MessengerPC = ({ dispatch, message }) => (
   <div style={{ textAlign: "center" }}>
     <input type="text" disabled value={message} />
-    <button className="btn btn-primary" onClick={() => dispatch(fetchData())}>
+    <button styleName="bootstrap.btn bootstrap.btn-primary" onClick={() => dispatch(fetchData())}>
       fetch
     </button>
   </div>

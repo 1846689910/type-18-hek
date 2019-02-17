@@ -20,9 +20,10 @@ const leaflet = dirname => [
 ];
 module.exports = dirname => {
     const files = [];
-    // files.push(`font-awesome/css/font-awesome.min.css`);
-    // files.push(`${dirname}/src/client/images/favicon.ico`);
+    files.push(`font-awesome/css/font-awesome.min.css`);
+    files.push(`${dirname}/src/client/images/favicon.ico`);
     files.push(...bootstrap(dirname));
+    files.push(`${dirname}/src/client/css/main.css`);
     // files.push(...jqueryUI(dirname));
     // files.push(...leaflet(dirname));
     return files;

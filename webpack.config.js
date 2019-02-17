@@ -62,6 +62,13 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                 use: [
                     {
                         loader: "babel-loader",
+                        options: {
+                            presets: ["@babel/preset-env", "@babel/preset-react"],
+                            cacheDirectory: true,
+                            plugins: [
+                                ["react-css-modules", { webpackHotModuleReloading: true, generateScopedName: `[name]__[local]___[hash:base64:5]` }]
+                            ]
+                        }
                     }
                 ]
             },{
@@ -71,7 +78,21 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                     options: { minimize: true }
                 }]
             },{
-                test: /\.scss$/,  // 之后就可以在js中直接import ".../xxx.scss"文件作为css的替代品
+                test: /\.(css)$/,
+                use: ExtractTextWebpackPlugin.extract({
+                    // use: "css-loader",
+                    use: [
+                        {
+                            loader: "css-loader",
+                            options: {
+                                modules: true,
+                                localIdentName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]`,
+                            }
+                        },
+                    ]
+                }),
+            },{
+                test: /\.(scss|sass)$/,  // 之后就可以在js中直接import ".../xxx.scss"文件作为css的替代品
                 use: [
                   { loader: 'style-loader' },
                   {
@@ -83,11 +104,6 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                   },
                   { loader: "sass-loader" }
                 ]
-            },{
-                test: /\.css$/,
-                use: ExtractTextWebpackPlugin.extract({
-                    use: "css-loader",
-                })
             },{
                 test: /\.(png|jpg|gif)$/,
                 use: [{
@@ -145,7 +161,7 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
             jQuery: "jquery",
             jquery: "jquery"
         }),
-        new ExtractTextWebpackPlugin({filename: "main.bundle.css"}),
+        new ExtractTextWebpackPlugin({filename: "main.bundle.css", allChunks: true}),
         new webpack.HotModuleReplacementPlugin(),
     ]
 });

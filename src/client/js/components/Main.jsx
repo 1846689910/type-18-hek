@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Window } from "./Window";
 import { app } from "./Container";
+import M from "./Messenger";
 // import {People} from "./People.ts";
-// import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
+import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 
 // console.log(People);
 const StatelessComp = props => {
@@ -34,6 +35,7 @@ export default class Main extends React.Component {
     console.log(app.getVsByProps({ p: 456 }));
   }
   render() {
+    console.log(M.custom);
     return (
       <div>
         <Window ref={r => (this[`_windowComp`] = r)} />
@@ -41,16 +43,16 @@ export default class Main extends React.Component {
         <StatedComp ref={r => (this[`_statedComp`] = r)} />
         <div style={{ display: "flex", justifyContent: "flex-start" }}>
           <Link to="/redux">
-            <button className="btn btn-primary">to /redux</button>
+            <button styleName="bootstrap.btn bootstrap.btn-primary">to /redux</button>
           </Link>
           <Link to="/react-redux">
-            <button className="btn btn-primary">to /react-redux</button>
+            <button styleName="bootstrap.btn bootstrap.btn-primary">to /react-redux</button>
           </Link>
           <Link to="/reselect">
-            <button className="btn btn-primary">to /reselect</button>
+            <button styleName="bootstrap.btn bootstrap.btn-primary">to /reselect</button>
           </Link>
           <Link to="/mobx">
-            <button className="btn btn-primary">to /mobx</button>
+            <button styleName="bootstrap.btn bootstrap.btn-primary">to /mobx</button>
           </Link>
         </div>
       </div>

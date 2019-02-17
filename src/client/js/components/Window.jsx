@@ -6,9 +6,10 @@ import { tileToBBox, pointToTileFraction, googleToTile } from "global-mercator";
 import { ActionWatcher } from "./utils";
 import { TopComp, TopComp1 } from "../context/ContextShow";
 import { ValidationWrapper } from "./ValidationTemp";
-// import custom from "../../css/main.css";
-// import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
-// import fontawesome from "font-awesome/css/font-awesome.min.css"
+import custom from "../../css/main.css";
+import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
+import fontawesome from "font-awesome/css/font-awesome.min.css";
+
 export class Window extends React.Component {
   constructor(props) {
     super(props);
@@ -81,14 +82,14 @@ export class Window extends React.Component {
     this.fn().then(res => console.log(res));
     return (
       <div ref={r => (this.div = r)}>
-        <h1 className="h1-title" style={{ display: this.state.showHeader ? "block" : "none" }}>
+        <h1 styleName="custom.h1-title" style={{ display: this.state.showHeader ? "block" : "none" }}>
           Hello
         </h1>
-        <button className="btn btn-success" onClick={this.clickHandler}>
+        <button styleName="bootstrap.btn bootstrap.btn-success" onClick={this.clickHandler}>
           toggle header
         </button>
-        <button className="fontawesome.fa fontawesome.fa-mail-forward" aria-hidden="true" />
-        <div className="div1">
+        <button styleName="fontawesome.fa fontawesome.fa-mail-forward" aria-hidden="true" />
+        <div>
           <input type="text" onChange={this.inputWatcher.watch} />
           {this.state.onInput ? <span style={{ color: "red" }}>inputting ...</span> : ""}
           <div>

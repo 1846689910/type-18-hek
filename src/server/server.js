@@ -13,27 +13,39 @@ import webpackConfig from "../../webpack.config";
 import webpack from "webpack";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
+import logger, {FgCyan, FgGreen, Bright, Underscore} from "./utils/logger";
 
 const app = express();
 const staticPath = path.resolve( __dirname, "../../dist" );
 const config = webpackConfig({ssr: true});
+const port = config.devServer && config.devServer.port || 3000;
 const compiler = webpack(config);
 
 app.use(webpackDevMiddleware(compiler, {
-    noInfo: true, publicPath: config.output.publicPath
+    noInfo: true,
+    publicPath: config.output.publicPath,
+    stats: {  // control print webpackDevMiddleware options.stats refer to https://webpack.js.org/configuration/stats/
+        all: false,
+        modules: true,
+        maxModules: 0,
+        errors: true,
+        warnings: true,
+        moduleTrace: true,
+        errorDetails: true
+    }
 }));
 app.use(webpackHotMiddleware(compiler));
 
-const watcher = chokidar.watch("./server");
+// const watcher = chokidar.watch("./server");
 
-watcher.on("ready", () => {
-    watcher.on("all", () => {
-        console.log("Clearing /server/ module cache from server");
-        Object.keys(require.cache).forEach(id => {
-          if (/[\/\\]server[\/\\]/.test(id)) delete require.cache[id];
-        });
-    });
-});
+// watcher.on("ready", () => {
+//     watcher.on("all", () => {
+//         console.log("Clearing /server/ module cache from server");
+//         Object.keys(require.cache).forEach(id => {
+//           if (/[\/\\]server[\/\\]/.test(id)) delete require.cache[id];
+//         });
+//     });
+// });
 
 app.use(express.static(staticPath));
 
@@ -51,12 +63,11 @@ app.get("/*", (req, res) => {
 });
 
 compiler.plugin("done", () => {
-    console.log("Clearing /client/ module cache from server");
+    logger("Clearing /client/ module cache from server", [FgCyan, Bright]);
     Object.keys(require.cache).forEach(id => {
       if (/[\/\\]client[\/\\]/.test(id)) delete require.cache[id];
     });
+    process.nextTick(() => logger(`\n\nexpress server running at: ${Underscore}http://localhost:${port}\n\n`, [FgGreen, Bright]));
 });
 
-app.listen(8080, () => {
-    console.log("server started");
-});
+app.listen(port);
