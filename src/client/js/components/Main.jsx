@@ -5,6 +5,11 @@ import { app } from "./Container";
 import M from "./Messenger";
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 // import {People} from "./People.ts";
+/**
+ * .babelrc.js, webpack.config.js, src/server/index.js
+ * @babel/preset-typescript, @babel/plugin-transform-typescript
+ * parse typescript error
+ */
 
 // console.log(People);
 const StatelessComp = props => {
