@@ -1,17 +1,17 @@
-import React from "react";
+import React, {lazy} from "react";
 import { Link } from "react-router-dom";
 import { Window } from "./Window";
 import { app } from "./Container";
 import M from "./Messenger";
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
-// import {People} from "./People.ts";
+import {People} from "./People.ts";
+console.log(People);
 /**
  * .babelrc.js, webpack.config.js, src/server/index.js
  * @babel/preset-typescript, @babel/plugin-transform-typescript
  * parse typescript error
  */
 
-// console.log(People);
 const StatelessComp = props => {
   return <div />;
 };

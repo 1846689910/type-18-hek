@@ -16,7 +16,7 @@ const { APP_SERVER } = process.env;
 module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123传入参数就可以在这里用env.xxx获取到. config要改成module.exports=env=>object
     mode: env.production ? "production" : "development",
     entry: [
-        "webpack-hot-middleware/client",
+        "webpack-hot-middleware/client?quiet=true",
         "@babel/polyfill",
         ...preloadedFiles,
         `${__dirname}/src/client/js/index.jsx`
@@ -58,17 +58,22 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: [
                     {
                         loader: "babel-loader",
                         options: {
-                            presets: ["@babel/preset-env", "@babel/preset-react"],
+                            presets: ["@babel/preset-env", "@babel/preset-typescript", "@babel/preset-react"],
                             cacheDirectory: true,
                             plugins: [
+                                ["@babel/plugin-proposal-decorators", { legacy: true }],
+                                "@babel/plugin-syntax-dynamic-import",
+                                "transform-class-properties",
+                                "css-modules-transform",
                                 ["react-css-modules", { webpackHotModuleReloading: true, generateScopedName: `${APP_SERVER.endsWith("dev") || env.development ? "[name]__[local]___" : ""}[hash:base64:5]` }],
-                                "@babel/plugin-proposal-class-properties"
+                                ["@babel/plugin-proposal-class-properties", { loose: true }],
+                                "@babel/proposal-object-rest-spread"
                             ]
                         }
                     }
@@ -135,14 +140,14 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                     }
                 }]
             },{
-                test: /\.(tsx|ts)?$/,
+                test: /\.tsx?$/,
                 use: "ts-loader",
                 exclude: /node_modules/
             }
         ]
     },
     resolve: {
-        extensions: [".js", ".jsx", ".ts"] // 引入js相关文件可以省略扩展名
+        extensions: [".js", ".jsx", ".ts", ".tsx"] // 引入js相关文件可以省略扩展名
     },
     plugins: [
         new CleanWebpackPlugin([  // the path(s) that should be cleaned
@@ -159,7 +164,7 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
         }),
         new webpack.HashedModuleIdsPlugin(),
         new webpack.ProvidePlugin({  // 使得在项目各处都可以通过$引用jQuery，并且bootstrap也可以找到jquery
-            $: 'jquery',
+            $: "jquery",
             jQuery: "jquery",
             jquery: "jquery"
         }),
