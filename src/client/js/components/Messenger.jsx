@@ -5,4 +5,5 @@ export default class Messenger{
     static Filter = {
         state1: 456
     };
+    static store = null;
 }

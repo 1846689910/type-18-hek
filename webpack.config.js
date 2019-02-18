@@ -8,18 +8,23 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
  * 在build bundle.js时，清理原有的文件
  * */
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const path = require("path");
 const preloadedFiles = require("./preloaded-files")(__dirname);
+const { APP_SERVER } = process.env;
 module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123传入参数就可以在这里用env.xxx获取到. config要改成module.exports=env=>object
+    mode: env.production ? "production" : "development",
     entry: [
-        "babel-polyfill",
+        "webpack-hot-middleware/client?quiet=true",
+        "@babel/polyfill",
         ...preloadedFiles,
-        `${__dirname}/src/js/index.jsx`
+        `${__dirname}/src/client/js/index.jsx`
     ],
     output: {
         path: `${__dirname}/dist`,  // packed file directory
-        filename: env.production ? "bundle.[contenthash].js" : "bundle.[hash].js"  // name of packed file
+        publicPath: "/",
+        filename: env.ssr ? "main.bundle.js" : env.production ? "bundle.[contenthash].js" : "bundle.[hash].js"  // name of packed file
     },
     devtool: 'eval-source-map',
     devServer: {
@@ -28,41 +33,51 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
         inline: true,  // 设置为true，当源文件改变时会自动刷新页面
         port: 8080  // 设置默认监听端口，如果省略，默认为”8080“
     },
-    optimization: {
-        runtimeChunk: 'single',
-        splitChunks: {
-            chunks: 'all',  // split code in app and node_modules into bundle and vendor.bundle.js
-            maxInitialRequests: Infinity,
-            minSize: 0,
-            cacheGroups: {  // keep splitting the node_modules chunks
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name(module) {
-                        // get the name. E.g. node_modules/packageName/not/this/part.js
-                        // or node_modules/packageName
-                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
 
-                        // npm package names are URL-safe, but some servers don't like @ symbols
-                        return `npm.${packageName.replace('@', '')}`;
-                    },
-                },
-            },
-        },
-    },
+    // optimization: {
+    //     runtimeChunk: 'single',
+    //     splitChunks: {
+    //         chunks: 'all',  // split code in app and node_modules into bundle and vendor.bundle.js
+    //         maxInitialRequests: Infinity,
+    //         minSize: 0,
+    //         cacheGroups: {  // keep splitting the node_modules chunks
+    //             vendor: {
+    //                 test: /[\\/]node_modules[\\/]/,
+    //                 name(module) {
+    //                     // get the name. E.g. node_modules/packageName/not/this/part.js
+    //                     // or node_modules/packageName
+    //                     const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+
+    //                     // npm package names are URL-safe, but some servers don't like @ symbols
+    //                     return `npm.${packageName.replace('@', '')}`;
+    //                 },
+    //             },
+    //         },
+    //     },
+    // },
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        cacheDirectory: true,
-                        plugins: [
-                            ["react-css-modules", { webpackHotModuleReloading: true, generateScopedName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]` }]
-                        ]
+                use: [
+                    {
+                        loader: "babel-loader",
+                        options: {
+                            presets: ["@babel/preset-env", "@babel/preset-typescript", "@babel/preset-react"],
+                            cacheDirectory: true,
+                            plugins: [
+                                ["@babel/plugin-proposal-decorators", { legacy: true }],
+                                "@babel/plugin-syntax-dynamic-import",
+                                "transform-class-properties",
+                                "css-modules-transform",
+                                ["react-css-modules", { webpackHotModuleReloading: true, generateScopedName: `${APP_SERVER.endsWith("dev") || env.development ? "[name]__[local]___" : ""}[hash:base64:5]` }],
+                                ["@babel/plugin-proposal-class-properties", { loose: true }],
+                                "@babel/proposal-object-rest-spread"
+                            ]
+                        }
                     }
-                }
+                ]
             },{
                 test: /\.html$/,
                 use: [{
@@ -70,15 +85,29 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                     options: { minimize: true }
                 }]
             },{
-                test: /\.(css|scss)$/,  // 之后就可以在js中直接import ".../xxx.scss"文件作为css的替代品
+                test: /\.(css)$/,
+                use: ExtractTextWebpackPlugin.extract({
+                    // use: "css-loader",
+                    use: [
+                        {
+                            loader: "css-loader",
+                            options: {
+                                modules: true,
+                                localIdentName: `${APP_SERVER.endsWith("dev") || env.development ? "[name]__[local]___" : ""}[hash:base64:5]`,
+                            }
+                        },
+                    ]
+                }),
+            },{
+                test: /\.(scss|sass)$/,  // 之后就可以在js中直接import ".../xxx.scss"文件作为css的替代品
                 use: [
                   { loader: 'style-loader' },
                   {
                     loader: 'css-loader',
-                    options: {
-                      modules: true,
-                      localIdentName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]`, //在npm run prod时文档的class会进一步缩减
-                    },
+                    // options: {
+                    //   modules: true,
+                    //   localIdentName: `${env.production ? "" : "[name]__[local]___"}[hash:base64:5]`, //在npm run prod时文档的class会进一步缩减
+                    // },
                   },
                   { loader: "sass-loader" }
                 ]
@@ -111,14 +140,14 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
                     }
                 }]
             },{
-                test: /\.(tsx|ts)?$/,
-                use: 'ts-loader',
+                test: /\.tsx?$/,
+                use: "ts-loader",
                 exclude: /node_modules/
             }
         ]
     },
     resolve: {
-        "extensions": [".js", ".jsx", ".ts"] // 引入js相关文件可以省略扩展名
+        extensions: [".js", ".jsx", ".ts", ".tsx"] // 引入js相关文件可以省略扩展名
     },
     plugins: [
         new CleanWebpackPlugin([  // the path(s) that should be cleaned
@@ -129,15 +158,17 @@ module.exports = env => ({  // 在package.json的scripts中使用 --env.xxx=123�
             verbose: false
         }),
         new HtmlWebpackPlugin({
-            title: "Webpack Test",
-            template: "./template/template.html",
-            filename: "./index.html"
+            title: "type-18-ssr",
+            template: "./template/template-ssr.html",
+            filename: "./main.html"
         }),
         new webpack.HashedModuleIdsPlugin(),
         new webpack.ProvidePlugin({  // 使得在项目各处都可以通过$引用jQuery，并且bootstrap也可以找到jquery
-            $: 'jquery',
+            $: "jquery",
             jQuery: "jquery",
             jquery: "jquery"
-        })
+        }),
+        new ExtractTextWebpackPlugin({filename: "main.bundle.css", allChunks: true}),
+        new webpack.HotModuleReplacementPlugin(),
     ]
 });

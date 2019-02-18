@@ -7,7 +7,6 @@ import ReactReduxConcise from "../react-redux-concise/ReactReduxConcise";
 import ReselectConcise from "../reselect-concise/ReselectConcise";
 import MobXConcise from "../mobx-concise/MobXConcise";
 import Main from "../components/Main";
-import store from "./store";
 
 const Root = ({ route }) => (
     <div>
@@ -24,7 +23,7 @@ const routes = [
         routes: [
             // 数组中的每一项，当使用到该路由的时候，可以在组件内通过props.route直接得到该对象，所以其中可以传入一些属性，通过props.route.xxx来获取
             { path: "/", exact: true, component: Main },
-            { path: "/redux", exact: true, component: ReduxConcise, store },
+            { path: "/redux", exact: true, component: ReduxConcise },
             { path: "/react-redux", exact: true, component: ReactReduxConcise },
             { path: "/reselect", exact: true, component: ReselectConcise },
             { path: "/mobx", exact: true, component: MobXConcise }

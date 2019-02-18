@@ -1,5 +1,6 @@
 const bootstrap = dirname => [
-    `bootstrap/dist/js/bootstrap.min`,
+    // `bootstrap/dist/js/bootstrap.min`,
+    `bootstrap/dist/css/bootstrap.min.css`
 ]
 const jqueryUI = dirname => [
     `jquery-ui-dist/images/ui-icons_ffffff_256x240.png`,
@@ -19,9 +20,12 @@ const leaflet = dirname => [
 ];
 module.exports = dirname => {
     const files = [];
-    files.push(`${dirname}/src/images/favicon.ico`);
+    files.push(`font-awesome/css/font-awesome.min.css`);
+    files.push(`${dirname}/src/client/images/favicon.ico`);
     files.push(...bootstrap(dirname));
-    files.push(...jqueryUI(dirname));
-    files.push(...leaflet(dirname));
+    files.push(`${dirname}/src/client/css/main.css`);
+    // files.push(`${dirname}/src/client/js/components/People.ts`);
+    // files.push(...jqueryUI(dirname));
+    // files.push(...leaflet(dirname));
     return files;
 }
