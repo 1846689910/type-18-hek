@@ -23,7 +23,12 @@
   "bin": {
     "transpile": "./clis/transpile.js"
   },
-  "keywords": ["React", "SSR", "HMR", "Redux"],
+  "keywords": [
+    "React",
+    "SSR",
+    "HMR",
+    "Redux"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
