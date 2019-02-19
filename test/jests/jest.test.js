@@ -1,6 +1,7 @@
 /**
  * Created by Eric on 9/6/2018.
  */
+process.env.APP_SERVER = "express-server-dev";
 import "babel-polyfill";
 import assert from "assert";
 import fetch from "node-fetch";

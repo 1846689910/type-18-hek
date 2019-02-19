@@ -8,7 +8,7 @@ module.exports = {
         "css-modules-transform",
         ["react-css-modules", {
             webpackHotModuleReloading: true,
-            generateScopedName: `${APP_SERVER.endsWith("dev") ? "[name]__[local]___" : ""}[hash:base64:5]`
+            generateScopedName: `${APP_SERVER && APP_SERVER.endsWith("dev") ? "[name]__[local]___" : ""}[hash:base64:5]`
         }],
         ["@babel/plugin-proposal-class-properties", { loose: true }],
         "@babel/proposal-object-rest-spread"
