@@ -1,7 +1,7 @@
-const {Builder, By, Key, until} = require("selenium-webdriver");
-const test = require("selenium-webdriver/testing");
+const {Builder, By, until} = require("selenium-webdriver");
+require("selenium-webdriver/testing");
 const assert = require("assert");  // this is node.js in-built assert
-const chromedriver = require("chromedriver");
+require("chromedriver");
 
 describe("Google homepage", function(){
     let driver;

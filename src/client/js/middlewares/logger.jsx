@@ -7,7 +7,7 @@ const logger = store => next => action => {
     console.log(`will dispatch ${action}`);
     let ret;
     if (typeof action === "function") {
-        res = action(dispatch, getState);
+        ret = action(dispatch, getState);
     } else {
         ret = next(action);
     }

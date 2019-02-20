@@ -88,7 +88,7 @@ describe("Mocha Test", () => {
     });
 
     const syncFn = () => {
-        throw new Error();
+        throw syncFnError;
     };
 
     const asyncFn = async () => {

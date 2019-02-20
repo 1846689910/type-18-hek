@@ -1,6 +1,7 @@
 /**
  * Created by Eric on 9/6/2018.
  */
+/* eslint-disable no-unused-vars, no-undef */
 import React from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";

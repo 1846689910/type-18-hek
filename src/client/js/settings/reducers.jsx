@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { combineReducers } from "redux";
-import { ActionTypes, Action } from "./actions";
+import { ActionTypes } from "./actions";
 /**
  * 一个APP只有一个store, 管理一个state
  * 每个state属性要有相应的handler并且要传入reducer, 然后react-redux才可以看到该state的属性
@@ -48,7 +49,7 @@ const tasksHandler = (tasks = initialState.tasks, action) => {
     return tasks;
 };
 const message = (message = initialState.message, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case ActionTypes.CLEAR_FIELD:
             message = "";
             break;
@@ -60,7 +61,7 @@ const message = (message = initialState.message, action) => {
             break;
     }
     return message;
-}
+};
 /**
  * Reducer所接收的函数都是纯函数pure function, 一个input 对应一个确定的返回值
  * 	    1 不能修改参数

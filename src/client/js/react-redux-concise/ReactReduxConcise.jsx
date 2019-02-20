@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { increase, decrease, fetchData } from "../settings/actions";
 import { Link } from "react-router-dom";
@@ -34,6 +36,10 @@ const CounterPC = props => {
     </div>
   );
 };
+CounterPC.propTypes = {
+  dispatch: PropTypes.function,
+  value: PropTypes.number
+};
 const MessengerPC = ({ dispatch, message }) => (
   <div style={{ textAlign: "center" }}>
     <input type="text" disabled value={message} />
@@ -42,6 +48,10 @@ const MessengerPC = ({ dispatch, message }) => (
     </button>
   </div>
 );
+MessengerPC.propTypes = {
+  dispatch: PropTypes.function,
+  message: PropTypes.string
+};
 /**
  * mapStateToProps: 建立state到内部pc组件的联系，使得内部PC组件可以拿到更新的state和props
  * */
@@ -101,5 +111,7 @@ const ReactReduxConcise = props => {
     </div>
   );
 };
-
+ReactReduxConcise.propTypes = {
+  route: PropTypes.object
+};
 export default ReactReduxConcise;

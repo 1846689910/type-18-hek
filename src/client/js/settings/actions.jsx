@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 export const ActionTypes = {
     INCREASE: "INCREASE",
     DECREASE: "DECREASE",

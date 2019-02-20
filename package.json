@@ -14,7 +14,7 @@
     "mochas": "node ./node_modules/mocha/bin/mocha test/mochas",
     "jests": "node ./node_modules/jest/bin/jest test/jests",
     "integration-tests": "node ./node_modules/mocha/bin/mocha integrationTest",
-    "lint": "eslint .",
+    "lint": "eslint ./src",
     "express-server-dev": "APP_SERVER=express_dev nodemon --inspect ./src/server",
     "express-server": "APP_SERVER=express nodemon ./src/server",
     "win-express-server-dev": "set APP_SERVER=express_dev && nodemon --inspect ./src/server",

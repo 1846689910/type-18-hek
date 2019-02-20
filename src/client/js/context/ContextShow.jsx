@@ -1,20 +1,23 @@
 import React from "react";
-export const TopComp = props => {
-    return (<div>
-        <h6>ContextShow.js</h6>
-        <MidComp myMessage={props.myMessage} />
-    </div>);
+import PropTypes from "prop-types";
+
+export const TopComp = props => (<div>
+    <h6>ContextShow.js</h6>
+    <MidComp myMessage={props.myMessage} />
+</div>);
+TopComp.propTypes = {
+    myMessage: PropTypes.string
 };
-export const MidComp = props => {
-    return (<div>
-        <BottomComp myMessage={props.myMessage} />
-    </div>);    
+
+export const MidComp = props => <BottomComp myMessage={props.myMessage} />;
+MidComp.propTypes = {
+    myMessage: PropTypes.string
 };
-export const BottomComp = props => {
-    return (<div>
-        <span>myMessage is {props.myMessage}</span>
-    </div>);        
-}
+
+export const BottomComp = props => <span>myMessage is {props.myMessage}</span>;
+BottomComp.propTypes = {
+    myMessage: PropTypes.string
+};
 
 import MessageContext, {Provider as MCProvider, Consumer as MCConsumer} from "./MessageContext";
 export class TopComp1 extends React.Component{
@@ -32,9 +35,12 @@ export class MidComp1 extends React.Component{
         return (<div>
             <BottomComp1/>
             <BottomComp2/>
-        </div>);        
+        </div>);
     }
 }
+MidComp1.propTypes = {
+    children: PropTypes.object
+};
 export class BottomComp1 extends React.Component {
     constructor(props){
         super(props);
@@ -49,9 +55,7 @@ export class BottomComp1 extends React.Component {
             <MCConsumer>
                 {context => console.log(context)}
             </MCConsumer>
-        ); 
+        );
     }
 }
-export const BottomComp2 = (props) => {
-    return (<MCConsumer>{context => console.log(context)}</MCConsumer>);
-};
+export const BottomComp2 = props => <MCConsumer>{context => console.log(context)}</MCConsumer>;

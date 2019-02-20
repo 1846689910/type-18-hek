@@ -36,7 +36,7 @@ app.get("/*", (req, res) => {
 compiler.plugin("done", () => {
     logger("Clearing /client/ module cache from server", [FgCyan, Bright]);
     Object.keys(require.cache).forEach(id => {
-      if (/[\/\\]client[\/\\]/.test(id)) delete require.cache[id];
+        if (/[\/\\]client[\/\\]/.test(id)) delete require.cache[id];
     });
     process.nextTick(() => logger(`\n\nexpress server running at: ${Underscore}http://localhost:${port}\n\n`, [FgGreen, Bright]));
 });

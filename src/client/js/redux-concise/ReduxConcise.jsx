@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
+import PropTypes from "prop-types";
 import { increase, decrease, fetchData } from "../settings/actions";
 import { Link } from "react-router-dom";
 import M from "../components/Messenger";
@@ -33,6 +35,9 @@ const Counter = props => {
     </div>
   );
 };
+Counter.propTypes = {
+  store: PropTypes.object
+};
 const Messenger = ({ store }) => (
   <div style={{ textAlign: "center" }}>
     <input type="text" disabled value={store.getState().message} />
@@ -41,6 +46,9 @@ const Messenger = ({ store }) => (
     </button>
   </div>
 );
+Messenger.propTypes = {
+  store: PropTypes.object
+};
 export default class ReduxConcise extends React.Component {
   constructor(props) {
     super(props);
@@ -60,3 +68,6 @@ export default class ReduxConcise extends React.Component {
     );
   }
 }
+ReduxConcise.propTypes = {
+  route: PropTypes.object
+};

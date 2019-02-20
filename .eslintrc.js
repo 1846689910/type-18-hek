@@ -1,41 +1,40 @@
 module.exports = {
     env: {
         node: true,
-        es6: true
+        es6: true,
+        browser: true,
+        mocha: true,
+        jest: true
     },
     parser: "babel-eslint",
     plugins: ["react"],
+    settings: {
+        react: {
+            createClass: "createReactClass", // Regex for Component Factory to use, default to "createReactClass"
+            pragma: "React",  // Pragma to use, default to "React"
+            version: "detect", // React version. "detect" automatically picks the version you have installed. You can also use `16.0`, `16.3`, etc
+            flowVersion: "0.53" // Flow version
+        }
+    },
     rules: {
         "no-undef": 2,
         "semi": 2,
         "strict": 2,
         "quotes": 1,
-        "indent": [2, 2],
-        "curly": [2, "multi-line"],
+        // "indent": [2, 4],
         "no-use-before-define": [2, "nofunc"],
-        "no-unused-vars": [2, "all"],
+        "no-unused-vars": [1, "all"],
         "no-mixed-requires": [1, true],
-        "max-depth": [1, 5],
-        "max-len": [1, 80, 4],
-        "max-params": [1, 6],
-        "max-statements": [1, 20],
         "eqeqeq": 0,
-        "new-cap": 0,
+        "new-cap": 2,
         "no-else-return": 1,
         "no-eq-null": 1,
         "no-lonely-if": 1,
-        "no-path-concat": 0,
+        "no-path-concat": 1,
         "comma-dangle": 0,
-        "complexity": [1, 20],
         "no-floating-decimal": 1,
         "no-void": 1,
-        "no-sync": 1,
-        "consistent-this": [1, "nope-dont-capture-this"],
-        "max-nested-callbacks": [2, 3],
-        "no-nested-ternary": 1,
         "keyword-spacing": 1,
-        "space-before-function-paren": [1, "never"],
-        "spaced-comment": [1, "always"],
         "react/prop-types": 1,
         "react/jsx-uses-react": 1,
         "react/jsx-uses-vars": 1,

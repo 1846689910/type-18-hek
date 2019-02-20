@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
+import PropTypes from "prop-types";
 import { createSelector } from "reselect";
 import { connect } from "react-redux";
 import { showAll, showActive, showCompleted, ActionTypes, fetchData } from "../settings/actions";
@@ -82,6 +84,12 @@ const VisibleTasksPC = props => {
     </div>
   );
 };
+VisibleTasksPC.propTypes = {
+  tasks: PropTypes.array,
+  showAll: PropTypes.function,
+  showCompleted: PropTypes.function,
+  showActive: PropTypes.function
+};
 const MessengerPC = ({ dispatch, message }) => (
   <div style={{ textAlign: "center" }}>
     <input type="text" disabled value={message} />
@@ -90,6 +98,10 @@ const MessengerPC = ({ dispatch, message }) => (
     </button>
   </div>
 );
+MessengerPC.propTypes = {
+  dispatch: PropTypes.function,
+  message: PropTypes.string
+};
 /**
  * Reselect 的用法1:
  * 在mapStateToProps中直接使用  myState: getMyState(state.aaa, state.bbb, ...)

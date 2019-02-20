@@ -1,11 +1,11 @@
 import Big from "big.js";
 const Double = {
-   "MIN_VALUE": Big("-1.7976931348623157E308"),
-   "MAX_VALUE": Big("1.7976931348623157E308")
+    MIN_VALUE: new Big("-1.7976931348623157E308"),  // "new" is optional for big.js
+    MAX_VALUE: new Big("1.7976931348623157E308")
 };
 const Long = {
-   "MIN_VALUE": Big(-2).pow(63),
-   "MAX_VALUE": Big(2).pow(63).minus(1)
+    MIN_VALUE: new Big(-2).pow(63),
+    MAX_VALUE: new Big(2).pow(63).minus(1)
 };
 class ActionWatcher {
     constructor(onAction, afterAction, timeout) {
