@@ -41,6 +41,7 @@ npm run win-express-server
 ```
 
 ## **Build Project**
+deprecated, waiting to be updated
 ```bash
 npm run build
 ```
@@ -76,5 +77,8 @@ transpile SRC.js
 ```
 will generate a `SRC.transpiled.js` to the same path
 
-### **Develop**
-the entry file is `index.jsx`. The router and redux store, actions, reducers are defined in `settings`
+## **Develop**
+- The entry file is `./src/client/js/index.jsx`
+- The router and redux store, actions, reducers are defined in `./src/client/js/settings/`
+- The entry file in server is `./src/server/index.js`
+- The server and `server.config.js` is defined in `./src/server/`

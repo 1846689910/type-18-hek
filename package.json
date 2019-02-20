@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --hot --open --mode development --env.development",
     "prod": "webpack-dev-server --open --mode production --env.production",
     "dev": "webpack --mode development --env.development",
-    "build": "webpack --mode production --env.production",
+    "build": "webpack --mode production --env.production --env.ssr=false",
     "test": "node ./node_modules/mocha/bin/mocha",
     "mocha": "node ./node_modules/mocha/bin/mocha",
     "jest": "node ./node_modules/jest/bin/jest",
