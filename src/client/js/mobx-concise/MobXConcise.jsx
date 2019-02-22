@@ -14,7 +14,7 @@ import {
 import { observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import React from "react";
-import bootstrap from "bootstrap/dist/css/bootstrap.min.css";  // eslint-disable-line
+import bootstrap from "bootstrap/dist/css/bootstrap.min.css"; // eslint-disable-line
 /**
  * mobx 重要概念
  * observable： 可被追踪变化的数据 使用 1 observable(数字，数组，对象...) 2 使用@observable, observable.box(num) 使用.set来设置或用.get来获取

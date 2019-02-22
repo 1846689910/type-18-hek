@@ -22,10 +22,16 @@ const CounterPC = props => {
       <div style={{ padding: 0 }}>
         <h3 style={{ textAlign: "center" }}>{value}</h3>
         <div style={{ textAlign: "center" }}>
-          <button styleName="bootstrap.btn bootstrap.btn-success" onClick={() => dispatch(increase())}>
+          <button
+            styleName="bootstrap.btn bootstrap.btn-success"
+            onClick={() => dispatch(increase())}
+          >
             increase
           </button>
-          <button styleName="bootstrap.btn bootstrap.btn-danger" onClick={() => dispatch(decrease())}>
+          <button
+            styleName="bootstrap.btn bootstrap.btn-danger"
+            onClick={() => dispatch(decrease())}
+          >
             decrease
           </button>
           <Link to="/">

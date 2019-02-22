@@ -27,7 +27,8 @@
     "React",
     "SSR",
     "HMR",
-    "Redux"
+    "Redux",
+    "MobX"
   ],
   "author": "",
   "license": "ISC",

@@ -1,4 +1,4 @@
 import React from "react";
-const MessageContext = React.createContext({a: 123});
+const MessageContext = React.createContext({ a: 123 });
 export default MessageContext;
-export const {Provider, Consumer} = MessageContext;
+export const { Provider, Consumer } = MessageContext;

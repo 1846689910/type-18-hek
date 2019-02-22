@@ -36,22 +36,22 @@ export default class ValidationTemp extends React.Component {
       Object.entries(obj).reduce((prev, [k, v]) => {
         // 从dataset延伸出valids数组，结构和dataset相同，但是数值变成了boolean
         switch (k) {
-          case "name":
-            prev[k] = v.length > 0;
-            break;
-          case "min":
-            prev[k] =
-              !isNaN(v) &&
-              parseFloat(v) < parseFloat(obj.max) &&
-              new Big(v).gte(Double.MIN_VALUE) &&
-              new Big(v).lt(Double.MAX_VALUE);
-            break;
-          default:
-            prev[k] =
-              !isNaN(v) &&
-              parseFloat(v) > parseFloat(obj.min) &&
-              new Big(v).gt(Double.MIN_VALUE) &&
-              new Big(v).lte(Double.MAX_VALUE);
+        case "name":
+          prev[k] = v.length > 0;
+          break;
+        case "min":
+          prev[k] =
+            !isNaN(v) &&
+            parseFloat(v) < parseFloat(obj.max) &&
+            new Big(v).gte(Double.MIN_VALUE) &&
+            new Big(v).lt(Double.MAX_VALUE);
+          break;
+        default:
+          prev[k] =
+            !isNaN(v) &&
+            parseFloat(v) > parseFloat(obj.min) &&
+            new Big(v).gt(Double.MIN_VALUE) &&
+            new Big(v).lte(Double.MAX_VALUE);
         }
         return prev;
       }, {})
