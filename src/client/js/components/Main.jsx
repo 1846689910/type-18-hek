@@ -1,10 +1,10 @@
-import React, {lazy} from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Window } from "./Window";
 import { app } from "./Container";
 import M from "./Messenger";
-import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
-import {People} from "./People.ts";
+import bootstrap from "bootstrap/dist/css/bootstrap.min.css"; // eslint-disable-line
+import { People } from "./People.ts";
 console.log(People);
 /**
  * .babelrc.js, webpack.config.js, src/server/index.js
@@ -12,10 +12,8 @@ console.log(People);
  * parse typescript error
  */
 
-const StatelessComp = props => {
-  return <div />;
-};
-class StatedComp extends React.Component {
+const StatelessComp = props => <div />;
+class StatedComp extends Component {
   constructor(props) {
     super(props);
   }
@@ -23,7 +21,7 @@ class StatedComp extends React.Component {
     return <div />;
   }
 }
-export default class Main extends React.Component {
+export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -43,9 +41,9 @@ export default class Main extends React.Component {
     console.log(M.custom);
     return (
       <div>
-        <Window ref={r => (this[`_windowComp`] = r)} />
+        <Window ref={r => (this["_windowComp"] = r)} />
         <StatelessComp />
-        <StatedComp ref={r => (this[`_statedComp`] = r)} />
+        <StatedComp ref={r => (this["_statedComp"] = r)} />
         <div style={{ display: "flex", justifyContent: "flex-start" }}>
           <Link to="/redux">
             <button styleName="bootstrap.btn bootstrap.btn-primary">to /redux</button>

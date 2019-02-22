@@ -7,13 +7,14 @@
     "start": "webpack-dev-server --hot --open --mode development --env.development",
     "prod": "webpack-dev-server --open --mode production --env.production",
     "dev": "webpack --mode development --env.development",
-    "build": "webpack --mode production --env.production",
+    "build": "webpack --mode production --env.production --env.ssr=false",
     "test": "node ./node_modules/mocha/bin/mocha",
     "mocha": "node ./node_modules/mocha/bin/mocha",
     "jest": "node ./node_modules/jest/bin/jest",
     "mochas": "node ./node_modules/mocha/bin/mocha test/mochas",
     "jests": "node ./node_modules/jest/bin/jest test/jests",
     "integration-tests": "node ./node_modules/mocha/bin/mocha integrationTest",
+    "lint": "eslint ./src",
     "express-server-dev": "APP_SERVER=express_dev nodemon --inspect ./src/server",
     "express-server": "APP_SERVER=express nodemon ./src/server",
     "win-express-server-dev": "set APP_SERVER=express_dev && nodemon --inspect ./src/server",
@@ -22,7 +23,13 @@
   "bin": {
     "transpile": "./clis/transpile.js"
   },
-  "keywords": ["React", "SSR", "HMR", "Redux"],
+  "keywords": [
+    "React",
+    "SSR",
+    "HMR",
+    "Redux",
+    "MobX"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {

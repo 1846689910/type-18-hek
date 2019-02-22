@@ -19,16 +19,29 @@ npm install
 ## **Start Web Dev Server**
 #### start project in development mode
 
-development with `HMR` enabled default
+development with `HMR` and `nodemon --inspect` enabled default
+
+Mac OS:
 ```bash
-npm start
+npm run express-server-dev
+```
+Windows:
+```bash
+npm run win-express-server-dev
 ```
 #### start project in production mode
+
+Mac OS:
 ```bash
-npm run prod
+npm run express-server
+```
+Windows:
+```bash
+npm run win-express-server
 ```
 
 ## **Build Project**
+deprecated, waiting to be updated
 ```bash
 npm run build
 ```
@@ -36,15 +49,17 @@ npm run build
 ## **Test**
 #### test with mocha
 ```bash
-npm run mocha test/mocha.test.js
+npm run mochas
+npx mocha test/mochas/mocha.test.js
 ```
 #### test with jest
 ```bash
-npm run jest test/mocha.test.js
+npm run jests
+npx jest test/jests/jest.test.js
 ```
-#### test with mocha
+#### test with mocha + chromedriver + selenium
 ```bash
-npm run mocha integrationTest
+npm run integration-tests
 ```
 ## **Transpile**
 the project support transpile ES6 to ES5 via `@babel/core`
@@ -62,5 +77,8 @@ transpile SRC.js
 ```
 will generate a `SRC.transpiled.js` to the same path
 
-### **Develop**
-the entry file is `index.jsx`. The router and redux store, actions, reducers are defined in `settings`
+## **Develop**
+- The entry file is `./src/client/js/index.jsx`
+- The router and redux store, actions, reducers are defined in `./src/client/js/settings/`
+- The entry file in server is `./src/server/index.js`
+- The server and `server.config.js` is defined in `./src/server/`

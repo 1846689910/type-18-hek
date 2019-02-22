@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
+import PropTypes from "prop-types";
 import { createSelector } from "reselect";
 import { connect } from "react-redux";
 import { showAll, showActive, showCompleted, ActionTypes, fetchData } from "../settings/actions";
@@ -15,12 +17,12 @@ import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 const getVisibleTasks = state => {
   // 根据sotre中的state.filterText的变化来决定我们要看的tasks的子集
   switch (state.filterText) {
-    case ActionTypes.SHOW_ALL:
-      return state.tasks;
-    case ActionTypes.SHOW_COMPLETED:
-      return state.tasks.filter(task => task.status === "completed");
-    case ActionTypes.SHOW_ACTIVE:
-      return state.tasks.filter(task => task.status === "active");
+  case ActionTypes.SHOW_ALL:
+    return state.tasks;
+  case ActionTypes.SHOW_COMPLETED:
+    return state.tasks.filter(task => task.status === "completed");
+  case ActionTypes.SHOW_ACTIVE:
+    return state.tasks.filter(task => task.status === "active");
   }
 };
 const getMessage = state => state.message;
@@ -82,6 +84,12 @@ const VisibleTasksPC = props => {
     </div>
   );
 };
+VisibleTasksPC.propTypes = {
+  tasks: PropTypes.array,
+  showAll: PropTypes.function,
+  showCompleted: PropTypes.function,
+  showActive: PropTypes.function
+};
 const MessengerPC = ({ dispatch, message }) => (
   <div style={{ textAlign: "center" }}>
     <input type="text" disabled value={message} />
@@ -90,6 +98,10 @@ const MessengerPC = ({ dispatch, message }) => (
     </button>
   </div>
 );
+MessengerPC.propTypes = {
+  dispatch: PropTypes.function,
+  message: PropTypes.string
+};
 /**
  * Reselect 的用法1:
  * 在mapStateToProps中直接使用  myState: getMyState(state.aaa, state.bbb, ...)

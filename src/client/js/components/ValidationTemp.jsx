@@ -1,16 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Big from "big.js";
-import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
-const LONG = {
-  MIN_VALUE: Big(-2).pow(63),
-  MAX_VALUE: Big(2)
-    .pow(63)
-    .minus(1)
-};
-const DOUBLE = {
-  MIN_VALUE: Big("-1.7976931348623157E308"),
-  MAX_VALUE: Big("1.7976931348623157E308")
-};
+import bootstrap from "bootstrap/dist/css/bootstrap.min.css"; // eslint-disable-line
+import { Double } from "./utils";
+
 export class ValidationWrapper extends React.Component {
   constructor(props) {
     super(props);
@@ -43,22 +36,22 @@ export default class ValidationTemp extends React.Component {
       Object.entries(obj).reduce((prev, [k, v]) => {
         // 从dataset延伸出valids数组，结构和dataset相同，但是数值变成了boolean
         switch (k) {
-          case "name":
-            prev[k] = v.length > 0;
-            break;
-          case "min":
-            prev[k] =
-              !isNaN(v) &&
-              parseFloat(v) < parseFloat(obj.max) &&
-              Big(v).gte(DOUBLE.MIN_VALUE) &&
-              Big(v).lt(DOUBLE.MAX_VALUE);
-            break;
-          default:
-            prev[k] =
-              !isNaN(v) &&
-              parseFloat(v) > parseFloat(obj.min) &&
-              Big(v).gt(DOUBLE.MIN_VALUE) &&
-              Big(v).lte(DOUBLE.MAX_VALUE);
+        case "name":
+          prev[k] = v.length > 0;
+          break;
+        case "min":
+          prev[k] =
+            !isNaN(v) &&
+            parseFloat(v) < parseFloat(obj.max) &&
+            new Big(v).gte(Double.MIN_VALUE) &&
+            new Big(v).lt(Double.MAX_VALUE);
+          break;
+        default:
+          prev[k] =
+            !isNaN(v) &&
+            parseFloat(v) > parseFloat(obj.min) &&
+            new Big(v).gt(Double.MIN_VALUE) &&
+            new Big(v).lte(Double.MAX_VALUE);
         }
         return prev;
       }, {})
@@ -157,3 +150,6 @@ export default class ValidationTemp extends React.Component {
     );
   }
 }
+ValidationTemp.propTypes = {
+  srcComp: PropTypes.object
+};

@@ -3,7 +3,7 @@ function _getTargetName(src) {
     var path = require("path");
     var dir = path.dirname(path.resolve(src));
     var nameparts = path.basename(src).split(".");
-    nameparts.splice(nameparts.length - 1, 0, "transpiled")
+    nameparts.splice(nameparts.length - 1, 0, "transpiled");
     return path.join(dir, nameparts.join("."));
 }
 function _write(src, target) {

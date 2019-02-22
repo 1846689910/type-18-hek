@@ -12,13 +12,13 @@ import logger from "../middlewares/logger";
  * the unique store accepts one reducer of above
  * */
 const configureStore = initialState => {
-    const store = createStore(reducer3, initialState, applyMiddleware(thunk, logger));
-    if (module.hot) {
-        module.hot.accept("./reducers",() => {
-            const nextRootReducer = require("./reducers").default;
-            store.replaceReducer(nextRootReducer);
-        });
-    }
-    return store;
+  const store = createStore(reducer3, initialState, applyMiddleware(thunk, logger));
+  if (module.hot) {
+    module.hot.accept("./reducers", () => {
+      const nextRootReducer = require("./reducers").default;
+      store.replaceReducer(nextRootReducer);
+    });
+  }
+  return store;
 };
 export default configureStore;

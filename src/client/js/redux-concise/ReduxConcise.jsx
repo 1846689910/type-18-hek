@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
+import PropTypes from "prop-types";
 import { increase, decrease, fetchData } from "../settings/actions";
 import { Link } from "react-router-dom";
 import M from "../components/Messenger";
@@ -19,10 +21,16 @@ const Counter = props => {
       <div style={divStyle}>
         <h3 style={{ textAlign: "center" }}>{store.getState().value}</h3>
         <div style={{ textAlign: "center" }}>
-          <button styleName="bootstrap.btn bootstrap.btn-success" onClick={() => store.dispatch(increase())}>
+          <button
+            styleName="bootstrap.btn bootstrap.btn-success"
+            onClick={() => store.dispatch(increase())}
+          >
             increase
           </button>
-          <button styleName="bootstrap.btn bootstrap.btn-danger" onClick={() => store.dispatch(decrease())}>
+          <button
+            styleName="bootstrap.btn bootstrap.btn-danger"
+            onClick={() => store.dispatch(decrease())}
+          >
             decrease
           </button>
           <Link to="/">
@@ -33,14 +41,23 @@ const Counter = props => {
     </div>
   );
 };
+Counter.propTypes = {
+  store: PropTypes.object
+};
 const Messenger = ({ store }) => (
   <div style={{ textAlign: "center" }}>
     <input type="text" disabled value={store.getState().message} />
-    <button styleName="bootstrap.btn bootstrap.btn-primary" onClick={() => store.dispatch(fetchData())}>
+    <button
+      styleName="bootstrap.btn bootstrap.btn-primary"
+      onClick={() => store.dispatch(fetchData())}
+    >
       fetch
     </button>
   </div>
 );
+Messenger.propTypes = {
+  store: PropTypes.object
+};
 export default class ReduxConcise extends React.Component {
   constructor(props) {
     super(props);
@@ -60,3 +77,6 @@ export default class ReduxConcise extends React.Component {
     );
   }
 }
+ReduxConcise.propTypes = {
+  route: PropTypes.object
+};
