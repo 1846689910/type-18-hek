@@ -9,6 +9,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
  * */
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
 const preloadedFiles = require("./preloaded-files")(__dirname);
@@ -185,6 +186,7 @@ module.exports = env => ({
       jquery: "jquery"
     }),
     new ExtractTextWebpackPlugin({ filename: "main.bundle.css", allChunks: true }),
+    new OptimizeCssAssetsPlugin({ assetNameRegExp: /\.css$/g }),  // optimize / minimize the css files generated after `extract-text-webpack-plugin`
     new webpack.HotModuleReplacementPlugin()
   ]
 });
