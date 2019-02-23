@@ -4,7 +4,7 @@ import { Window } from "./Window";
 import { app } from "./Container";
 import M from "./Messenger";
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css"; // eslint-disable-line
-import { People } from "./People.ts";
+import { People } from "./People";
 console.log(People);
 /**
  * .babelrc.js, webpack.config.js, src/server/index.js

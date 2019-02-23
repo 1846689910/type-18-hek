@@ -9,6 +9,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
  * */
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
 const preloadedFiles = require("./preloaded-files")(__dirname);
@@ -67,30 +68,7 @@ module.exports = env => ({
         exclude: /node_modules/,
         use: [
           {
-            loader: "babel-loader",
-            options: {
-              presets: ["@babel/preset-env", "@babel/preset-typescript", "@babel/preset-react"],
-              cacheDirectory: true,
-              plugins: [
-                ["@babel/plugin-proposal-decorators", { legacy: true }],
-                "@babel/plugin-syntax-dynamic-import",
-                "transform-class-properties",
-                "css-modules-transform",
-                [
-                  "react-css-modules",
-                  {
-                    webpackHotModuleReloading: true,
-                    generateScopedName: `${
-                      (APP_SERVER && APP_SERVER.endsWith("dev")) || env.development
-                        ? "[name]__[local]___"
-                        : ""
-                    }[hash:base64:5]`
-                  }
-                ],
-                ["@babel/plugin-proposal-class-properties", { loose: true }],
-                "@babel/proposal-object-rest-spread"
-              ]
-            }
+            loader: "babel-loader"
           }
         ]
       },
@@ -208,6 +186,7 @@ module.exports = env => ({
       jquery: "jquery"
     }),
     new ExtractTextWebpackPlugin({ filename: "main.bundle.css", allChunks: true }),
+    new OptimizeCssAssetsPlugin({ assetNameRegExp: /\.css$/g }),  // optimize / minimize the css files generated after `extract-text-webpack-plugin`
     new webpack.HotModuleReplacementPlugin()
   ]
 });
