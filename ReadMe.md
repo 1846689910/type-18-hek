@@ -16,7 +16,7 @@ npm install webpack webpack-cli --save-dev
 npm install
 ```
 
-## **Start Web Dev Server**
+## **Start Server**
 #### start project in development mode
 
 development with `HMR` and `nodemon --inspect` enabled default
@@ -41,10 +41,16 @@ npm run win-express-server
 ```
 
 ## **Build Project**
-deprecated, waiting to be updated
 ```bash
 npm run build
 ```
+Then will transpile resources to `lib` directory
+
+run server
+```bash
+npm run prod
+```
+or use `node lib/server`
 
 ## **Test**
 #### test with mocha
@@ -76,6 +82,12 @@ or use
 transpile SRC.js
 ```
 will generate a `SRC.transpiled.js` to the same path
+
+well, the easiest way is still
+```bash
+npx babel SRC.js -o TARGET.js
+npx babel srcDir -d targetDir
+```
 
 ## **Develop**
 - The entry file is `./src/client/js/index.jsx`

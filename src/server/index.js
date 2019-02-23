@@ -12,7 +12,7 @@ require("@babel/register")({
       {
         webpackHotModuleReloading: true,
         generateScopedName: `${
-          APP_SERVER.endsWith("dev") ? "[name]__[local]___" : ""
+          APP_SERVER && APP_SERVER.endsWith("dev") ? "[name]__[local]___" : ""
         }[hash:base64:5]`
       }
     ],
@@ -22,6 +22,8 @@ require("@babel/register")({
   extensions: [".js", ".jsx", ".ts", ".tsx"]
 });
 require("@babel/polyfill");
-if (APP_SERVER.startsWith("express")) {
+if (APP_SERVER && APP_SERVER.startsWith("express")) {
+  require("./express/server");
+} else {
   require("./express/server");
 }

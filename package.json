@@ -4,21 +4,20 @@
   "description": "The `Type-18-ssr` is a self-defined front-end only project starter which is supported by `React`, `Redux`, `Webpack` and other libraries. The Project starter includes demos for `redux`, `react-redux`, `reselect`, `mobx` and other self-defined classes and components. It has already setup `HMR`, `code-spliting`, `babel-plugin-react-css-modules`. The project also supports tests via `mocha`, `jest` and integration test simulating user activity driven by `selenium` and `chromedriver`",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --open --mode development --env.development",
-    "prod": "webpack-dev-server --open --mode production --env.production",
-    "dev": "webpack --mode development --env.development",
-    "build": "webpack --mode production --env.production --env.ssr=false",
+    "clean": "npx rimraf lib dist",
+    "build": "npx rimraf lib && npx babel src -d lib --extensions='.js,.jsx,.ts,.tsx' ",
+    "prod": "node lib/server",
+    "express-server-dev": "APP_SERVER=express_dev nodemon --inspect ./src/server",
+    "express-server": "nodemon ./src/server",
+    "win-express-server-dev": "set APP_SERVER=express_dev && nodemon --inspect ./src/server",
+    "win-express-server": "set APP_SERVER=express && nodemon ./src/server",
     "test": "node ./node_modules/mocha/bin/mocha",
     "mocha": "node ./node_modules/mocha/bin/mocha",
     "jest": "node ./node_modules/jest/bin/jest",
     "mochas": "node ./node_modules/mocha/bin/mocha test/mochas",
     "jests": "node ./node_modules/jest/bin/jest test/jests",
     "integration-tests": "node ./node_modules/mocha/bin/mocha integrationTest",
-    "lint": "eslint ./src",
-    "express-server-dev": "APP_SERVER=express_dev nodemon --inspect ./src/server",
-    "express-server": "APP_SERVER=express nodemon ./src/server",
-    "win-express-server-dev": "set APP_SERVER=express_dev && nodemon --inspect ./src/server",
-    "win-express-server": "set APP_SERVER=express && nodemon ./src/server"
+    "lint": "eslint ./src"
   },
   "bin": {
     "transpile": "./clis/transpile.js"
@@ -106,6 +105,7 @@
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
     "reselect": "^4.0.0",
+    "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
     "sass-resources-loader": "^2.0.0",
     "selenium-webdriver": "^4.0.0-alpha.1",
