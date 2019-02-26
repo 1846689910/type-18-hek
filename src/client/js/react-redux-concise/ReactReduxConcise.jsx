@@ -43,7 +43,7 @@ const CounterPC = props => {
   );
 };
 CounterPC.propTypes = {
-  dispatch: PropTypes.function,
+  dispatch: PropTypes.func,
   value: PropTypes.number
 };
 const MessengerPC = ({ dispatch, message }) => (
@@ -55,7 +55,7 @@ const MessengerPC = ({ dispatch, message }) => (
   </div>
 );
 MessengerPC.propTypes = {
-  dispatch: PropTypes.function,
+  dispatch: PropTypes.func,
   message: PropTypes.string
 };
 /**

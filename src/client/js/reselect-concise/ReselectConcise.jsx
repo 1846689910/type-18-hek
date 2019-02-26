@@ -17,12 +17,12 @@ import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 const getVisibleTasks = state => {
   // 根据sotre中的state.filterText的变化来决定我们要看的tasks的子集
   switch (state.filterText) {
-  case ActionTypes.SHOW_ALL:
-    return state.tasks;
-  case ActionTypes.SHOW_COMPLETED:
-    return state.tasks.filter(task => task.status === "completed");
-  case ActionTypes.SHOW_ACTIVE:
-    return state.tasks.filter(task => task.status === "active");
+    case ActionTypes.SHOW_ALL:
+      return state.tasks;
+    case ActionTypes.SHOW_COMPLETED:
+      return state.tasks.filter(task => task.status === "completed");
+    case ActionTypes.SHOW_ACTIVE:
+      return state.tasks.filter(task => task.status === "active");
   }
 };
 const getMessage = state => state.message;
@@ -86,9 +86,9 @@ const VisibleTasksPC = props => {
 };
 VisibleTasksPC.propTypes = {
   tasks: PropTypes.array,
-  showAll: PropTypes.function,
-  showCompleted: PropTypes.function,
-  showActive: PropTypes.function
+  showAll: PropTypes.func,
+  showCompleted: PropTypes.func,
+  showActive: PropTypes.func
 };
 const MessengerPC = ({ dispatch, message }) => (
   <div style={{ textAlign: "center" }}>
@@ -99,7 +99,7 @@ const MessengerPC = ({ dispatch, message }) => (
   </div>
 );
 MessengerPC.propTypes = {
-  dispatch: PropTypes.function,
+  dispatch: PropTypes.func,
   message: PropTypes.string
 };
 /**
