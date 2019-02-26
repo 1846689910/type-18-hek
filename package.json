@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "npx rimraf lib dist",
-    "build": "npx rimraf lib && npx babel src -d lib --extensions='.js,.jsx,.ts,.tsx' ",
+    "build": "npx rimraf lib && npx babel src -d lib --extensions=.js,.jsx,.ts,.tsx",
     "prod": "node lib/server",
     "express-server-dev": "APP_SERVER=express_dev nodemon --inspect ./src/server",
     "express-server": "nodemon ./src/server",
