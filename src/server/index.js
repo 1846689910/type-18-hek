@@ -1,4 +1,6 @@
-const { APP_SERVER } = process.env;
+const { startSetup } = require("./utils/commands");
+startSetup();
+const { APP_SERVER, APP_SERVER_MODE } = process.env;
 require("@babel/register")({
   ignore: [/node_modules/],
   presets: ["@babel/preset-env", "@babel/preset-typescript", "@babel/preset-react"],
@@ -12,7 +14,7 @@ require("@babel/register")({
       {
         webpackHotModuleReloading: true,
         generateScopedName: `${
-          APP_SERVER && APP_SERVER.endsWith("dev") ? "[name]__[local]___" : ""
+          APP_SERVER_MODE === "dev" ? "[name]__[local]___" : ""
         }[hash:base64:5]`
       }
     ],
@@ -22,7 +24,7 @@ require("@babel/register")({
   extensions: [".js", ".jsx", ".ts", ".tsx"]
 });
 require("@babel/polyfill");
-if (APP_SERVER && APP_SERVER.startsWith("express")) {
+if (APP_SERVER === "express") {
   require("./express/server");
 } else {
   require("./express/server");

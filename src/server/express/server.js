@@ -10,8 +10,10 @@ import { initialState } from "../../client/js/settings/reducers";
 import webpack from "webpack";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
-import logger, { FgCyan, FgGreen, Bright, Underscore } from "../utils/logger";
+import Logger from "../utils/logger";
+const { default: logger, FgCyan, FgGreen, Bright, Underscore } = Logger;
 import { staticPath, config, port, webpackDevMiddlewareOptions } from "../server.config";
+const { APP_SERVER, APP_SERVER_MODE } = process.env;
 
 const app = express();
 const compiler = webpack(config);
@@ -31,7 +33,7 @@ app.get("/*", (req, res) => {
       </StaticRouter>
     </Provider>
   );
-  const html = getHtml("type-18-ssr", reactDom, store);
+  const html = getHtml(`type-18-${APP_SERVER}-${APP_SERVER_MODE}`, reactDom, store);
   res
     .status(200)
     .type("text/html")
