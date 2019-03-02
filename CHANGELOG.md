@@ -1,3 +1,14 @@
+# 3/2/2019
+## Updates
+- modify prod run command
+- update `README.md`
+
+# 3/1/2019
+## Updates
+- add `CHANGELOG.md`
+- modify build command
+- modify prop-types for function
+
 # 2/22/2019
 ## Updates
 - .babelrc.js only
