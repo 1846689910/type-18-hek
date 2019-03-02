@@ -21,23 +21,13 @@ npm install
 
 development with `HMR` and `nodemon --inspect` enabled default
 
-Mac OS:
 ```bash
-npm run express-server-dev
-```
-Windows:
-```bash
-npm run win-express-server-dev
+npm run express-dev
 ```
 #### start project in production mode
 
-Mac OS:
 ```bash
-npm run express-server
-```
-Windows:
-```bash
-npm run win-express-server
+npm run express
 ```
 
 ## **Build Project**

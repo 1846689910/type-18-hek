@@ -1,6 +1,6 @@
 module.exports = {
-    getHtml(title, reactDom, store){
-        return `
+  getHtml(title, reactDom, store) {
+    return `
             <!DOCTYPE html>
             <html>
             <head>
@@ -16,5 +16,5 @@ module.exports = {
             </body>
             </html>
         `;
-    }
-}
+  }
+};

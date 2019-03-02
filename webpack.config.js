@@ -13,7 +13,7 @@ const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
 const preloadedFiles = require("./preloaded-files")(__dirname);
-const { APP_SERVER } = process.env;
+const { APP_SERVER_MODE } = process.env;
 module.exports = env => ({
   // 在package.json的scripts中使用 --env.xxx=123传入参数就可以在这里用env.xxx获取到. config要改成module.exports=env=>object
   mode: env.production ? "production" : "development",
@@ -90,7 +90,7 @@ module.exports = env => ({
               options: {
                 modules: true,
                 localIdentName: `${
-                  (APP_SERVER && APP_SERVER.endsWith("dev")) || env.development
+                  APP_SERVER_MODE === "dev" || env.development
                     ? "[name]__[local]___"
                     : ""
                 }[hash:base64:5]`
