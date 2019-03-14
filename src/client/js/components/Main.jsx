@@ -36,6 +36,7 @@ export default class Main extends Component {
     app.add(12, { b: 456 }, { p: 456 });
     app.updatePropsByK(11, { p: 456 });
     console.log(app.getVsByProps({ p: 456 }));
+    import("./Hello").then(Hello => console.log(<Hello name="alex123" />));
   }
   render() {
     console.log(M.custom);
