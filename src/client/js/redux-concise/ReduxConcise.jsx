@@ -19,7 +19,7 @@ const Counter = props => {
         </b>
       </p>
       <div style={divStyle}>
-        <h3 style={{ textAlign: "center" }}>{store.getState().value}</h3>
+        <h3 style={{ textAlign: "center" }}>{store.getState().counter.value}</h3>
         <div style={{ textAlign: "center" }}>
           <button
             styleName="bootstrap.btn bootstrap.btn-success"
@@ -46,7 +46,7 @@ Counter.propTypes = {
 };
 const Messenger = ({ store }) => (
   <div style={{ textAlign: "center" }}>
-    <input type="text" disabled value={store.getState().message} />
+    <input type="text" disabled value={store.getState().message.value} />
     <button
       styleName="bootstrap.btn bootstrap.btn-primary"
       onClick={() => store.dispatch(fetchData())}

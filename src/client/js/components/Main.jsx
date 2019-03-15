@@ -30,6 +30,7 @@ export default class Main extends Component {
     return {};
   }
   componentDidMount() {
+    import("./Container").then(({ app }) => console.log(app));
     console.log(this._windowComp.div);
     console.log(this._windowComp.setState());
     app.add(11, { a: 123 }, { p: 123, q: 456 });

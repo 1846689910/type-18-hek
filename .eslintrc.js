@@ -21,7 +21,7 @@ module.exports = {
     semi: 2,
     strict: 2,
     quotes: 1,
-    indent: [2, 2],
+    indent: [2, 2, { "SwitchCase": 1 }],
     "no-use-before-define": [2, "nofunc"],
     "no-unused-vars": [1, "all"],
     "no-mixed-requires": [1, true],

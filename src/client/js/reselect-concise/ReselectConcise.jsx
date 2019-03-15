@@ -16,16 +16,16 @@ import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
  * */
 const getVisibleTasks = state => {
   // 根据sotre中的state.filterText的变化来决定我们要看的tasks的子集
-  switch (state.filterText) {
+  switch (state.filterText.value) {
     case ActionTypes.SHOW_ALL:
-      return state.tasks;
+      return state.tasks.value;
     case ActionTypes.SHOW_COMPLETED:
-      return state.tasks.filter(task => task.status === "completed");
+      return state.tasks.value.filter(task => task.status === "completed");
     case ActionTypes.SHOW_ACTIVE:
-      return state.tasks.filter(task => task.status === "active");
+      return state.tasks.value.filter(task => task.status === "active");
   }
 };
-const getMessage = state => state.message;
+const getMessage = state => state.message.value;
 /**
  * 对于这个VisibleTasks, 他所需要的属性tasks, 是来源于APP的state中的state.tasks和state.filterText算出来的。他自己只负责渲染这个
  * tasks的计算结果
@@ -36,7 +36,7 @@ const selector1 = () =>
   createSelector(
     [(state, props) => state],
     getVisibleTasks
-  ); // 这个getVisibleTasks的函数的参数顺序要和数组一样，其实就是把数组的参数传了进去
+  ); // 这个getVisibleTasks的函数的参数顺序要和数组一样，其实就是把数组的每一项结果参数传了进去
 // 写法2:不写成数组也可以, 但是建议使用写法1
 const selector2 = () =>
   createSelector(
