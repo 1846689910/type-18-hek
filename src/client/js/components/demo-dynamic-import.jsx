@@ -15,7 +15,7 @@ const loadFakeComp = (dispatch, doRefresh = false) => {
       .then(() => import("./demo-fake"))
       .then(({ Fake: _Fake }) => {
         Fake = _Fake;
-        dispatch(setShowFakeComp({ value: true }));
+        dispatch(setShowFakeComp(true));
       });
   }
 };
