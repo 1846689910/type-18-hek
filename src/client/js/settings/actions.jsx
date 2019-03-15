@@ -7,7 +7,8 @@ export const ActionTypes = {
   SHOW_ACTIVE: "SHOW_ACTIVE",
   DATA_FETCH_RECEIVED: "DATA_FETCH_RECEIVED",
   DATA_FETCH_FAILED: "DATA_FETCH_FAILED",
-  CLEAR_FIELD: "CLEAR_FIELD"
+  CLEAR_FIELD: "CLEAR_FIELD",
+  SHOW_FAKE_COMP: "SHOW_FAKE_COMP"
 };
 export const increase = (attr = {}) => ({
   ...attr,
@@ -52,3 +53,8 @@ export const fetchData = () => async (dispatch, getState) => {
     .then(({ message }) => dispatch(dataFetchReceived(message)))
     .catch(err => dispatch(dataFetchFailed(err)));
 };
+export const setShowFakeComp = (value = false, attr = {}) => ({
+  ...attr,
+  value,
+  type: ActionTypes.SHOW_FAKE_COMP
+});

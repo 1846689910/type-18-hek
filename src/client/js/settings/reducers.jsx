@@ -17,7 +17,8 @@ export const initialState = {
     ]
   },
   filterText: { value: ActionTypes.SHOW_ALL }, // "SHOW_COMPLETED", "SHOW_ACTIVE"
-  message: { value: "" }
+  message: { value: "" },
+  showFakeComp: { value: false }
 };
 const counter = (counter = initialState.counter, action) => {
   switch (action.type) {
@@ -28,7 +29,7 @@ const counter = (counter = initialState.counter, action) => {
       counter.value -= 1;
       break;
   }
-  return {...counter};
+  return { ...counter };
 };
 const value2 = (value2 = initialState.value2, action) => ({ ...value2 });
 const tasks = (tasks = initialState.tasks, actions) => ({ ...tasks });
@@ -44,7 +45,7 @@ const filterText = (filterText = initialState.filterText, action) => {
       filterText.value = ActionTypes.SHOW_ACTIVE;
       break;
   }
-  return {...filterText};
+  return { ...filterText };
 };
 const message = (message = initialState.message, action) => {
   switch (action.type) {
@@ -58,7 +59,13 @@ const message = (message = initialState.message, action) => {
       message.value = action.value;
       break;
   }
-  return {...message};
+  return { ...message };
+};
+const showFakeComp = (showFakeComp = initialState.showFakeComp, action) => {
+  if (action.type === ActionTypes.SHOW_FAKE_COMP) {
+    showFakeComp.value = action.value;
+  }
+  return { ...showFakeComp };
 };
 /**
  * Reducer所接收的函数都是纯函数pure function, 一个input 对应一个确定的返回值
@@ -76,6 +83,7 @@ export const reducer1 = (state = initialState, action) => {
   state.filterText = filterText(state.filterText, action);
   state.tasks = tasks(state.tasks, action);
   state.message = message(state.message, action);
+  state.showFakeComp = showFakeComp(state.showFakeComp, action);
   return { ...state };
 };
 
@@ -88,7 +96,8 @@ export const reducer2 = (state = initialState, action) => {
     value2: ((value2, action) => value2)(state.value2, action), // 用闭包的形式
     filterText: filterText(state.filterText, action),
     tasks: tasks(state.tasks, action),
-    message: message(state.message, action)
+    message: message(state.message, action),
+    showFakeComp: showFakeComp(state.showFakeComp, action)
   };
 };
 
@@ -102,5 +111,6 @@ export const reducer3 = combineReducers({
   value2,
   filterText,
   tasks,
-  message
+  message,
+  showFakeComp
 });
