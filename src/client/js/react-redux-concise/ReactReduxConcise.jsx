@@ -11,7 +11,7 @@ import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
  * pc (for UI only, no state mgmt, all data from props, no redux api)
  * */
 const CounterPC = props => {
-  const { dispatch, value } = props;
+  const { dispatch, counter } = props;
   return (
     <div>
       <p style={{ textAlign: "center" }}>
@@ -20,7 +20,7 @@ const CounterPC = props => {
         </b>
       </p>
       <div style={{ padding: 0 }}>
-        <h3 style={{ textAlign: "center" }}>{value}</h3>
+        <h3 style={{ textAlign: "center" }}>{counter.value}</h3>
         <div style={{ textAlign: "center" }}>
           <button
             styleName="bootstrap.btn bootstrap.btn-success"
@@ -44,11 +44,11 @@ const CounterPC = props => {
 };
 CounterPC.propTypes = {
   dispatch: PropTypes.func,
-  value: PropTypes.number
+  counter: PropTypes.object
 };
 const MessengerPC = ({ dispatch, message }) => (
   <div style={{ textAlign: "center" }}>
-    <input type="text" disabled value={message} />
+    <input type="text" disabled value={message.value} />
     <button styleName="bootstrap.btn bootstrap.btn-primary" onClick={() => dispatch(fetchData())}>
       fetch
     </button>
@@ -62,9 +62,9 @@ MessengerPC.propTypes = {
  * mapStateToProps: 建立state到内部pc组件的联系，使得内部PC组件可以拿到更新的state和props
  * */
 const mapStateToProps = (state, props) => {
-  const { value, message } = state;
+  const { counter, message } = state;
   return {
-    value, // 连接CounterPC的属性value到state的value属性
+    counter, // 连接CounterPC的属性value到state的value属性
     message
   };
 };

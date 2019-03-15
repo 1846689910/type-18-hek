@@ -5,62 +5,60 @@ import { ActionTypes } from "./actions";
  * 一个APP只有一个store, 管理一个state
  * 每个state属性要有相应的handler并且要传入reducer, 然后react-redux才可以看到该state的属性
  * */
-const initialState = {
-  value: 0,
-  value2: 0,
-  tasks: [
-    { name: "task1", status: "completed" },
-    { name: "task2", status: "active" },
-    { name: "task3", status: "active" },
-    { name: "task4", status: "completed" }
-  ],
-  filterText: ActionTypes.SHOW_ALL, // "SHOW_COMPLETED", "SHOW_ACTIVE"
-  message: ""
+export const initialState = {
+  counter: { value: 0 },
+  value2: { value: 0 },
+  tasks: {
+    value: [
+      { name: "task1", status: "completed" },
+      { name: "task2", status: "active" },
+      { name: "task3", status: "active" },
+      { name: "task4", status: "completed" }
+    ]
+  },
+  filterText: { value: ActionTypes.SHOW_ALL }, // "SHOW_COMPLETED", "SHOW_ACTIVE"
+  message: { value: "" }
 };
-const valueHandler = (value = initialState.value, action) => {
+const counter = (counter = initialState.counter, action) => {
   switch (action.type) {
     case ActionTypes.INCREASE:
-      value += 1;
+      counter.value += 1;
       break;
     case ActionTypes.DECREASE:
-      value -= 1;
+      counter.value -= 1;
       break;
   }
-  return value;
+  return {...counter};
 };
-const value2Handler = (value2 = initialState.value2, action) => {
-  return value2;
-};
-const filterTextHandler = (filterText = initialState.filterText, action) => {
+const value2 = (value2 = initialState.value2, action) => ({ ...value2 });
+const tasks = (tasks = initialState.tasks, actions) => ({ ...tasks });
+const filterText = (filterText = initialState.filterText, action) => {
   switch (action.type) {
     case ActionTypes.SHOW_ALL:
-      filterText = ActionTypes.SHOW_ALL;
+      filterText.value = ActionTypes.SHOW_ALL;
       break;
     case ActionTypes.SHOW_COMPLETED:
-      filterText = ActionTypes.SHOW_COMPLETED;
+      filterText.value = ActionTypes.SHOW_COMPLETED;
       break;
     case ActionTypes.SHOW_ACTIVE:
-      filterText = ActionTypes.SHOW_ACTIVE;
+      filterText.value = ActionTypes.SHOW_ACTIVE;
       break;
   }
-  return filterText;
-};
-const tasksHandler = (tasks = initialState.tasks, action) => {
-  return tasks;
+  return {...filterText};
 };
 const message = (message = initialState.message, action) => {
   switch (action.type) {
     case ActionTypes.CLEAR_FIELD:
-      message = "";
+      message.value = "";
       break;
     case ActionTypes.DATA_FETCH_RECEIVED:
-      message = action.message;
+      message.value = action.value;
       break;
     case ActionTypes.DATA_FETCH_FAILED:
-      message = action.err.message;
+      message.value = action.value;
       break;
   }
-  return message;
+  return {...message};
 };
 /**
  * Reducer所接收的函数都是纯函数pure function, 一个input 对应一个确定的返回值
@@ -72,27 +70,24 @@ const message = (message = initialState.message, action) => {
  *  单一的reducer
  * 有initialState, reducer接收两个参数state = initialState和action对象
  * */
-const reducer1 = (state = initialState, action) => {
-  state.value = valueHandler(state.value, action);
-  state.value2 = value2Handler(state.value2, action);
-  state.filterText = filterTextHandler(state.filterText, action);
-  state.tasks = tasksHandler(state.tasks, action);
+export const reducer1 = (state = initialState, action) => {
+  state.counter = counter(state.counter, action);
+  state.value2 = value2(state.value2, action);
+  state.filterText = filterText(state.filterText, action);
+  state.tasks = tasks(state.tasks, action);
   state.message = message(state.message, action);
   return { ...state };
 };
 
 /**
- * reducer写法2, 其实和写法1是一样的，只不过把value和value2都放到新的object里
+ * reducer写法2, 其实和写法1是一样的，只不过把counter和value2都放到新的object里
  * */
-const reducer2 = (state = initialState, action) => {
+export const reducer2 = (state = initialState, action) => {
   return {
-    value: valueHandler(state.value, action),
-    value2: (function(value2, action) {
-      // 用闭包的形式写也可以
-      return value2;
-    })(state.value2, action),
-    filterText: filterTextHandler(state.filterText, action),
-    tasks: tasksHandler(state.tasks, action),
+    counter: counter(state.counter, action),
+    value2: ((value2, action) => value2)(state.value2, action), // 用闭包的形式
+    filterText: filterText(state.filterText, action),
+    tasks: tasks(state.tasks, action),
     message: message(state.message, action)
   };
 };
@@ -102,11 +97,10 @@ const reducer2 = (state = initialState, action) => {
  * use combineReducers
  * 默认地initialState是空{}, 函数名就是state的属性名
  * */
-const reducer3 = combineReducers({
-  value: valueHandler, // 如果valueHandler的名字为value和state.value属性的名字一样，就可以只写{value, value2}
-  value2: value2Handler,
-  filterText: filterTextHandler,
-  tasks: tasksHandler,
+export const reducer3 = combineReducers({
+  counter,
+  value2,
+  filterText,
+  tasks,
   message
 });
-export { initialState, reducer1, reducer2, reducer3 };
