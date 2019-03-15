@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf lib dist",
-    "build": "rimraf lib dist; babel src -d lib --extensions=.js,.jsx,.ts,.tsx & webpack --env.production --env.ssr",
-    "build1": "rimraf lib dist; babel src -d lib --extensions=.js,.jsx,.ts,.tsx",
+    "build": "rimraf lib dist & babel src -d lib --extensions=.js,.jsx,.ts,.tsx & webpack --env.production --env.ssr",
+    "build1": "rimraf lib dist & babel src -d lib --extensions=.js,.jsx,.ts,.tsx",
     "prod": "node lib/server",
     "express-dev": "nodemon --inspect ./src/server dev",
     "express": "nodemon ./src/server",
