@@ -26,6 +26,7 @@ module.exports = env => ({
   output: {
     path: `${__dirname}/dist`, // packed file directory
     publicPath: "/",
+    chunkFilename: "[name].[hash].js",
     filename: env.ssr
       ? "main.bundle.js"
       : env.production
