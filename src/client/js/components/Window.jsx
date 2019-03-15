@@ -2,11 +2,16 @@
  * Created by Eric on 9/6/2018.
  */
 import React from "react";
+import loadable from "@loadable/component";
 import { tileToBBox, pointToTileFraction, googleToTile } from "global-mercator";
 import { ActionWatcher } from "./utils";
 import { TopComp, TopComp1 } from "../context/ContextShow";
 import { ValidationWrapper } from "./ValidationTemp";
 // import DemoDynamicImport from "./demo-dynamic-import";  // TODO: DemoDynamicImport has `Not Supported` error
+const NamedLazyComp = loadable(() =>
+  import("./demo-fake").then(module => ({ default: module.Fake }))
+);
+const DefaultLazyComp = loadable(() => import("./demo-fake")); // TODO: default lazy comp has issue to render, why ???
 import custom from "../../css/main.css"; // eslint-disable-line
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css"; // eslint-disable-line
 import fontawesome from "font-awesome/css/font-awesome.min.css"; // eslint-disable-line
@@ -103,8 +108,10 @@ export class Window extends React.Component {
         <hr />
         <ValidationWrapper />
         <hr />
+        <NamedLazyComp />
+        {/* <DefaultLazyComp /> */}
         {/* <DemoDynamicImport /> */}
-        {/* <hr /> */}
+        <hr />
         <TopComp myMessage={"hello world"} />
         <TopComp1 />
       </div>
