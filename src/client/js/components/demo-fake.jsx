@@ -4,3 +4,8 @@ export const Fake = () => (
     <strong>Fake Comp Here</strong>
   </div>
 );
+export default () => (
+  <div>
+    <strong>Fake Comp Here</strong>
+  </div>
+);

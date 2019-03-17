@@ -5,6 +5,8 @@ import { app } from "./Container";
 import M from "./Messenger";
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css"; // eslint-disable-line
 import { People } from "./People";
+import DemoDynamicImport from "./demo-dynamic-import";
+
 console.log(People);
 /**
  * .babelrc.js, webpack.config.js, src/server/index.js
@@ -59,6 +61,8 @@ export default class Main extends Component {
             <button styleName="bootstrap.btn bootstrap.btn-primary">to /mobx</button>
           </Link>
         </div>
+        <hr />
+        <DemoDynamicImport />
       </div>
     );
   }
