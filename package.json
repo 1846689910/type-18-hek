@@ -1,7 +1,7 @@
 {
-  "name": "Type-18-ssr",
+  "name": "type-18-hek",
   "version": "1.0.0",
-  "description": "The `Type-18-ssr` is a self-defined front-end only project starter which is supported by `React`, `Redux`, `Webpack` and other libraries. The Project starter includes demos for `redux`, `react-redux`, `reselect`, `mobx` and other self-defined classes and components. It has already setup `HMR`, `code-spliting`, `babel-plugin-react-css-modules`. The project also supports tests via `mocha`, `jest` and integration test simulating user activity driven by `selenium` and `chromedriver`",
+  "description": "The `type-18-hek` is a self-defined front-end only project starter which is supported by `React`, `Redux`, `Webpack` and other libraries. The Project starter includes demos for `redux`, `react-redux`, `reselect`, `mobx` and other self-defined classes and components. It has already setup `HMR`, `code-spliting`, `babel-plugin-react-css-modules`. The project also supports tests via `mocha`, `jest` and integration test simulating user activity driven by `selenium` and `chromedriver`",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf lib dist",
