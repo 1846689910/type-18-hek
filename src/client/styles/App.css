@@ -17,6 +17,14 @@
   color: white;
 }
 
+.App-header-div {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
 .App-link {
   color: #09d3ac;
 }
