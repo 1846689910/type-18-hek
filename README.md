@@ -15,11 +15,12 @@ npm install
 
 ## **Start Server**
 
-#### start project in production mode
+#### start project in development mode
 
 ```bash
 npm run start
 ```
+#### start project in production mode
 
 ```bash
 npm run express
