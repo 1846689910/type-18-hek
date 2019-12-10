@@ -1,4 +1,4 @@
-# **Type-18-ssr**
+# **Type-18-hek**
 
 ## **Install**
 ### 1 create project directory and install webpack
