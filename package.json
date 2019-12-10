@@ -1,7 +1,6 @@
 {
-  "name": "hello-react",
-  "version": "0.1.0",
-  "private": true,
+  "name": "type-18-hek",
+  "version": "2.0.0",
   "dependencies": {
     "@babel/core": "7.6.0",
     "@babel/register": "^7.7.4",
