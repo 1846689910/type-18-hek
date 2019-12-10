@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import PropTypes from "prop-types";
 import "../../styles/App.scss";
 import "../../styles/App.css";
 import "../../styles/App.less";
@@ -45,3 +46,6 @@ export default function Home(props) {
     </Fragment>
   );
 }
+Home.propTypes = {
+  all: PropTypes.string
+};
