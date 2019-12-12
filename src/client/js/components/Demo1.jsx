@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { Grid, Container, Typography, Button } from "@material-ui/core";
 import { increase, decrease } from "../settings/actions";
@@ -41,3 +42,6 @@ export default function Demo1(props) {
     </Fragment>
   );
 }
+Demo1.propTypes = {
+  route: PropTypes.object
+};
