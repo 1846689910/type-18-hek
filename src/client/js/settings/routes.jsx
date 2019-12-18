@@ -3,6 +3,7 @@ import propTypes from "prop-types";
 import Home from "../components/Home";
 import Demo1 from "../components/Demo1";
 import Demo2 from "../components/Demo2";
+import Pipelines from "../components/Pipelines";
 import NoMatch from "../components/NoMatch";
 import { withRouter } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
@@ -49,6 +50,16 @@ const routes = [
         path: "/demo2/:id",
         key: "/demo2/:id",
         component: Demo2
+      },
+      {
+        path: "/pipelines/:pipelineId",
+        key: "/pipelines/:pipelineId",
+        component: Pipelines
+      },
+      {
+        path: "/pipelines/:pipelineId/jobs/:jobId",
+        key: "/pipelines/:pipelineId/jobs/:jobId",
+        component: Pipelines
       },
       {
         path: "/*",
