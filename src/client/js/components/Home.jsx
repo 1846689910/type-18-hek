@@ -4,6 +4,7 @@ import { Container, Grid } from "@material-ui/core";
 import Nav from "./Nav";
 import DemoWrapper from "./DemoWrapper";
 import ModuledStyleDemo from "./ModuledStyleDemo";
+import DynamicImportDemo from "./DynamicImportDemo";
 
 
 export default function Home(props) {
@@ -16,9 +17,9 @@ export default function Home(props) {
           <DemoWrapper title="CSS Module Demo">
             <ModuledStyleDemo />
           </DemoWrapper>
-          {/* <DemoWrapper title="Dynamic Import Demo">
+          <DemoWrapper title="Dynamic Import Demo">
             <DynamicImportDemo />
-          </DemoWrapper> */}
+          </DemoWrapper>
         </Grid>
       </Container>
     </Fragment>
