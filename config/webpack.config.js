@@ -26,7 +26,7 @@ const ModuleNotFoundPlugin = require("react-dev-utils/ModuleNotFoundPlugin");
 const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpackPlugin");
 const typescriptFormatter = require("react-dev-utils/typescriptFormatter");
 const eslint = require("eslint");
-const LoadablePlugin = require("@loadable/webpack-plugin");
+const { ReactLoadablePlugin } = require("react-loadable/webpack");
 
 const postcssNormalize = require("postcss-normalize");
 
@@ -571,7 +571,9 @@ module.exports = function(webpackEnv) {
       ]
     },
     plugins: [
-      new LoadablePlugin(),
+      new ReactLoadablePlugin({
+        filename: path.resolve("dist/react-loadable.json"),
+      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
