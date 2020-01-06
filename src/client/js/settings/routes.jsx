@@ -1,10 +1,10 @@
 import React from "react";
 import propTypes from "prop-types";
-import Home from "../components/Home";
-import Demo1 from "../components/Demo1";
-import Demo2 from "../components/Demo2";
-import Folders from "../components/Folders";
-import NoMatch from "../components/NoMatch";
+import Home from "../pages/Home";
+import Demo1 from "../pages/Demo1";
+import Demo2 from "../pages/Demo2";
+import Folders from "../pages/Folders";
+import NoMatch from "../pages/NoMatch";
 import { withRouter } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
 
