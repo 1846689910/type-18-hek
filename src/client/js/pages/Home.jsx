@@ -2,9 +2,9 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Container, Grid } from "@material-ui/core";
 import Nav from "./Nav";
-import DemoWrapper from "./DemoWrapper";
-import ModuledStyleDemo from "./ModuledStyleDemo";
-import DynamicImportDemo from "./DynamicImportDemo";
+import DemoWrapper from "../components/DemoWrapper";
+import ModuledStyleDemo from "../components/ModuledStyleDemo";
+import DynamicImportDemo from "../components/DynamicImportDemo";
 
 
 export default function Home(props) {

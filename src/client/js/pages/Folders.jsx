@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import Nav from "./Nav";
 
 
-export default function Pipelines() {
+export default function Folders() {
   const location = useLocation();
   return (
     <>

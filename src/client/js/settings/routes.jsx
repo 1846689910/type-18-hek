@@ -1,10 +1,10 @@
 import React from "react";
 import propTypes from "prop-types";
-import Home from "../components/Home";
-import Demo1 from "../components/Demo1";
-import Demo2 from "../components/Demo2";
-import Pipelines from "../components/Pipelines";
-import NoMatch from "../components/NoMatch";
+import Home from "../pages/Home";
+import Demo1 from "../pages/Demo1";
+import Demo2 from "../pages/Demo2";
+import Folders from "../pages/Folders";
+import NoMatch from "../pages/NoMatch";
 import { withRouter } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
 
@@ -52,14 +52,14 @@ const routes = [
         component: Demo2
       },
       {
-        path: "/pipelines/:pipelineId",
-        key: "/pipelines/:pipelineId",
-        component: Pipelines
+        path: "/folders/:folderId",
+        key: "/folders/:folderId",
+        component: Folders
       },
       {
-        path: "/pipelines/:pipelineId/jobs/:jobId",
-        key: "/pipelines/:pipelineId/jobs/:jobId",
-        component: Pipelines
+        path: "/folders/:folderId/files/:fileId",
+        key: "/folders/:folderId/files/:fileId",
+        component: Folders
       },
       {
         path: "/*",
