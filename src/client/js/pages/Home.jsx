@@ -5,6 +5,7 @@ import Nav from "./Nav";
 import DemoWrapper from "../components/DemoWrapper";
 import ModuledStyleDemo from "../components/ModuledStyleDemo";
 import DynamicImportDemo from "../components/DynamicImportDemo";
+import RecomposeDemo from "../components/RecomposeDemo";
 
 
 export default function Home(props) {
@@ -19,6 +20,9 @@ export default function Home(props) {
           </DemoWrapper>
           <DemoWrapper title="Dynamic Import Demo">
             <DynamicImportDemo />
+          </DemoWrapper>
+          <DemoWrapper title="Recompose Demo">
+            <RecomposeDemo />
           </DemoWrapper>
         </Grid>
       </Container>
