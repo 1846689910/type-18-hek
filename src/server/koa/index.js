@@ -9,7 +9,7 @@ import Loadable from "react-loadable";
 
 const PORT = process.env.PORT || 3000;
 const app = new Koa();
-const router = new Router();
+const router = new Router();  // eslint-disable-line
 
 app.use(serve(Path.resolve("dist"), { maxAge: "30d", index: false }));
 

@@ -9,7 +9,7 @@
     "@material-ui/styles": "^4.8.2",
     "@svgr/webpack": "5.0.1",
     "@typescript-eslint/eslint-plugin": "^2.14.0",
-    "@typescript-eslint/parser": "^2.14.0",
+    "@typescript-eslint/parser": "^2.15.0",
     "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
@@ -92,7 +92,8 @@
     "test": "node scripts/test.js",
     "express": "npm run build && node src/server",
     "koa": "npm run build && node src/server koa",
-    "hapi": "npm run build && node src/server hapi"
+    "hapi": "npm run build && node src/server hapi",
+    "lint": "eslint src/* --ext .js,.jsx,.ts,.tsx"
   },
   "eslintConfig": {
     "extends": "eslint:react-app"
