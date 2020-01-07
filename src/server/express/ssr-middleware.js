@@ -54,7 +54,7 @@ const getRenderedString = url => {
   dom.querySelector("body").appendChild(loadableBundles);
 
   return dom.toString().replace(
-    '<span id="body-after-root"></span>',
+    "<span id=\"body-after-root\"></span>",
     `
     <noscript>
       <h4>JavaScript is Disabled</h4>
