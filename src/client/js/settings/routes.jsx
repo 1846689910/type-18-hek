@@ -35,7 +35,8 @@ const routes = [
         path: "/",
         exact: true,
         key: "/",
-        component: Home
+        component: Home,
+        isExact: true
       },
       {
         path: "/demo1",
@@ -44,22 +45,26 @@ const routes = [
         component: Demo1,
         partial: {
           abc: "I am accessible only at `/demo` route by `props.route.partial`"
-        }
+        },
+        isExact: true
       },
       {
         path: "/demo2/:id",
         key: "/demo2/:id",
-        component: Demo2
+        component: Demo2,
+        isExact: true
       },
       {
         path: "/folders/:folderId",
         key: "/folders/:folderId",
-        component: Folders
+        component: Folders,
+        isExact: true
       },
       {
         path: "/folders/:folderId/files/:fileId",
         key: "/folders/:folderId/files/:fileId",
-        component: Folders
+        component: Folders,
+        isExact: true
       },
       {
         path: "/*",
