@@ -1,4 +1,4 @@
-import React, { Fragment, useState, createRef } from "react";
+import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import {
@@ -55,7 +55,6 @@ const useStyles = makeStyles(theme =>
 
 function FolderDropdown(props) {
   const { anchorEl, handleClose, dropdown } = props;
-  const refs = dropdown.fileIds.map(() => createRef());
   const history = useHistory();
   const handleClick = fileId => {
     handleClose();
@@ -81,7 +80,6 @@ function FolderDropdown(props) {
               : classes.subMenuItemUnmatch
           }
           onClick={() => handleClick(x, i)}
-          ref={refs[i]}
         >
           File{x}
         </MenuItem>
