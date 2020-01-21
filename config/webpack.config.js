@@ -463,8 +463,9 @@ module.exports = function(webpackEnv) {
               use: getStyleLoaders({
                 importLoaders: 1,
                 sourceMap: isEnvProduction && shouldUseSourceMap,
-                modules: true,
-                getLocalIdent: getCSSModuleLocalIdent
+                modules: {
+                  getLocalIdent: getCSSModuleLocalIdent
+                }
               })
             },
             // Opt-in support for SASS (using .scss or .sass extensions).
@@ -494,8 +495,9 @@ module.exports = function(webpackEnv) {
                 {
                   importLoaders: 2,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
-                  modules: true,
-                  getLocalIdent: getCSSModuleLocalIdent
+                  modules: {
+                    getLocalIdent: getCSSModuleLocalIdent
+                  }
                 },
                 "sass-loader"
               )
@@ -518,8 +520,9 @@ module.exports = function(webpackEnv) {
                 {
                   importLoaders: 2,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
-                  modules: true,
-                  getLocalIdent: getCSSModuleLocalIdent
+                  modules: {
+                    getLocalIdent: getCSSModuleLocalIdent
+                  }
                 },
                 "less-loader"
               )
@@ -542,8 +545,9 @@ module.exports = function(webpackEnv) {
                 {
                   importLoaders: 2,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
-                  modules: true,
-                  getLocalIdent: getCSSModuleLocalIdent
+                  modules: {
+                    getLocalIdent: getCSSModuleLocalIdent
+                  }
                 },
                 "stylus-loader"
               )
@@ -572,7 +576,7 @@ module.exports = function(webpackEnv) {
     },
     plugins: [
       new ReactLoadablePlugin({
-        filename: path.resolve("dist/react-loadable.json"),
+        filename: path.resolve("dist/react-loadable.json")
       }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
