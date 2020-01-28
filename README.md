@@ -1,14 +1,7 @@
 # **Type-18-hek**
 
 ## **Install**
-### 1 create project directory and install webpack
-```bash
-mkdir my-starter
-cd my-starter
-npm init -y
-npm install webpack webpack-cli --save-dev
-```
-### 2 install other dependencies
+### install dependencies
 ```bash
 npm install
 ```
@@ -18,7 +11,7 @@ npm install
 #### start project in development mode
 
 ```bash
-npm run start
+npm start
 ```
 #### start project in production mode
 
