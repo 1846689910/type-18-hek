@@ -4,6 +4,8 @@
 ### install dependencies
 ```bash
 npm install
+# OR
+yarn
 ```
 
 ## **Start Server**
@@ -12,6 +14,8 @@ npm install
 
 ```bash
 npm start
+# OR
+yarn start
 ```
 #### start project in production mode
 
@@ -20,10 +24,27 @@ npm run express
 npm run koa
 npm run hapi
 ```
+OR
+
+```bash
+yarn run express
+yarn run koa
+yarn run hapi
+```
 
 ## **Build Project**
 ```bash
 npm run build
+# OR
+yarn run build
+```
+
+## **Test**
+
+```bash
+npm test
+# OR
+yarn test
 ```
 
 ## **Develop**
