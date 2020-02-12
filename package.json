@@ -159,5 +159,8 @@
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
     ]
+  },
+  "devDependencies": {
+    "webpack-bundle-analyzer": "^3.6.0"
   }
 }

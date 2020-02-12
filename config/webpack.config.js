@@ -27,6 +27,7 @@ const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpack
 const typescriptFormatter = require("react-dev-utils/typescriptFormatter");
 const eslint = require("eslint");
 const { ReactLoadablePlugin } = require("react-loadable/webpack");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 const postcssNormalize = require("postcss-normalize");
 
@@ -575,6 +576,11 @@ module.exports = function(webpackEnv) {
       ]
     },
     plugins: [
+      new BundleAnalyzerPlugin({ 
+        generateStatsFile: true, 
+        analyzerMode: "static", 
+        reportFilename: "bundle-analyze-report.html" 
+      }),
       new ReactLoadablePlugin({
         filename: path.resolve("dist/react-loadable.json")
       }),
