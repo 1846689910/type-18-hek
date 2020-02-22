@@ -115,7 +115,8 @@
   },
   "jest": {
     "roots": [
-      "<rootDir>/test/client"
+      "<rootDir>/test/client",
+      "<rootDir>/test/server"
     ],
     "collectCoverageFrom": [
       "client/**/*.{js,jsx,ts,tsx}",
@@ -126,8 +127,8 @@
     ],
     "setupFilesAfterEnv": ["<rootDir>/.enzyme.setup.js"],
     "testMatch": [
-      "<rootDir>/test/client/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/test/client/**/*.{spec,test}.{js,jsx,ts,tsx}"
+      "<rootDir>/test/{client,server}/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/test/{client,server}/**/*.{spec,test}.{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jest-environment-jsdom-fourteen",
     "transform": {

@@ -61,13 +61,13 @@ describe("Sinon library", () => {
 });
 describe("Mocha Test", () => {
   let syncFnError, asyncFnError;
-  before(() => {
+  beforeAll(() => {
     syncFnError = new Error("syncFn failed");
     asyncFnError = new Error("asyncFn failed");
     // runs before all tests in this block
   });
 
-  after(() => {
+  afterAll(() => {
     // runs after all tests in this block
   });
 
