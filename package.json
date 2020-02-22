@@ -124,7 +124,7 @@
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
-    "setupFilesAfterEnv": [],
+    "setupFilesAfterEnv": ["<rootDir>/.enzyme.setup.js"],
     "testMatch": [
       "<rootDir>/test/client/**/__tests__/**/*.{js,jsx,ts,tsx}",
       "<rootDir>/test/client/**/*.{spec,test}.{js,jsx,ts,tsx}"
@@ -167,6 +167,10 @@
     ]
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "sinon": "^9.0.0",
     "webpack-bundle-analyzer": "^3.6.0"
   }
 }
