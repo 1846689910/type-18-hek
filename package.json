@@ -125,7 +125,9 @@
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
-    "setupFilesAfterEnv": ["<rootDir>/.enzyme.setup.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/.enzyme.setup.js"
+    ],
     "testMatch": [
       "<rootDir>/test/{client,server}/**/__tests__/**/*.{js,jsx,ts,tsx}",
       "<rootDir>/test/{client,server}/**/*.{spec,test}.{js,jsx,ts,tsx}"
@@ -160,11 +162,6 @@
     "watchPlugins": [
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
-    ]
-  },
-  "workspaces": {
-    "nohoist": [
-      "**/babel-preset-react-app/@babel/runtime"
     ]
   },
   "devDependencies": {
