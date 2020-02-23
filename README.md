@@ -49,7 +49,7 @@ yarn run browser-automation -chrome
 
 - does not support the other browsers on the [list](https://www.selenium.dev/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html)
 
-[![demo browser automation](./doc/images/yarn-ba.gif)](./doc/images/yarn-ba.gif =250x)
+[![demo browser automation](./doc/images/yarn-ba.gif =250x)](./doc/images/yarn-ba.gif =250x)
 
 ## **Test**
 
