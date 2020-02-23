@@ -51,7 +51,7 @@ yarn run browser-automation -chrome
 
 https://drive.google.com/file/d/16bRB195qp15PmTeg0iZjw_vrHMHWDMbh/view?usp=sharing
 
-[![Demo Doccou alpha](http://share.gifyoutube.com/KzB6Gb.gif)](https://drive.google.com/file/d/16bRB195qp15PmTeg0iZjw_vrHMHWDMbh/view?usp=sharing)
+[![Demo Doccou alpha](https://drive.google.com/file/d/16bRB195qp15PmTeg0iZjw_vrHMHWDMbh/view?usp=sharing)](https://drive.google.com/file/d/16bRB195qp15PmTeg0iZjw_vrHMHWDMbh/view?usp=sharing)
 
 ## **Test**
 
