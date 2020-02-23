@@ -10,6 +10,6 @@ it("renders without crashing", () => {
 
 describe("Jest", () => {
   it("should work", () => {
-    expect("a").toBe("a");
+    expect("a").toBe("a");  // use jest `expect`
   });
 });
