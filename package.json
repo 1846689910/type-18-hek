@@ -91,9 +91,10 @@
     "workbox-webpack-plugin": "5.0.0"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
+    "start": "node scripts/start",
+    "build": "node scripts/build",
+    "test": "node scripts/test",
+    "browser-automation": "node scripts/browser-automation",
     "express": "npm run build && node src/server",
     "koa": "npm run build && node src/server koa",
     "hapi": "npm run build && node src/server hapi",
