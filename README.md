@@ -47,6 +47,10 @@ npm test
 yarn test
 ```
 
+- enzyme configuration:
+  - create `.enzyme.setup.js`
+  - in `package.json` include `"setupFilesAfterEnv": ["<rootDir>/.enzyme.setup.js"]`
+
 ## **Develop**
 - The entry file is `./src/client/js/index.jsx`
 - The router and redux store, actions, reducers are defined in `./src/client/js/settings/`
