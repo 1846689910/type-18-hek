@@ -39,6 +39,18 @@ npm run build
 yarn run build
 ```
 
+## **Browser Automation**
+
+```bash
+npm run browser-automation -chrome
+# OR
+yarn run browser-automation -chrome
+```
+
+- does not support the other browsers on the [list](https://www.selenium.dev/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html)
+
+<img src="./doc/images/yarn-ba.gif" alt="demo browser automation" width="80%"/>
+
 ## **Test**
 
 ```bash
