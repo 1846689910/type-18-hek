@@ -20,7 +20,6 @@ const collectChunks = jsx => {
     const statsFile = Path.resolve("dist/loadable-stats.json");
     // We create an extractor from the statsFile
     extractor = new ChunkExtractor({ statsFile });
-    console.log(extractor);
   }
   return extractor.collectChunks(jsx);
 };
