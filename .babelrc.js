@@ -1,4 +1,4 @@
 module.exports = {
   presets: ["react-app"],
-  plugins: ["@loadable/babel-plugin"]
+  plugins: ["@babel/plugin-syntax-dynamic-import", "@loadable/babel-plugin"]
 };
