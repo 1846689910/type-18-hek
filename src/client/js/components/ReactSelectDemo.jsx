@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
-import { setSelectOptionsAction, setSelectedOptionAction } from "../settings/actions";
+import PropTypes from "prop-types";
+import {
+  setSelectOptionsAction,
+  setSelectedOptionAction
+} from "../settings/actions";
 import { useSelector, useDispatch } from "react-redux";
-import Select from "react-select";
+import Select, { components } from "react-select";
 import { Grid, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -29,7 +33,7 @@ export default function ReactSelectDemo() {
   const selectOptions = useSelector(state => state.selectOptions);
   const selectedOption = useSelector(state => state.selectedOption);
   useEffect(() => {
-    (async() => {
+    (async () => {
       const _options = await colourOptions();
       dispatch(setSelectOptionsAction(_options));
       dispatch(setSelectedOptionAction(_options.filter(_ => _.isFixed)));
@@ -50,8 +54,33 @@ export default function ReactSelectDemo() {
           className="basic-multi-select"
           classNamePrefix="select"
           onChange={handleChange}
+          components={{
+            MultiValueLabel: CustomMultiValueLabel
+          }}
         />
       </Grid>
     </Grid>
   );
 }
+const useStyles1 = makeStyles({
+  label: attr => ({
+    color: attr.color
+  })
+});
+function CustomMultiValueLabel({ children, ...props }) {
+  const classes = useStyles1(props.data);
+  return (
+    <components.MultiValueLabel {...props}>
+      <strong className={classes.label}>{children}</strong>
+    </components.MultiValueLabel>
+  );
+}
+CustomMultiValueLabel.propTypes = {
+  children: PropTypes.string,
+  data: PropTypes.object,
+  props: PropTypes.shape({
+    data: PropTypes.shape({
+      color: PropTypes.string
+    })
+  })
+};
