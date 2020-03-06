@@ -9,7 +9,7 @@ import { routes } from "./js/settings/routes";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
 import { theme } from "../client/styles/theme";
-import Loadable from "react-loadable";
+import { loadableReady } from "@loadable/component";
 import * as serviceWorker from "./js/serviceWorker";
 
 const store = configureStore();
@@ -18,7 +18,7 @@ const start = App => {
   const root = document.querySelector("#root");
   const reactStart =
     window.__PRELOADED_STATE__ && root.innerHTML ? hydrate : render;
-  Loadable.preloadReady().then(() =>
+  loadableReady(() =>
     reactStart(
       <Provider store={store}>
         <ThemeProvider theme={theme}>

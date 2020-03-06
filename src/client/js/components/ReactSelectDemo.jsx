@@ -21,7 +21,7 @@ const colourOptions = [
   { value: "silver", label: "Silver", color: "#666666" }
 ];
 
-export function ReactSelectDemo() {
+export default function ReactSelectDemo() {
   const classes = useStyles();
   return (
     <Grid className={classes.outer} container justify="center">
