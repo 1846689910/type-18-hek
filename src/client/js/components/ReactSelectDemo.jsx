@@ -7,11 +7,19 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import Select, { components } from "react-select";
 import { Grid, makeStyles } from "@material-ui/core";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
 const useStyles = makeStyles({
   outer: {
     margin: "10px 0"
-  }
+  },
+  label: attr => ({
+    color: attr.color
+  }),
+  optionFiber: attr => ({
+    fontSize: "14px",
+    color: attr.isDisabled ? "gray" : attr.color
+  })
 });
 
 const colourOptions = async () => [
@@ -55,20 +63,16 @@ export default function ReactSelectDemo() {
           classNamePrefix="select"
           onChange={handleChange}
           components={{
-            MultiValueLabel: CustomMultiValueLabel
+            MultiValueLabel: CustomMultiValueLabel,
+            Option: CustomOption
           }}
         />
       </Grid>
     </Grid>
   );
 }
-const useStyles1 = makeStyles({
-  label: attr => ({
-    color: attr.color
-  })
-});
 function CustomMultiValueLabel({ children, ...props }) {
-  const classes = useStyles1(props.data);
+  const classes = useStyles(props.data);
   return (
     <components.MultiValueLabel {...props}>
       <strong className={classes.label}>{children}</strong>
@@ -83,4 +87,20 @@ CustomMultiValueLabel.propTypes = {
       color: PropTypes.string
     })
   })
+};
+function CustomOption({ children, ...props }) {
+  const classes = useStyles(props.data);
+  return (
+    <components.Option {...props}>
+      <Grid container alignItems="center">
+        <FiberManualRecordIcon className={classes.optionFiber} />
+        <span>{children}</span>
+      </Grid>
+    </components.Option>
+  );
+}
+CustomOption.propTypes = {
+  children: PropTypes.string,
+  data: PropTypes.object,
+  props: PropTypes.object
 };
