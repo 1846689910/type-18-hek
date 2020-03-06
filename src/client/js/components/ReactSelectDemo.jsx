@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { setSelectOptionsAction, setSelectedOptionAction } from "../settings/actions";
+import { useSelector, useDispatch } from "react-redux";
 import Select from "react-select";
 import { Grid, makeStyles } from "@material-ui/core";
 
@@ -8,7 +10,7 @@ const useStyles = makeStyles({
   }
 });
 
-const colourOptions = [
+const colourOptions = async () => [
   { value: "ocean", label: "Ocean", color: "#00B8D9", isFixed: true },
   { value: "blue", label: "Blue", color: "#0052CC", isDisabled: true },
   { value: "purple", label: "Purple", color: "#5243AA" },
@@ -23,17 +25,31 @@ const colourOptions = [
 
 export default function ReactSelectDemo() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const selectOptions = useSelector(state => state.selectOptions);
+  const selectedOption = useSelector(state => state.selectedOption);
+  useEffect(() => {
+    (async() => {
+      const _options = await colourOptions();
+      dispatch(setSelectOptionsAction(_options));
+      dispatch(setSelectedOptionAction(_options.filter(_ => _.isFixed)));
+    })();
+  }, []);
+  const handleChange = (selected, action) => {
+    console.log(action);
+    dispatch(setSelectedOptionAction(selected));
+  };
   return (
     <Grid className={classes.outer} container justify="center">
       <Grid item xs={4}>
         <Select
-          defaultValue={[colourOptions[2], colourOptions[3]]}
           isMulti
+          value={selectedOption.value}
           name="colors"
-          options={colourOptions}
+          options={selectOptions.value}
           className="basic-multi-select"
           classNamePrefix="select"
-          onChange={(selected, action) => console.log([selected, action])}
+          onChange={handleChange}
         />
       </Grid>
     </Grid>
