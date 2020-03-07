@@ -26,7 +26,7 @@ Root.propTypes = {
   children: propTypes.object
 };
 
-export const routes = [
+const routes = [
   {
     path: "/",
     component: withRouter(Root),
@@ -72,3 +72,4 @@ export const routes = [
     ]
   }
 ];
+export { routes };
