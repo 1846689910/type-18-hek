@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { Grid, Container, Typography, Button } from "@material-ui/core";
 import { setCounterAction } from "../settings/actions";
-import Nav from "./Nav";
+import Nav from "../components/Nav";
 
 export default function Demo1(props) {
   const counter = useSelector(state => state.counter);

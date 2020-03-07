@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Grid } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
-import Nav from "./Nav";
+import Nav from "../components/Nav";
 
 export default function Demo2() {
   const location = useLocation();

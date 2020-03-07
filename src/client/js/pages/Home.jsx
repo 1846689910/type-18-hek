@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Container, Grid } from "@material-ui/core";
-import Nav from "./Nav";
+import Nav from "../components/Nav";
 import DemoWrapper from "../components/DemoWrapper";
 import ModuledStyleDemo from "../components/ModuledStyleDemo";
 import DynamicImportDemo from "../components/DynamicImportDemo";
