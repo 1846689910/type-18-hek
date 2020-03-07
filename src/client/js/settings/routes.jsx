@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import propTypes from "prop-types";
 import Home from "../pages/Home";
 import Demo1 from "../pages/Demo1";
@@ -12,12 +12,12 @@ const Root = props => {
   const { route, children } = props;
   console.log(props);
   return (
-    <div>
+    <Fragment>
       {renderRoutes(route.routes, {
         all: "I am accessible from all routes by `props.all`"
       })}
       {children}
-    </div>
+    </Fragment>
   );
 };
 
@@ -35,8 +35,7 @@ const routes = [
         path: "/",
         exact: true,
         key: "/",
-        component: Home,
-        isExact: true
+        component: Home
       },
       {
         path: "/demo1",
@@ -45,33 +44,32 @@ const routes = [
         component: Demo1,
         partial: {
           abc: "I am accessible only at `/demo` route by `props.route.partial`"
-        },
-        isExact: true
+        }
       },
       {
         path: "/demo2/:id",
         key: "/demo2/:id",
         component: Demo2,
-        isExact: true
+        exact: true
       },
       {
         path: "/folders/:folderId",
         key: "/folders/:folderId",
         component: Folders,
-        isExact: true
+        exact: true,
       },
       {
         path: "/folders/:folderId/files/:fileId",
         key: "/folders/:folderId/files/:fileId",
         component: Folders,
-        isExact: true
+        exact: true
       },
       {
         path: "/*",
+        key: "/*",
         component: NoMatch
       }
     ]
   }
 ];
-
 export { routes };
