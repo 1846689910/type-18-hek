@@ -3,30 +3,49 @@ import { combineReducers } from "redux";
 import { ActionTypes } from "./actions";
 
 /**
- * 一个APP只有一个store, 管理一个state
- * 每个state属性要有相应的handler并且要传入reducer, 然后react-redux才可以看到该state的属性
+ * one app maintain sinle centralized state
  * */
 export const initialState = {
-  counter: { value: 0 }
+  counter: { value: 0 },
+  selectOptions: {
+    value: []
+  },
+  selectedOption: {
+    value: []
+  }
 };
 
 const counter = (counter = initialState.counter, action) => {
-  switch (action.type) {
-    case ActionTypes.INCREASE:
-      counter.value++;
-      break;
-    case ActionTypes.DECREASE:
-      counter.value--;
-      break;
+  if (action.type === ActionTypes.SET_COUNTER_ACTION) {
+    counter.value = action.data;
   }
   return { ...counter };
 };
 
+const selectOptions = (selectOptions = initialState.selectOptions, action) => {
+  if (action.type === ActionTypes.SET_SELECT_OPTIONS_ACTION) {
+    selectOptions.value = action.data;
+  }
+  return { ...selectOptions };
+};
+
+const selectedOption = (
+  selectedOption = initialState.selectedOption,
+  action
+) => {
+  if (action.type === ActionTypes.SET_SELECTED_OPTION_ACTION) {
+    selectedOption.value = action.data;
+  }
+  return { ...selectedOption };
+};
+
 /**
- * reducer写法3
+ * reducer
  * use combineReducers
- * 默认地initialState是空{}, 函数名就是state的属性名
+ * initialState is empty object by default, function name is state field
  * */
 export default combineReducers({
-  counter
+  counter,
+  selectOptions,
+  selectedOption
 });
