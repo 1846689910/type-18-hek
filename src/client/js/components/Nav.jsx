@@ -33,7 +33,9 @@ const useStyles = makeStyles(theme => ({
     height: "50px"
   },
   btnGroup: {
-    margin: "0 20px"
+    margin: "0 20px",
+    textTransform: "none",
+    fontWeight: "bold"
   },
   btnGroup_btn: {
     fontWeight: "bold",
@@ -42,12 +44,12 @@ const useStyles = makeStyles(theme => ({
   folders_btn: {
     width: "20px"
   },
-  subMenuItemMatch: {
-    background: theme.palette.secondary.main
-  },
-  subMenuItemUnmatch: {
-    background: ""
-  }
+  subMenuItem: ({ routeMatch, fileId }) => ({
+    background:
+      routeMatch && routeMatch.params.fileId === `${fileId}`
+        ? theme.palette.secondary.main
+        : ""
+  })
 }));
 
 export default function Nav() {
@@ -79,7 +81,10 @@ export default function Nav() {
             alignItems="center"
           >
             <Grid container justify="center">
-              {tabs.map((x, i) => <TabButton route={x} key={i}/>)}
+              {tabs.map((x, i) => {
+                const TabBtn = x.routes ? TabButtonGroup : TabButton;
+                return <TabBtn route={x} key={i} />;
+              })}
             </Grid>
           </Grid>
         </Container>
@@ -88,26 +93,53 @@ export default function Nav() {
   );
 }
 
-function TabButton({ route }){
+/**
+ *
+ * @description regular tab button
+ */
+function TabButton({ route }) {
+  const classes = useStyles();
+  const history = useHistory();
+  const match = useRouteMatch(route.key);
+  return (
+    <Button
+      className={classes.btnGroup}
+      variant="contained"
+      color={match && match.isExact ? "secondary" : "default"}
+      onClick={() => history.push(route.path)}
+    >
+      {route.label}
+    </Button>
+  );
+}
+TabButton.propTypes = {
+  route: PropTypes.shape({
+    key: PropTypes.string,
+    label: PropTypes.string,
+    path: PropTypes.string
+  })
+};
+
+/**
+ *
+ * @description tab button with dropdown menu
+ */
+function TabButtonGroup({ route }) {
   const classes = useStyles();
   const [fileAnchor, setFileAnchor] = useState(null);
   const history = useHistory();
   const match = useRouteMatch(route.key);
-  return <Fragment>
-    <ButtonGroup className={classes.btnGroup}>
-      <Button
-        className={classes.btnGroup_btn}
-        variant="contained"
-        color={
-          match && match.isExact
-            ? "secondary"
-            : "default"
-        }
-        onClick={() => history.push(route.path)}
-      >
-        {route.label}
-      </Button>
-      {route.label === "Folders" && (
+  return (
+    <Fragment>
+      <ButtonGroup className={classes.btnGroup}>
+        <Button
+          className={classes.btnGroup_btn}
+          variant="contained"
+          color={match && match.isExact ? "secondary" : "default"}
+          onClick={() => history.push(route.path)}
+        >
+          {route.label}
+        </Button>
         <Button
           className={classes.folders_btn}
           variant="contained"
@@ -115,18 +147,18 @@ function TabButton({ route }){
         >
           <ArrowDropDownIcon />
         </Button>
+      </ButtonGroup>
+      {route.label === "Folders" && (
+        <FolderDropdown
+          anchorEl={fileAnchor}
+          handleClose={() => setFileAnchor(null)}
+          dropdown={route.routes}
+        />
       )}
-    </ButtonGroup>
-    {route.label === "Folders" && (
-      <FolderDropdown
-        anchorEl={fileAnchor}
-        handleClose={() => setFileAnchor(null)}
-        dropdown={route.routes}
-      />
-    )}
-  </Fragment>;
+    </Fragment>
+  );
 }
-TabButton.propTypes = {
+TabButtonGroup.propTypes = {
   route: PropTypes.shape({
     key: PropTypes.string,
     label: PropTypes.string,
@@ -168,17 +200,14 @@ function FolderDropdown(props) {
       onClose={handleClose}
     >
       {dropdown.fileIds.map((x, i) => (
-        <MenuItem
+        <EachMenuItem
           key={i}
-          className={
-            routeMatch && routeMatch.params.fileId === `${x}`
-              ? classes.subMenuItemMatch
-              : classes.subMenuItemUnmatch
-          }
+          fileId={x}
+          routeMatch={routeMatch}
           onClick={() => handleClick(x, i)}
         >
-          File{x}
-        </MenuItem>
+          {`File${x}`}
+        </EachMenuItem>
       ))}
     </Menu>
   );
@@ -187,4 +216,20 @@ FolderDropdown.propTypes = {
   anchorEl: PropTypes.object,
   handleClose: PropTypes.func,
   dropdown: PropTypes.object
+};
+
+const EachMenuItem = React.forwardRef(
+  ({ children, routeMatch, fileId, ...props }, ref) => {
+    const classes = useStyles({ routeMatch, fileId });
+    return (
+      <MenuItem ref={ref} className={classes.subMenuItem} {...props}>
+        {children}
+      </MenuItem>
+    );
+  }
+);
+EachMenuItem.propTypes = {
+  children: PropTypes.string,
+  routeMatch: PropTypes.object,
+  fileId: PropTypes.number
 };
