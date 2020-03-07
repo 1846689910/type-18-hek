@@ -152,7 +152,7 @@ function TabButtonGroup({ route }) {
         <FolderDropdown
           anchorEl={fileAnchor}
           handleClose={() => setFileAnchor(null)}
-          dropdown={route.routes}
+          routes={route.routes}
         />
       )}
     </Fragment>
@@ -182,13 +182,13 @@ function Title() {
 }
 
 function FolderDropdown(props) {
-  const { anchorEl, handleClose, dropdown } = props;
+  const { anchorEl, handleClose, routes } = props;
   const history = useHistory();
   const handleClick = fileId => {
     handleClose();
     history.push(`/folders/123/files/${fileId}`);
   };
-  const routeMatch = useRouteMatch(dropdown.key);
+  const routeMatch = useRouteMatch(routes.key);
   const classes = useStyles();
   return (
     <Menu
@@ -199,7 +199,7 @@ function FolderDropdown(props) {
       open={Boolean(anchorEl)}
       onClose={handleClose}
     >
-      {dropdown.fileIds.map((x, i) => (
+      {routes.fileIds.map((x, i) => (
         <EachMenuItem
           key={i}
           fileId={x}
@@ -215,7 +215,7 @@ function FolderDropdown(props) {
 FolderDropdown.propTypes = {
   anchorEl: PropTypes.object,
   handleClose: PropTypes.func,
-  dropdown: PropTypes.object
+  routes: PropTypes.object
 };
 
 const EachMenuItem = React.forwardRef(
