@@ -94,8 +94,12 @@ function CustomOption({ children, ...props }) {
   return (
     <components.Option {...props}>
       <Grid container alignItems="center" item xs={12}>
-        <Grid item xs={1} container alignItems="center"><FiberManualRecordIcon className={classes.optionFiber} /></Grid>
-        <Grid item xs={11}>{children}</Grid>
+        <Grid item xs={1} container alignItems="center">
+          <FiberManualRecordIcon className={classes.optionFiber} />
+        </Grid>
+        <Grid item xs={11}>
+          {children}
+        </Grid>
       </Grid>
     </components.Option>
   );
