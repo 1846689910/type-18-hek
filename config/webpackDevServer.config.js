@@ -3,6 +3,7 @@
 const errorOverlayMiddleware = require("react-dev-utils/errorOverlayMiddleware");
 const evalSourceMapMiddleware = require("react-dev-utils/evalSourceMapMiddleware");
 const noopServiceWorkerMiddleware = require("react-dev-utils/noopServiceWorkerMiddleware");
+const { graphqlMiddleware } = require("../src/server/express/graphql-middleware");
 const ignoredFiles = require("react-dev-utils/ignoredFiles");
 const paths = require("./paths");
 const fs = require("fs");
@@ -87,6 +88,8 @@ module.exports = function(proxy, allowedHost) {
         // This registers user provided middleware for proxy reasons
         require(paths.proxySetup)(app);
       }
+
+      app.use("/graphql", graphqlMiddleware);
 
       // This lets us fetch source contents from webpack for the error overlay
       app.use(evalSourceMapMiddleware(server));
