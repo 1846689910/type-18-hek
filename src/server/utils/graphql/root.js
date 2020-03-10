@@ -8,7 +8,6 @@ module.exports = {
     return students.filter(x => keys.every(key => x[key] === params[key]));
   },
   createStudent({ student }) {
-    console.log(student);
     if (!students.find(x => x.id === student.id)) {
       students.push(student);
       return true;
