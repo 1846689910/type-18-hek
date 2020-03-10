@@ -1,0 +1,12 @@
+type Query {
+  hello: String
+  students(name: String, age: Int, sex: String): [Student]!
+  student(id: ID): Student!
+}
+type Student {
+  id: ID!
+  name: String!
+  age: Int!
+  sex: String!
+  gpa: Float!
+}

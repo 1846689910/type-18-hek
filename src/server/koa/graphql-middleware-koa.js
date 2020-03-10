@@ -1,9 +1,9 @@
-import { schema, rootValue } from "../express/graphql-middleware";
+import { schema, root } from "../utils/graphql";
 import { graphql } from "graphql";
 
 const graphqlMiddlewareKoa = async ctx => {
   const { query } = ctx.request.body;
-  ctx.body = await graphql(schema, query, rootValue);
+  ctx.body = await graphql(schema, query, root);
 };
 
 module.exports = { graphqlMiddlewareKoa };

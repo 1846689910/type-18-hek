@@ -1,4 +1,4 @@
-import { schema, rootValue } from "../express/graphql-middleware";
+import { schema, root } from "../utils/graphql";
 import { graphql } from "graphql";
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
       path: "/graphql",
       handler: async (request, h) => {
         const { query } = request.payload;
-        const response = h.response(await graphql(schema, query, rootValue));
+        const response = h.response(await graphql(schema, query, root));
         return response;
       }
     });

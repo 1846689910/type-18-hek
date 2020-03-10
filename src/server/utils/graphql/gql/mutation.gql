@@ -1,0 +1,12 @@
+input StudentInput {
+  id: ID!
+  name: String!
+  age: Int!
+  sex: String!
+  gpa: Float!
+}
+type Mutation { # CRUD operation
+  createStudent(student: StudentInput): Boolean!
+  deleteStudent(id: ID): Boolean!
+  updateStudent(id: ID, student: StudentInput): Student!
+}
