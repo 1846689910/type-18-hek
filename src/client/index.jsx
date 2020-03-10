@@ -10,23 +10,29 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
 import { theme } from "../client/styles/theme";
 import { loadableReady } from "@loadable/component";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "@apollo/react-hooks";
 import * as serviceWorker from "./js/serviceWorker";
 
 const store = configureStore();
+const graphqlUri = "http://localhost:3000/graphql";
 
 const start = App => {
   const root = document.querySelector("#root");
   const reactStart =
     window.__PRELOADED_STATE__ && root.innerHTML ? hydrate : render;
+  const apolloClient = new ApolloClient({uri: graphqlUri});
   loadableReady(() =>
     reactStart(
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <CssBaseline />
-            <App />
-          </BrowserRouter>
-        </ThemeProvider>
+        <ApolloProvider client={apolloClient}>
+          <ThemeProvider theme={theme}>
+            <BrowserRouter>
+              <CssBaseline />
+              <App />
+            </BrowserRouter>
+          </ThemeProvider>
+        </ApolloProvider>
       </Provider>,
       root
     )

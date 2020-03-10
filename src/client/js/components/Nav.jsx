@@ -14,6 +14,8 @@ import {
 } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,6 +54,12 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
+const HELLO_QUERY = gql`
+  {
+    hello
+  }
+`;
+
 export default function Nav() {
   const classes = useStyles();
   const counter = useSelector(state => state.counter);
@@ -70,6 +78,8 @@ export default function Nav() {
     },
     { path: `/demo2/${counter.value}`, label: "Demo2", key: "/demo2/:id" }
   ];
+  const { loading, error, data } = useQuery(HELLO_QUERY, {ssr: false});
+  if (!loading && !error) console.info(data.hello);
   return (
     <Fragment>
       <Title />
