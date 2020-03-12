@@ -2,6 +2,8 @@ type Query {
   hello: String
   students(name: String, age: Int, sex: String): [Student]!
   student(id: ID): Student!
+  landmarks(name: String, address: String): [Landmark]!
+  landmark(name: String): Landmark!
 }
 type Student {
   id: ID!
@@ -9,4 +11,12 @@ type Student {
   age: Int!
   sex: String!
   gpa: Float!
+}
+type Landmark {
+  id: ID!
+  name: String!
+  address: String!
+  url: String!
+  description: String!
+  coordinates: [Float!]!
 }

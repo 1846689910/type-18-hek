@@ -7,6 +7,7 @@ module.exports = class TextFileReader {
    */
   constructor(options = {}) {
     this.encoding = options.encoding || "utf8";
+    this.path = options.path;
     /* this.text = undefined; */
   }
 
@@ -15,7 +16,8 @@ module.exports = class TextFileReader {
    * @returns {TextFileReader}
    */
   read = (path) => {
-    this.text = Fs.readFileSync(path, { encoding: this.encoding });
+    const p = path || this.path;
+    this.text = Fs.readFileSync(p, { encoding: this.encoding });
     return this;
   };
 

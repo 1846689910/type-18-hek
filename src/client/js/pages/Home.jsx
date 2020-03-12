@@ -6,6 +6,7 @@ import DemoWrapper from "../components/DemoWrapper";
 import ModuledStyleDemo from "../components/Home/ModuledStyleDemo";
 import DynamicImportDemo from "../components/Home/DynamicImportDemo";
 import RecomposeDemo from "../components/Home/RecomposeDemo";
+import ApolloGraphqlDemo from "../components/Home/ApolloGraphqlDemo";
 
 
 export default function Home(props) {
@@ -20,6 +21,9 @@ export default function Home(props) {
           </DemoWrapper>
           <DemoWrapper title="Dynamic Import Demo">
             <DynamicImportDemo />
+          </DemoWrapper>
+          <DemoWrapper title="Apollo Graphql Demo">
+            <ApolloGraphqlDemo/>
           </DemoWrapper>
           <DemoWrapper title="Recompose Demo">
             <RecomposeDemo />
