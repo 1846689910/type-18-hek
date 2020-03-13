@@ -2,14 +2,14 @@ const TextFileReader = require("../TextFileReader");
 const Path = require("path");
 
 const studentsJsonPath = Path.resolve("src/data/students.json");
-const landmarksJsonPath = Path.resolve("src/data/landmarks.json");
+const landmarksJsonPath = Path.resolve("src/data/landmarks.geo.json");
 
 const landmarksPartial = {
   landmark: ({ name }) =>
     new TextFileReader()
       .read(landmarksJsonPath)
       .toJson([])
-      .find(x => x.properties.name === name),
+      .find(x => x.name === name),
   landmarks(params) {
     // params will contain {name, address, ...} some fields that user passed in when query
     const landmarks = new TextFileReader().read(landmarksJsonPath).toJson([]);
@@ -18,7 +18,7 @@ const landmarksPartial = {
   },
   createLandmark({ landmark }) {
     const landmarks = new TextFileReader().read(landmarksJsonPath).toJson([]);
-    if (!landmarks.find(x => x.properties.name === landmark.name)) {
+    if (!landmarks.find(x => x.name === landmark.name)) {
       landmarks.push(landmark);
       return true;
     }
@@ -26,14 +26,14 @@ const landmarksPartial = {
   },
   deleteLandmark({ name }) {
     const landmarks = new TextFileReader().read(landmarksJsonPath).toJson([]);
-    const idx = landmarks.findIndex(x => x.properties.name === name);
+    const idx = landmarks.findIndex(x => x.name === name);
     if (idx < 0) return false;
     landmarks.splice(idx, 1);
     return true;
   },
   updateLandmark({ name, landmark }) {
     const landmarks = new TextFileReader().read(landmarksJsonPath).toJson([]);
-    const idx = landmarks.findIndex(x => x.properties.name === name);
+    const idx = landmarks.findIndex(x => x.name === name);
     if (idx < 0) return null;
     landmarks.splice(idx, 1, landmark);
     return landmark;
@@ -41,7 +41,7 @@ const landmarksPartial = {
 };
 
 module.exports = {
-  hello: () => "Hello, type-18-hek now support graphql",
+  hello: () => "Hello, type-18-hek is now boosted by Apollo + GraphQL",
   student: ({ id }) =>
     new TextFileReader()
       .read(studentsJsonPath)
