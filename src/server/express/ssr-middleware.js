@@ -1,6 +1,6 @@
 import Path from "path";
 import Fs from "fs";
-import React, { Fragment } from "react";
+import React from "react";
 import { renderToString } from "react-dom/server";
 import { Provider } from "react-redux";
 import { routes } from "../../client/js/settings/routes";

@@ -1,8 +1,8 @@
 import React from "react";
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
 import { LocalProvider } from "./LocalContext";
-import Map from "./Map";
-import MarkerSelect from "./MarkerSelect";
+import loadable from "@loadable/component";
+
 
 const useStyles = makeStyles({
   outer: {
@@ -10,13 +10,31 @@ const useStyles = makeStyles({
   }
 });
 
+const MapDemo = loadable(() => import(/* webpackChunkName: "MapDemo" */ "./Map"), {
+  ssr: false,
+  fallback: (
+    <Typography variant="h6">
+      {"<MapDemo/>"} is loading ...
+      </Typography>
+  )
+});
+
+const MarkerSelectDemo = loadable(() => import(/* webpackChunkName: "MarkerSelectDemo" */ "./MarkerSelect"), {
+  ssr: false,
+  fallback: (
+    <Typography variant="h6">
+      {"<MarkerSelectDemo/>"} is loading ...
+      </Typography>
+  )
+});
+
 export default function ApolloGraphqlDemo() {
   const classes = useStyles();
   return (
     <LocalProvider>
       <Grid container justify="center" className={classes.outer}>
-        <Map />
-        <MarkerSelect />
+        <MapDemo />
+        <MarkerSelectDemo />
       </Grid>
     </LocalProvider>
   );

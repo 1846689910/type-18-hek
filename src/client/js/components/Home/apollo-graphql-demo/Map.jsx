@@ -31,7 +31,8 @@ export default function Map() {
     setBaseLayer,
     setMarkers,
     data,
-    greeting
+    greeting,
+    setSelectedMarkerOption
   } = useContext(LocalContext);
   const mapRef = useRef();
   useEffect(() => {
@@ -44,7 +45,9 @@ export default function Map() {
   }, [map, greeting]);
   useEffect(() => {
     if (map && data && data.landmarks) {
-      setMarkers(configureMarkers(map, data.landmarks));
+      setMarkers(
+        configureMarkers(map, data.landmarks, setSelectedMarkerOption)
+      );
     }
   }, [map, data]);
   return <div className={classes.map} ref={mapRef} />;
@@ -79,9 +82,10 @@ function configureBaseLayer(map, layerAttr) {
  *
  * @param {L.Map} map
  * @param {Object[]} landmarks
+ * @param {Function} setSelectedMarkerOption
  * @returns {L.Marker[]}
  */
-function configureMarkers(map, landmarks) {
+function configureMarkers(map, landmarks, setSelectedMarkerOption) {
   return landmarks.map(x => {
     const { coordinates, ...props } = x;
     const [lng, lat] = coordinates;
@@ -89,6 +93,7 @@ function configureMarkers(map, landmarks) {
       .bindPopup(renderToString(<Popup {...props} />))
       .on("click", function() {
         map.flyTo(this.getLatLng(), 18, { animate: true, duration: 3 });
+        setSelectedMarkerOption({ value: this, label: props.name });
       })
       .addTo(map);
   });

@@ -16,8 +16,7 @@ const useStyles = makeStyles({
 
 export default function MarkerSelect() {
   const classes = useStyles();
-  const { data, markers, map } = useContext(LocalContext);
-  const [sel, setSel] = useState(undefined);
+  const { data, markers, map, selectedMarkerOption, setSelectedMarkerOption } = useContext(LocalContext);
   const [landmarkOptions, setLandmarkOptions] = useState([]);
   useEffect(() => {
     if (data && data.landmarks && markers.length > 0) {
@@ -33,12 +32,13 @@ export default function MarkerSelect() {
   }, [data, markers]);
   const handleChange = async selected => {
     const marker = selected.value;
-    if (sel) {
-      sel.closePopup();
+    if (selectedMarkerOption) {
+      selectedMarkerOption.value.closePopup();
       map.flyTo(initLatLng, initZoom, { animate: true, duration: 3, easeLinearity: 1 });
       await Promise.delay(3000);
     }
-    setSel(marker.fire("click"));
+    marker.fire("click");
+    setSelectedMarkerOption(selected);
   };
   return (
     <Grid
@@ -49,7 +49,7 @@ export default function MarkerSelect() {
       className={classes.markerSelect}
     >
       <Grid item xs={5}>
-        <Select options={landmarkOptions} onChange={handleChange} />
+        <Select value={selectedMarkerOption} options={landmarkOptions} onChange={handleChange} />
       </Grid>
     </Grid>
   );
