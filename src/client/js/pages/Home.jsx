@@ -20,7 +20,7 @@ export default function Home(props) {
           <DemoWrapper title="Dynamic Import Demo">
             <DynamicImportDemo />
           </DemoWrapper>
-          <DemoWrapper title="Apollo Graphql Demo">
+          <DemoWrapper title="Apollo GraphQL Demo">
             <ApolloGraphqlDemo/>
           </DemoWrapper>
         </Grid>

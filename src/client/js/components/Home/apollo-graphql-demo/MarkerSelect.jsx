@@ -48,7 +48,7 @@ export default function MarkerSelect() {
       justify="flex-start"
       className={classes.markerSelect}
     >
-      <Grid item xs={4}>
+      <Grid item xs={5}>
         <Select options={landmarkOptions} onChange={handleChange} />
       </Grid>
     </Grid>
