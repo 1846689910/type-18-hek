@@ -1,21 +1,15 @@
-import React, {
-  useRef,
-  useEffect,
-  useState,
-  createContext,
-  useContext
-} from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { renderToString } from "react-dom/server";
 import L from "leaflet";
-import { Grid, makeStyles } from "@material-ui/core";
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
+import { makeStyles } from "@material-ui/core";
+import LocalContext from "./LocalContext";
 
 const useStyles = makeStyles({
   map: {
     width: "100%",
-    height: "400px"
+    height: "500px",
+    zIndex: 0
   },
   popHeader: {
     textAlign: "center"
@@ -25,67 +19,10 @@ const useStyles = makeStyles({
   }
 });
 
-const LANDMARKS = gql`
-  query Landmark($name: String, $address: String) {
-    landmarks(name: $name, address: $address) {
-      name
-      address
-      url
-      description
-      coordinates
-    }
-  }
-`;
+export const initLatLng = L.latLng(41.713, -100.281);
+export const initZoom = 4;
 
-const HELLO_QUERY = gql`
-  {
-    hello
-  }
-`;
-
-const LocalContext = createContext();
-const LocalProvider = ({ children }) => {
-  const { Provider } = LocalContext;
-  const [map, setMap] = useState(undefined);
-  const [baseLayer, setBaseLayer] = useState(undefined);
-  const [markers, setMarkers] = useState([]);
-  const { data } = useQuery(LANDMARKS);
-  const { data: greeting } = useQuery(HELLO_QUERY);
-  return (
-    <Provider
-      value={{
-        map,
-        setMap,
-        baseLayer,
-        setBaseLayer,
-        markers,
-        setMarkers,
-        data,
-        greeting
-      }}
-    >
-      {children}
-    </Provider>
-  );
-};
-LocalProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element)
-  ])
-};
-
-export default function ApolloGraphqlDemo() {
-  return (
-    <LocalProvider>
-      <Grid container justify="center">
-        <Map />
-      </Grid>
-    </LocalProvider>
-  );
-}
-
-function Map() {
+export default function Map() {
   const classes = useStyles();
   const {
     map,
@@ -118,7 +55,7 @@ function Map() {
  * @returns {L.Map}
  */
 function initMap(dom) {
-  return L.map(dom).setView([41.713, -100.281], 4);
+  return L.map(dom, { zoomControl: false }).setView(initLatLng, initZoom);
 }
 /**
  *

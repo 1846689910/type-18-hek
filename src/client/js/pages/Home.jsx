@@ -5,7 +5,7 @@ import Nav from "../components/Nav";
 import DemoWrapper from "../components/DemoWrapper";
 import ModuledStyleDemo from "../components/Home/ModuledStyleDemo";
 import DynamicImportDemo from "../components/Home/DynamicImportDemo";
-import ApolloGraphqlDemo from "../components/Home/ApolloGraphqlDemo";
+import ApolloGraphqlDemo from "../components/Home/apollo-graphql-demo";
 
 export default function Home(props) {
   console.log(props.all);
