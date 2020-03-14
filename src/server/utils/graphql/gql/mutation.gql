@@ -1,18 +1,18 @@
 type Mutation { # CRUD operation
-  createStudent(student: StudentInput): Boolean!
-  deleteStudent(id: ID): Boolean!
-  updateStudent(id: ID, student: StudentInput): Student!
+  # createStudent(student: StudentInput): Boolean!
+  # deleteStudent(id: ID): Boolean!
+  # updateStudent(id: ID, student: StudentInput): Student!
   createLandmark(landmark: LandmarkInput): Boolean!
   deleteLandmark(name: String): Boolean!
   updateLandmark(name: String, landmark: LandmarkInput): Landmark!
 }
-input StudentInput {
-  id: ID!
-  name: String!
-  age: Int!
-  sex: String!
-  gpa: Float!
-}
+# input StudentInput {
+#   id: ID!
+#   name: String!
+#   age: Int!
+#   sex: String!
+#   gpa: Float!
+# }
 input LandmarkInput {
   name: String!
   address: String!

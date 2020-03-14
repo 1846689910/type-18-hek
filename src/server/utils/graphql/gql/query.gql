@@ -1,17 +1,17 @@
 type Query {
   hello: String
-  students(name: String, age: Int, sex: String): [Student]!
-  student(id: ID): Student!
+  # students(name: String, age: Int, sex: String): [Student]!
+  # student(id: ID): Student!
   landmarks(name: String, address: String): [Landmark]!
   landmark(name: String): Landmark!
 }
-type Student {
-  id: ID!
-  name: String!
-  age: Int!
-  sex: String!
-  gpa: Float!
-}
+# type Student {
+#   id: ID!
+#   name: String!
+#   age: Int!
+#   sex: String!
+#   gpa: Float!
+# }
 type Landmark {
   id: ID!
   name: String!
