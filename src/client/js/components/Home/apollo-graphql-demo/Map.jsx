@@ -1,9 +1,10 @@
-import React, { useRef, useEffect, useContext } from "react";
+import React, { useRef, useEffect, useContext, Fragment } from "react";
 import PropTypes from "prop-types";
 import { renderToString } from "react-dom/server";
 import L from "leaflet";
 import { makeStyles } from "@material-ui/core";
 import LocalContext from "./LocalContext";
+import MarkerUpdate from "./MarkerUpdate";
 
 const useStyles = makeStyles({
   map: {
@@ -32,7 +33,8 @@ export default function Map() {
     setMarkers,
     data,
     greeting,
-    setSelectedMarkerOption
+    setSelectedMarkerOption,
+    showEditor
   } = useContext(LocalContext);
   const mapRef = useRef();
   useEffect(() => {
@@ -50,7 +52,12 @@ export default function Map() {
       );
     }
   }, [map, data]);
-  return <div className={classes.map} ref={mapRef} />;
+  return (
+    <Fragment>
+      <div className={classes.map} ref={mapRef} />
+      {showEditor && <MarkerUpdate />}
+    </Fragment>
+  );
 }
 
 /**

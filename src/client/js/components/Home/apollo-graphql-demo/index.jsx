@@ -3,7 +3,6 @@ import { Grid, makeStyles, Typography } from "@material-ui/core";
 import { LocalProvider } from "./LocalContext";
 import loadable from "@loadable/component";
 
-
 const useStyles = makeStyles({
   outer: {
     position: "relative"

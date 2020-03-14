@@ -29,7 +29,9 @@ export const LocalProvider = ({ children }) => {
   const [map, setMap] = useState(undefined);
   const [baseLayer, setBaseLayer] = useState(undefined);
   const [markers, setMarkers] = useState([]);
+  const [prevFields, setPrevFields] = useState(undefined);
   const [selectedMarkerOption, setSelectedMarkerOption] = useState(undefined);
+  const [showEditor, setShowEditor] = useState(false);
   const { data } = useQuery(LANDMARKS);
   const { data: greeting } = useQuery(HELLO_QUERY);
   return (
@@ -44,7 +46,11 @@ export const LocalProvider = ({ children }) => {
         data,
         greeting,
         selectedMarkerOption,
-        setSelectedMarkerOption
+        setSelectedMarkerOption,
+        prevFields,
+        setPrevFields,
+        showEditor,
+        setShowEditor
       }}
     >
       {children}
