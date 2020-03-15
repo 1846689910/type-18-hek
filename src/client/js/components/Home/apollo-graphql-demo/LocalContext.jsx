@@ -1,11 +1,12 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation, useApolloClient } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
-const LANDMARKS = gql`
+export const LANDMARKS = gql`
   query Landmark($name: String, $address: String) {
     landmarks(name: $name, address: $address) {
+      id
       name
       address
       url
@@ -15,9 +16,48 @@ const LANDMARKS = gql`
   }
 `;
 
-const HELLO_QUERY = gql`
+export const HELLO_QUERY = gql`
   {
     hello
+  }
+`;
+
+export const CREATE_LANDMARK = gql`
+  mutation CreateLandmark($landmark: LandmarkInput!) {
+    createLandmark(landmark: $landmark) {
+      id
+      name
+      address
+      url
+      description
+      coordinates
+    }
+  }
+`;
+
+export const DELETE_LANDMARK = gql`
+  mutation DeleteLandmark($id: ID!) {
+    deleteLandmark(id: $id) {
+      id
+      name
+      address
+      url
+      description
+      coordinates
+    }
+  }
+`;
+
+export const UPDATE_LANDMARK = gql`
+  mutation UpdateLandmark($id: ID!, $landmark: LandmarkInput!) {
+    updateLandmark(id: $id, landmark: $landmark) {
+      id
+      name
+      address
+      url
+      description
+      coordinates
+    }
   }
 `;
 
@@ -29,11 +69,69 @@ export const LocalProvider = ({ children }) => {
   const [map, setMap] = useState(undefined);
   const [baseLayer, setBaseLayer] = useState(undefined);
   const [markers, setMarkers] = useState([]);
+  const [landmarks, setLandmarks] = useState([]);
   const [prevFields, setPrevFields] = useState(undefined);
   const [selectedMarkerOption, setSelectedMarkerOption] = useState(undefined);
   const [showEditor, setShowEditor] = useState(false);
-  const { data } = useQuery(LANDMARKS);
+  const { data: landmarksData } = useQuery(LANDMARKS);
+  const apolloClient = useApolloClient();
   const { data: greeting } = useQuery(HELLO_QUERY);
+
+  useEffect(() => {
+    if (landmarksData) setLandmarks(landmarksData.landmarks);
+  }, [landmarksData]);
+
+  const [createLandmark, { data: createLandmarkData }] = useMutation(
+    CREATE_LANDMARK, {
+      update(cache, { data: { createLandmark } }){
+        if (createLandmark) {
+          const { landmarks } = cache.readQuery({ query: LANDMARKS });
+          const newLandmarks = [...landmarks, createLandmark];
+          cache.writeQuery({
+            query: LANDMARKS,
+            data: { landmarks: newLandmarks }
+          });
+          setLandmarks(newLandmarks);
+        }
+      }
+    }
+  );
+  const [updateLandmark, { data: updateLandmarkData }] = useMutation(
+    UPDATE_LANDMARK,
+    {
+      update(cache, { data: { updateLandmark } }) {
+        if (updateLandmark) {
+          const { landmarks } = cache.readQuery({ query: LANDMARKS });
+          const newLandmarks = [...landmarks];
+          const idx = landmarks.findIndex(x => x.id === updateLandmark.id);
+          newLandmarks.splice(idx, 1, updateLandmark);
+          cache.writeQuery({
+            query: LANDMARKS,
+            data: { landmarks: newLandmarks }
+          });
+          setLandmarks(newLandmarks);
+        }
+      }
+    }
+  );
+  const [deleteLandmark, { data: deleteLandmarkData }] = useMutation(
+    DELETE_LANDMARK,
+    {
+      update(cache, { data: { deleteLandmark } }) {
+        if (deleteLandmark) {
+          const { landmarks } = cache.readQuery({ query: LANDMARKS });
+          const newLandmarks = landmarks.filter(
+            x => x.id !== deleteLandmark.id
+          );
+          cache.writeQuery({
+            query: LANDMARKS,
+            data: { landmarks: newLandmarks }
+          });
+          setLandmarks(newLandmarks);
+        }
+      }
+    }
+  );
   return (
     <Provider
       value={{
@@ -43,14 +141,23 @@ export const LocalProvider = ({ children }) => {
         setBaseLayer,
         markers,
         setMarkers,
-        data,
+        // data,
+        landmarks,
+        // refetch,
+        apolloClient,
         greeting,
         selectedMarkerOption,
         setSelectedMarkerOption,
         prevFields,
         setPrevFields,
         showEditor,
-        setShowEditor
+        setShowEditor,
+        createLandmark,
+        createLandmarkData,
+        updateLandmark,
+        updateLandmarkData,
+        deleteLandmark,
+        deleteLandmarkData
       }}
     >
       {children}

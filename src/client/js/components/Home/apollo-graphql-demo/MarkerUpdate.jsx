@@ -8,6 +8,7 @@ import {
   Typography
 } from "@material-ui/core";
 import LocalContext from "./LocalContext";
+import Landmark from "../../../models/Landmark";
 
 const useStyles = makeStyles({
   markerUpdate: {
@@ -44,8 +45,17 @@ const defaultFields = [
 ];
 
 export default function MarkerUpdate() {
-  const { prevFields, setShowEditor } = useContext(LocalContext);
+  const {
+    prevFields,
+    setShowEditor,
+    createLandmark,
+    updateLandmark,
+    setPrevFields,
+    refetch,
+    apolloClient
+  } = useContext(LocalContext);
   const [fields, setFields] = useState(prevFields || defaultFields);
+  const isUpdate = !!prevFields;
   const classes = useStyles();
   const handleChange = (value, i) => {
     fields[i].value = value;
@@ -54,14 +64,38 @@ export default function MarkerUpdate() {
   const isValid = () => {
     const coords = fields.find(x => x.key === "coordinates").value.split(",");
     return (
-      fields.some(x => x.value.trim() !== "") &&
+      fields.filter(x => x.key !== "id").every(x => x.value.trim() !== "") &&
       coords.length === 2 &&
       coords.every(x => x.trim() !== "" && !isNaN(parseInt(x.trim())))
     );
   };
+  const cancel = () => {
+    setPrevFields(undefined);
+    setShowEditor(false);
+  };
   const submit = () => {
-    console.log(fields);
+    const { name, coordinates, address, description, url, id } = fields.reduce(
+      (p, v) => {
+        if (v.key === "coordinates") {
+          p[v.key] = v.value
+            .split(",")
+            .slice(0, 2)
+            .map(x => parseFloat(x));
+        } else {
+          p[v.key] = v.value;
+        }
+        return p;
+      },
+      {}
+    );
+    const landmark = new Landmark(name, coordinates, address, url, description, id);
+    if (isUpdate) {
+      updateLandmark({variables: { id: landmark.id, landmark }});
+    } else {
+      createLandmark({ variables: { landmark } });
+    }
     setShowEditor(false); // TODO: get response from server for success update
+    setPrevFields(false);
   };
   return (
     <Grid
@@ -75,10 +109,10 @@ export default function MarkerUpdate() {
       <Grid item xs={6} className={classes.window} container direction="column">
         <Grid item container justify="center" alignItems="flex-end">
           <Typography variant={"h6"}>
-            <strong>{prevFields ? "Update" : "Add"} Marker</strong>
+            <strong>{isUpdate ? "Update" : "Add"} Marker</strong>
           </Typography>
         </Grid>
-        {fields.map(({ label, value }, i) => (
+        {fields.filter(x => x.key !== "id").map(({ label, value }, i) => (
           <Grid item container key={i} justify="center" alignItems="flex-end">
             <Grid item xs={10}>
               <TextField
@@ -107,7 +141,7 @@ export default function MarkerUpdate() {
             className={classes.btn}
             color="secondary"
             variant="contained"
-            onClick={() => setShowEditor(false)}
+            onClick={cancel}
           >
             cancel
           </Button>

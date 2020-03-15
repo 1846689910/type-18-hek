@@ -5,11 +5,11 @@ const Path = require("path");
 const landmarksJsonPath = Path.resolve("src/data/landmarks.geo.json");
 
 const landmarksPartial = {
-  landmark: ({ name }) =>
+  landmark: ({ id }) =>
     new TextFileReader()
       .read(landmarksJsonPath)
       .toJson([])
-      .find(x => x.name === name),
+      .find(x => x.id === id),
   landmarks(params) {
     // params will contain {name, address, ...} some fields that user passed in when query
     const landmarks = new TextFileReader().read(landmarksJsonPath).toJson([]);
@@ -18,22 +18,21 @@ const landmarksPartial = {
   },
   createLandmark({ landmark }) {
     const landmarks = new TextFileReader().read(landmarksJsonPath).toJson([]);
-    if (!landmarks.find(x => x.name === landmark.name)) {
-      landmarks.push(landmark);
-      return true;
-    }
-    return false;
+    const nextId = Math.max.apply(null, landmarks.map(x => x.id)) + 1;
+    landmark.id = nextId;
+    landmarks.push(landmark);
+    return landmark;
   },
-  deleteLandmark({ name }) {
+  deleteLandmark({ id }) {
     const landmarks = new TextFileReader().read(landmarksJsonPath).toJson([]);
-    const idx = landmarks.findIndex(x => x.name === name);
-    if (idx < 0) return false;
-    landmarks.splice(idx, 1);
-    return true;
+    const idx = landmarks.findIndex(x => x.id === id);
+    if (idx < 0) return null;
+    const [deleted] = landmarks.splice(idx, 1);
+    return deleted;
   },
-  updateLandmark({ name, landmark }) {
+  updateLandmark({ id, landmark }) {
     const landmarks = new TextFileReader().read(landmarksJsonPath).toJson([]);
-    const idx = landmarks.findIndex(x => x.name === name);
+    const idx = landmarks.findIndex(x => x.id === id);
     if (idx < 0) return null;
     landmarks.splice(idx, 1, landmark);
     return landmark;

@@ -30,8 +30,9 @@ export default function Map() {
     setMap,
     baseLayer,
     setBaseLayer,
+    markers,
     setMarkers,
-    data,
+    landmarks,
     greeting,
     setSelectedMarkerOption,
     showEditor
@@ -46,12 +47,11 @@ export default function Map() {
     }
   }, [map, greeting]);
   useEffect(() => {
-    if (map && data && data.landmarks) {
-      setMarkers(
-        configureMarkers(map, data.landmarks, setSelectedMarkerOption)
-      );
+    if (map && landmarks) {
+      if (markers) markers.forEach(x => map.removeLayer(x));
+      setMarkers(configureMarkers(map, landmarks, setSelectedMarkerOption));
     }
-  }, [map, data]);
+  }, [map, landmarks]);
   return (
     <Fragment>
       <div className={classes.map} ref={mapRef} />

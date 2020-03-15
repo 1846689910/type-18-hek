@@ -3,10 +3,12 @@ import PropTypes from "prop-types";
 import { Grid, makeStyles, IconButton } from "@material-ui/core";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import AddIcon from "@material-ui/icons/Add";
 import Select, { components } from "react-select";
 import LocalContext from "./LocalContext";
 import Promise from "bluebird";
 import { initLatLng, initZoom } from "./Map";
+import Landmark from "../../../models/Landmark";
 
 const useStyles = makeStyles({
   markerSelect: {
@@ -14,13 +16,19 @@ const useStyles = makeStyles({
     zIndex: 99,
     top: "20px",
     left: "20px"
+  },
+  addIcon: {
+    fontSize: "20px"
+  },
+  addBtn: {
+    width: "35px"
   }
 });
 
 export default function MarkerSelect() {
   const classes = useStyles();
   const {
-    data,
+    landmarks,
     markers,
     map,
     selectedMarkerOption,
@@ -28,9 +36,9 @@ export default function MarkerSelect() {
   } = useContext(LocalContext);
   const [landmarkOptions, setLandmarkOptions] = useState([]);
   useEffect(() => {
-    if (data && data.landmarks && markers.length > 0) {
+    if (landmarks && markers.length > 0) {
       setLandmarkOptions(
-        data.landmarks
+        landmarks
           .map(({ name }, i) => ({
             value: markers[i],
             label: name
@@ -38,7 +46,7 @@ export default function MarkerSelect() {
           .sort((x, y) => x.label.localeCompare(y.label))
       );
     }
-  }, [data, markers]);
+  }, [landmarks, markers]);
   const handleChange = async selected => {
     const marker = selected.value;
     if (selectedMarkerOption) {
@@ -67,7 +75,8 @@ export default function MarkerSelect() {
           options={landmarkOptions}
           onChange={handleChange}
           components={{
-            Option: CustomOption
+            Option: CustomOption,
+            IndicatorsContainer: CustomIndicatorsContainer
           }}
         />
       </Grid>
@@ -75,13 +84,24 @@ export default function MarkerSelect() {
   );
 }
 function CustomOption({ children, ...props }) {
-  const { setShowEditor } = useContext(LocalContext);
+  const { label } = props.data;
+  const {
+    setShowEditor,
+    landmarks,
+    setPrevFields,
+    deleteLandmark
+  } = useContext(LocalContext);
   const handleUpdate = e => {
     e.stopPropagation();
+    const obj = landmarks.find(x => x.name === label);
+    const fields = Landmark.fromObject(obj).toFields();
+    setPrevFields(fields);
     setShowEditor(true);
   };
   const handleDelete = e => {
     e.stopPropagation();
+    const { id } = landmarks.find(x => x.name === label);
+    deleteLandmark({ variables: { id } });
   };
   return (
     <components.Option {...props}>
@@ -105,6 +125,36 @@ function CustomOption({ children, ...props }) {
 }
 CustomOption.propTypes = {
   children: PropTypes.string,
-  data: PropTypes.object,
+  props: PropTypes.shape({
+    data: PropTypes.object
+  }),
+  data: PropTypes.object
+};
+function CustomIndicatorsContainer({ children, ...props }) {
+  const { setShowEditor, setPrevFields } = useContext(LocalContext);
+  const classes = useStyles();
+  const handleClick = e => {
+    e.stopPropagation();
+    setPrevFields(undefined);
+    setShowEditor(true);
+  };
+  return (
+    <div>
+      <components.IndicatorsContainer {...props}>
+        {children}
+        <IconButton
+          size="small"
+          color="default"
+          className={classes.addBtn}
+          onClick={handleClick}
+        >
+          <AddIcon className={classes.addIcon} />
+        </IconButton>
+      </components.IndicatorsContainer>
+    </div>
+  );
+}
+CustomIndicatorsContainer.propTypes = {
+  children: PropTypes.array,
   props: PropTypes.object
 };
