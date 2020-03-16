@@ -20,6 +20,7 @@
     "@typescript-eslint/parser": "^2.20.0",
     "apollo-boost": "^0.4.7",
     "apollo-server-express": "^2.11.0",
+    "apollo-server-hapi": "^2.11.0",
     "apollo-server-koa": "^2.11.0",
     "babel-eslint": "10.0.3",
     "babel-jest": "^25.1.0",
