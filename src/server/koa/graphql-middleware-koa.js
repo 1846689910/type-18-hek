@@ -1,5 +1,7 @@
 import { schema, root } from "../utils/graphql";
 import { graphql } from "graphql";
+import { ApolloServer } from "apollo-server-koa";
+import { typeDefs, resolvers } from "../utils/graphql";
 
 const graphqlMiddlewareKoa = async ctx => {
   const { query } = ctx.request.body;
@@ -7,4 +9,6 @@ const graphqlMiddlewareKoa = async ctx => {
   ctx.body = await graphql(schema, query, root);
 };
 
-module.exports = { graphqlMiddlewareKoa };
+const graphqlMiddlewareKoa2 = new ApolloServer({ typeDefs, resolvers }).getMiddleware();
+
+module.exports = { graphqlMiddlewareKoa, graphqlMiddlewareKoa2 };

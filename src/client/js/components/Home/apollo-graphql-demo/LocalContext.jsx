@@ -4,8 +4,8 @@ import { useQuery, useMutation, useApolloClient } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
 export const LANDMARKS = gql`
-  query Landmark($name: String, $address: String) {
-    landmarks(name: $name, address: $address) {
+  query Landmark {
+    landmarks {
       id
       name
       address
@@ -76,9 +76,10 @@ export const LocalProvider = ({ children }) => {
   const { data: landmarksData } = useQuery(LANDMARKS);
   const apolloClient = useApolloClient();
   const { data: greeting } = useQuery(HELLO_QUERY);
-
+  console.log(greeting);
   useEffect(() => {
     if (landmarksData) setLandmarks(landmarksData.landmarks);
+    console.log(landmarksData);
   }, [landmarksData]);
 
   const [createLandmark, { data: createLandmarkData }] = useMutation(
@@ -118,6 +119,7 @@ export const LocalProvider = ({ children }) => {
     DELETE_LANDMARK,
     {
       update(cache, { data: { deleteLandmark } }) {
+        console.log(deleteLandmark);
         if (deleteLandmark) {
           const { landmarks } = cache.readQuery({ query: LANDMARKS });
           const newLandmarks = landmarks.filter(
@@ -132,6 +134,7 @@ export const LocalProvider = ({ children }) => {
       }
     }
   );
+  console.log(deleteLandmarkData);
   return (
     <Provider
       value={{
