@@ -1,4 +1,4 @@
-class Landmark {
+export default class Landmark {
   /**
    *
    * @param {String} name
@@ -41,4 +41,4 @@ class Landmark {
     { key: "id", value: this.id }
   ];
 };
-module.exports = Landmark;
+// module.exports = Landmark;
