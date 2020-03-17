@@ -1,6 +1,9 @@
 import { schema, root } from "../utils/graphql";
 import { graphql } from "graphql";
 
+/**
+ * @deprecated use graphql-middleware-hapi
+ */
 module.exports = {
   name: "GraphQL-Plugin",
   version: "1.0.0",

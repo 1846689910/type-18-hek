@@ -3,6 +3,10 @@ import { graphql } from "graphql";
 import { ApolloServer } from "apollo-server-koa";
 import { typeDefs, resolvers } from "../utils/graphql";
 
+/**
+ * @deprecated
+ * @param {Object} ctx 
+ */
 const graphqlMiddlewareKoa = async ctx => {
   const { query } = ctx.request.body;
   console.log(query);

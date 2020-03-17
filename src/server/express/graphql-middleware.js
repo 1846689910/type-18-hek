@@ -1,10 +1,12 @@
-// TODO: https://graphql.org/code/#express-graphql-graphql-js-running-an-express-graphql-server-github-https-github-com-graphql-express-graphql-npm-https-www-npmjs-com-package-express-graphql
 const graphqlHTTP = require("express-graphql");
 const { schema, root } = require("../utils/graphql");
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs, resolvers } = require("../utils/graphql");
 
 
+/**
+ * @deprecated
+ */
 const graphqlMiddleware = graphqlHTTP({
   schema,
   rootValue: root,

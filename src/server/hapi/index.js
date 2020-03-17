@@ -11,7 +11,6 @@ const server = Hapi.server({
 });
 (async () => {
   await server.register([
-    // { plugin: require("./graphql-plugin")},
     { plugin: require("./ssr-plugin"), options: { staticRoot } },
     require("inert") // configure plugin inert to load static resources
   ]);
