@@ -50,9 +50,7 @@ export default function MarkerUpdate() {
     setShowEditor,
     createLandmark,
     updateLandmark,
-    setPrevFields,
-    refetch,
-    apolloClient
+    setPrevFields
   } = useContext(LocalContext);
   const [fields, setFields] = useState(prevFields || defaultFields);
   const isUpdate = !!prevFields;
@@ -88,13 +86,20 @@ export default function MarkerUpdate() {
       },
       {}
     );
-    const landmark = new Landmark(name, coordinates, address, url, description, id);
+    const landmark = new Landmark(
+      name,
+      coordinates,
+      address,
+      url,
+      description,
+      id
+    );
     if (isUpdate) {
-      updateLandmark({variables: { id: landmark.id, landmark }});
+      updateLandmark({ variables: { id: landmark.id, landmark } });
     } else {
       createLandmark({ variables: { landmark } });
     }
-    setShowEditor(false); // TODO: get response from server for success update
+    setShowEditor(false);
     setPrevFields(false);
   };
   return (
@@ -112,24 +117,26 @@ export default function MarkerUpdate() {
             <strong>{isUpdate ? "Update" : "Add"} Marker</strong>
           </Typography>
         </Grid>
-        {fields.filter(x => x.key !== "id").map(({ label, value }, i) => (
-          <Grid item container key={i} justify="center" alignItems="flex-end">
-            <Grid item xs={10}>
-              <TextField
-                autoFocus
-                margin="dense"
-                label={label}
-                type="text"
-                fullWidth
-                value={value}
-                onChange={e => handleChange(e.target.value, i)}
-                inputProps={{
-                  className: classes.input
-                }}
-              />
+        {fields
+          .filter(x => x.key !== "id")
+          .map(({ label, value }, i) => (
+            <Grid item container key={i} justify="center" alignItems="flex-end">
+              <Grid item xs={10}>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  label={label}
+                  type="text"
+                  fullWidth
+                  value={value}
+                  onChange={e => handleChange(e.target.value, i)}
+                  inputProps={{
+                    className: classes.input
+                  }}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        ))}
+          ))}
         <Grid
           item
           container

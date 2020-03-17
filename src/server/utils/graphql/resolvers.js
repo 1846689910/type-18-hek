@@ -1,8 +1,5 @@
-const TextFileReader = require("../TextFileReader");
+const Fs = require("fs");
 const Path = require("path");
-
-// const studentsJsonPath = Path.resolve("src/data/students.json");
-// const landmarksJsonPath = Path.resolve("src/data/landmarks.geo.json");
 
 let _landmarks;
 
@@ -13,7 +10,8 @@ let _landmarks;
 const localMockDataFetch = () => {
   if (!_landmarks) {
     const landmarksJsonPath = Path.resolve("src/data/landmarks.geo.json");
-    _landmarks = new TextFileReader().read(landmarksJsonPath).toJson([]);
+    const content = Fs.readFileSync(landmarksJsonPath, { encoding: "utf8" });
+    _landmarks = JSON.parse(content);
   }
   return _landmarks;
 };
@@ -22,15 +20,6 @@ module.exports = {
   Query: {
     hello: () => "Hello, type-18-hek is now boosted by Apollo + GraphQL",
     landmark: ({ id }) => localMockDataFetch().find(x => x.id === id),
-    // landmarks(params) {
-    //   console.log("here123");
-    //   // params will contain {name, address, ...} some fields that user passed in when query
-    //   const landmarks = localMockDataFetch(); // new TextFileReader().read(landmarksJsonPath).toJson([]);
-
-    //   const keys = Object.keys(params);
-    //   console.log(landmarks);
-    //   return landmarks.filter(x => keys.every(key => x[key] === params[key]));
-    // },
     landmarks() {
       const landmarks = localMockDataFetch();
       return landmarks;
@@ -38,7 +27,7 @@ module.exports = {
   },
   Mutation: {
     createLandmark(parent, { landmark }) {
-      const landmarks = localMockDataFetch(); // new TextFileReader().read(landmarksJsonPath).toJson([]);
+      const landmarks = localMockDataFetch();
       const nextId =
         Math.max.apply(
           null,
@@ -46,23 +35,20 @@ module.exports = {
         ) + 1;
       landmark.id = `${nextId}`;
       landmarks.push(landmark);
-      console.log(landmarks);
       return landmark;
     },
     deleteLandmark(parent, { id }) {
-      const landmarks = localMockDataFetch(); // new TextFileReader().read(landmarksJsonPath).toJson([]);
+      const landmarks = localMockDataFetch();
       const idx = landmarks.findIndex(x => x.id === id);
       if (idx < 0) return null;
       const [deleted] = landmarks.splice(idx, 1);
-      console.log(landmarks);
       return deleted;
     },
     updateLandmark(parent, { id, landmark }) {
-      const landmarks = localMockDataFetch(); // new TextFileReader().read(landmarksJsonPath).toJson([]);
+      const landmarks = localMockDataFetch();
       const idx = landmarks.findIndex(x => x.id === id);
       if (idx < 0) return null;
       landmarks.splice(idx, 1, landmark);
-      console.log(landmarks);
       return landmark;
     }
   }

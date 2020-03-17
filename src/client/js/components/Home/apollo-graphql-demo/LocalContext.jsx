@@ -76,10 +76,8 @@ export const LocalProvider = ({ children }) => {
   const { data: landmarksData } = useQuery(LANDMARKS);
   const apolloClient = useApolloClient();
   const { data: greeting } = useQuery(HELLO_QUERY);
-  console.log(greeting);
   useEffect(() => {
     if (landmarksData) setLandmarks(landmarksData.landmarks);
-    console.log(landmarksData);
   }, [landmarksData]);
 
   const [createLandmark, { data: createLandmarkData }] = useMutation(
@@ -119,7 +117,6 @@ export const LocalProvider = ({ children }) => {
     DELETE_LANDMARK,
     {
       update(cache, { data: { deleteLandmark } }) {
-        console.log(deleteLandmark);
         if (deleteLandmark) {
           const { landmarks } = cache.readQuery({ query: LANDMARKS });
           const newLandmarks = landmarks.filter(
@@ -134,7 +131,6 @@ export const LocalProvider = ({ children }) => {
       }
     }
   );
-  console.log(deleteLandmarkData);
   return (
     <Provider
       value={{
@@ -144,9 +140,7 @@ export const LocalProvider = ({ children }) => {
         setBaseLayer,
         markers,
         setMarkers,
-        // data,
         landmarks,
-        // refetch,
         apolloClient,
         greeting,
         selectedMarkerOption,

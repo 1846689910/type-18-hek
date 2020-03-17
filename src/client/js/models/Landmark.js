@@ -14,8 +14,6 @@ export default class Landmark {
     this.url = url;
     this.description = description;
     this.id = id;
-    // this.lng = coordinates && coordinates[0];
-    // this.lat = coordinates && coordinates[1];
   }
   /**
    * @param {Object} obj
@@ -41,4 +39,3 @@ export default class Landmark {
     { key: "id", value: this.id }
   ];
 };
-// module.exports = Landmark;
