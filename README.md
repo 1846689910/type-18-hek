@@ -68,3 +68,23 @@ yarn test
 - The entry file is `./src/client/js/index.jsx`
 - The router and redux store, actions, reducers are defined in `./src/client/js/settings/`
 - The entry file in server is `./src/server/index.js`
+
+### **Apollo + GraphQL Demo structure**
+
+- dev
+  - client: 
+    - use `ApolloProvider` at `./src/client/js/index.jsx`
+    - use `useQuery` and `useMutation` at `./src/client/js/components/Home/apollo-graphql-demo/LocalContext.jsx`
+    - update local state and apollo cache after mutation
+    - **leaflet css link tag was inserted into `./src/client/public/index.html` template**
+    - in order to avoid render leaflet map on server side, use `loadable-components` for dynamic loading, and disable `ssr`
+  - server: 
+    - use `webpack-dev-server`
+    - use config at `./configwebpackDevServer.config.js`, where apply `graphqlMiddleware2` middleware of `./src/server/express/graphql-middleware`
+- prod
+  - client: 
+    - same as the above dev client
+  - server: 
+    - use `resolvers` and `typeDefs` in `./src/server/utils/graphql`
+    - use `apollo-server-hapi/koa/express` for hapi/koa/express server respectively
+    - the used apollo middleware/server will read data from `./src/data/landmarks.geo.json` with node.js `fs` to mock up the process of data fetching.
