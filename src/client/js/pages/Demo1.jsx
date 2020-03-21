@@ -1,42 +1,24 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
-import { Grid, Container, Typography, Button } from "@material-ui/core";
-import { setCounterAction } from "../settings/actions";
+import { Grid, Container } from "@material-ui/core";
 import Nav from "../components/Nav";
+import DemoWrapper from "../components/DemoWrapper";
+import ReduxStateDemo from "../components/Demo1/ReduxStateDemo";
+import RecomposeDemo from "../components/Demo1/RecomposeDemo";
 
 export default function Demo1(props) {
-  const counter = useSelector(state => state.counter);
-  const dispatch = useDispatch();
   console.log(props.route.partial);
   return (
     <Fragment>
       <Nav />
       <Container maxWidth="md">
         <Grid container>
-          <Grid container item xs={12} justify="center">
-            <Typography component="strong">{counter.value}</Typography>
-          </Grid>
-          <Grid container item xs={12}>
-            <Grid container item xs={6} justify="center">
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => dispatch(setCounterAction(counter.value + 1))}
-              >
-                increase
-              </Button>
-            </Grid>
-            <Grid container item xs={6} justify="center">
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => dispatch(setCounterAction(counter.value - 1))}
-              >
-                decrease
-              </Button>
-            </Grid>
-          </Grid>
+          <DemoWrapper title="Redux State Demo">
+            <ReduxStateDemo/>
+          </DemoWrapper>
+          <DemoWrapper title="Recompose Demo">
+            <RecomposeDemo />
+          </DemoWrapper>
         </Grid>
       </Container>
     </Fragment>

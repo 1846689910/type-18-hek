@@ -10,7 +10,7 @@ require("@babel/register")({
   root: `./${server}`,
   ignore: [/(node_modules)/],
   presets: ["@babel/preset-env", "@babel/preset-react"],
-  plugins: [...babelRcPlugins]
+  plugins: [...babelRcPlugins, "@babel/plugin-proposal-class-properties"]
 });
 
 require(`./${server}`);
