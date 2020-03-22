@@ -67,6 +67,9 @@ module.exports = function(webpackEnv) {
   const isEnvProductionProfile =
     isEnvProduction && process.argv.includes("--profile");
 
+  const doAnalyzeBundle =
+    isEnvProduction && process.argv.includes("--bundle-analyze");
+
   // Webpack uses `publicPath` to determine where the app is being served from.
   // It requires a trailing slash, or the file assets will get an incorrect path.
   // In development, we always serve from the root. This makes config easier.
@@ -576,7 +579,7 @@ module.exports = function(webpackEnv) {
       ]
     },
     plugins: [
-      process.env.NODE_ENV !== "development" && new BundleAnalyzerPlugin({ 
+      doAnalyzeBundle && new BundleAnalyzerPlugin({ 
         generateStatsFile: true, 
         analyzerMode: "static", 
         reportFilename: "bundle-analyze-report.html" 

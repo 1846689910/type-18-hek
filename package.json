@@ -108,6 +108,7 @@
   "scripts": {
     "start": "node scripts/start",
     "build": "node scripts/build",
+    "analyze": "node scripts/build --bundle-analyze",
     "test": "node scripts/test",
     "browser-automation": "node scripts/browser-automation",
     "express": "npm run build && node src/server",
