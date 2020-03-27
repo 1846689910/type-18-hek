@@ -66,7 +66,7 @@ const getRenderedString = url => {
   // dom.querySelector("body").appendChild(extractor.getScriptTags());
 
   return dom.toString().replace(
-    '<span id="body-after-root"></span>',
+    "<span id=\"body-after-root\"></span>",
     `
     <noscript>
       <h4>JavaScript is Disabled</h4>
