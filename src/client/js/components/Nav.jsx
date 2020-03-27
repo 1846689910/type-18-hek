@@ -10,11 +10,16 @@ import {
   Button,
   ButtonGroup,
   Menu,
-  MenuItem
+  MenuItem,
+  Chip
 } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import MediaQueryContext from "./MediaQueryContext";
+import MediaQueryContext, { QUERY } from "./MediaQueryContext";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import SmartphoneIcon from "@material-ui/icons/Smartphone";
+import TabletMacIcon from "@material-ui/icons/TabletMac";
+import LaptopIcon from "@material-ui/icons/Laptop";
+import HdIcon from "@material-ui/icons/Hd";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -171,7 +176,6 @@ TabButtonGroup.propTypes = {
 function Title() {
   const history = useHistory();
   const classes = useStyles();
-  const { media } = useContext(MediaQueryContext);
   return (
     <Container className={classes.hc} maxWidth="md">
       <Grid
@@ -183,14 +187,32 @@ function Title() {
         <Typography variant="h4" onClick={() => history.push("/")}>
           Type 18 hek
         </Typography>
-        <Typography>
-          <strong>
-            <i>media: {media}</i>
-          </strong>
-        </Typography>
+        <MediaChip />
       </Grid>
     </Container>
   );
+}
+
+function MediaChip() {
+  const { media } = useContext(MediaQueryContext);
+  let icon;
+  switch (media) {
+    case QUERY.MOBILE_S:
+    case QUERY.MOBILE_M:
+    case QUERY.MOBILE_L:
+      icon = <SmartphoneIcon />;
+      break;
+    case QUERY.TABLET:
+      icon = <TabletMacIcon />;
+      break;
+    case QUERY.LAPTOP:
+    case QUERY.LAPTOP_L:
+      icon = <LaptopIcon />;
+      break;
+    default:
+      icon = <HdIcon />;
+  }
+  return <Chip label={media} icon={icon} variant="outlined" size="small" />;
 }
 
 function FolderDropdown(props) {
