@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import {
@@ -13,6 +13,7 @@ import {
   MenuItem
 } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import MediaQueryContext from "./MediaQueryContext";
 import { useHistory, useRouteMatch } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
@@ -170,11 +171,22 @@ TabButtonGroup.propTypes = {
 function Title() {
   const history = useHistory();
   const classes = useStyles();
+  const { media } = useContext(MediaQueryContext);
   return (
     <Container className={classes.hc} maxWidth="md">
-      <Grid className={classes.hcg} container alignItems="flex-end">
+      <Grid
+        className={classes.hcg}
+        container
+        alignItems="flex-end"
+        justify="space-between"
+      >
         <Typography variant="h4" onClick={() => history.push("/")}>
           Type 18 hek
+        </Typography>
+        <Typography>
+          <strong>
+            <i>media: {media}</i>
+          </strong>
         </Typography>
       </Grid>
     </Container>
