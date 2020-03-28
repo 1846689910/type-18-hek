@@ -7,6 +7,7 @@ import { routes } from "../../client/js/settings/routes";
 import { renderRoutes } from "react-router-config";
 import { configureStore } from "../../client/js/settings/store";
 import { initialState } from "../../client/js/settings/reducers";
+import { MediaQueryProvider } from "../../client/js/components/MediaQueryContext";
 import { StaticRouter } from "react-router-dom";
 import { parse as parseHtml } from "node-html-parser";
 import serialize from "serialize-javascript";
@@ -42,7 +43,9 @@ const getRenderedString = url => {
       <Provider store={store}>
         <ApolloProvider client={apolloClient}>
           <StaticRouter location={url} context={{}}>
-            <App />
+            <MediaQueryProvider>
+              <App />
+            </MediaQueryProvider>
           </StaticRouter>
         </ApolloProvider>
       </Provider>

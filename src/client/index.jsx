@@ -16,6 +16,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
 
 import { ApolloProvider } from "@apollo/react-hooks";
+import { MediaQueryProvider } from "./js/components/MediaQueryContext";
 import * as serviceWorker from "./js/serviceWorker";
 
 const store = configureStore();
@@ -28,7 +29,7 @@ const start = App => {
   const link = new HttpLink({
     uri: "http://localhost:3000/graphql"
   });
-  const apolloClient = new ApolloClient({cache, link});
+  const apolloClient = new ApolloClient({ cache, link });
   loadableReady(() =>
     reactStart(
       <Provider store={store}>
@@ -36,7 +37,9 @@ const start = App => {
           <ThemeProvider theme={theme}>
             <BrowserRouter>
               <CssBaseline />
-              <App />
+              <MediaQueryProvider>
+                <App />
+              </MediaQueryProvider>
             </BrowserRouter>
           </ThemeProvider>
         </ApolloProvider>
