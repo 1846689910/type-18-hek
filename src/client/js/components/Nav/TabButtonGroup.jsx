@@ -100,7 +100,10 @@ const useStyles = makeStyles(theme => ({
     background:
       routeMatch && routeMatch.params.fileId === `${fileId}`
         ? theme.palette.secondary.main
-        : ""
+        : "",
+    color:
+      routeMatch && routeMatch.params.fileId === `${fileId}` ? "white" : "",
+    fontWeight: "bold"
   })
 }));
 
