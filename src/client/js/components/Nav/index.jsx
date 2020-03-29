@@ -42,6 +42,13 @@ const useStyles = makeStyles({
   },
   folders_btn: {
     width: "20px"
+  },
+  innerGrid: {
+    position: "absolute"
+  },
+  innerSub: {
+    fontSize: "12px",
+    marginLeft: "5px"
   }
 });
 
@@ -63,16 +70,18 @@ export default function Nav() {
     },
     { path: `/demo2/${counter.value}`, label: "Demo2", key: "/demo2/:id" }
   ];
-  const { isMobile, isTablet } = useContext(MediaQueryContext);
+  const { media, isMobile, isTablet } = useContext(MediaQueryContext);
 
   let inner;
   if (isMobile || isTablet) {
     inner = (
       <Fragment>
         <MobileTabButton {...{ classes, tabs }} />
-        <Grid container justify="center" style={{ position: "absolute" }}>
+        <Grid container justify="center" className={classes.innerGrid}>
           <Typography variant="h6">
-            <strong>Type 18 hek</strong>
+            <strong>
+              Type 18 hek<sub className={classes.innerSub}>{media}</sub>
+            </strong>
           </Typography>
         </Grid>
       </Fragment>
