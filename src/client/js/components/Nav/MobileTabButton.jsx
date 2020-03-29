@@ -12,6 +12,12 @@ const useStyles = makeStyles({
   },
   menuItem: {
     minWidth: "150px"
+  },
+  btn: {
+    padding: "5px 0",
+    minWidth: 0,
+    width: "40px",
+    zIndex: 999
   }
 });
 
@@ -25,6 +31,7 @@ export default function MobileTabButton({ classes, tabs }) {
         color="default"
         onClick={e => setAnchor(e.target)}
         size="small"
+        className={mobileClasses.btn}
       >
         <MenuIcon />
       </Button>

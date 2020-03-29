@@ -1,11 +1,17 @@
 import React, { Fragment, useContext } from "react";
 import { useSelector } from "react-redux";
-import { Container, Grid, AppBar, makeStyles } from "@material-ui/core";
+import {
+  Container,
+  Grid,
+  AppBar,
+  makeStyles,
+  Typography
+} from "@material-ui/core";
 import Title from "./Title";
 import TabButton from "./TabButton";
 import TabButtonGroup from "./TabButtonGroup";
 import MobileTabButton from "./MobileTabButton";
-import MediaQueryContext, { QUERY } from "../MediaQueryContext";
+import MediaQueryContext from "../MediaQueryContext";
 
 const useStyles = makeStyles({
   root: {
@@ -22,7 +28,8 @@ const useStyles = makeStyles({
   },
   container_grid: {
     width: "100%",
-    height: "50px"
+    height: "50px",
+    position: "relative"
   },
   btnGroup: {
     margin: "0 20px",
@@ -56,11 +63,20 @@ export default function Nav() {
     },
     { path: `/demo2/${counter.value}`, label: "Demo2", key: "/demo2/:id" }
   ];
-  const { media } = useContext(MediaQueryContext);
+  const { isMobile, isTablet } = useContext(MediaQueryContext);
 
   let inner;
-  if (media && (media.startsWith("mobile") || media === QUERY.TABLET)) {
-    inner = <MobileTabButton {...{ classes, tabs }} />;
+  if (isMobile || isTablet) {
+    inner = (
+      <Fragment>
+        <MobileTabButton {...{ classes, tabs }} />
+        <Grid container justify="center" style={{ position: "absolute" }}>
+          <Typography variant="h6">
+            <strong>Type 18 hek</strong>
+          </Typography>
+        </Grid>
+      </Fragment>
+    );
   } else {
     inner = (
       <Grid container justify="center">
@@ -74,7 +90,7 @@ export default function Nav() {
 
   return (
     <Fragment>
-      <Title classes={classes} />
+      {!isMobile && !isTablet && <Title classes={classes} />}
       <AppBar position="static" className={classes.root}>
         <Container maxWidth="md">
           <Grid
