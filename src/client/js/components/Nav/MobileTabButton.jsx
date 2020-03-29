@@ -1,7 +1,13 @@
 import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import { makeStyles, Button, Menu, MenuItem } from "@material-ui/core";
+import {
+  makeStyles,
+  Button,
+  Menu,
+  MenuItem,
+  IconButton
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import { useHistory } from "react-router-dom";
@@ -75,18 +81,25 @@ CustomMenuItem.propTypes = {
 const CustomMenuItemWithSubmenu = React.forwardRef(
   ({ tab, setAnchor: setUpperAnchor }, ref) => {
     const history = useHistory();
-    const { label, routes } = tab;
+    const { label, routes, path } = tab;
     const [anchor, setAnchor] = useState(null);
     const handleClick = x => {
       history.push(routes.path.replace(":fileId", x));
       setAnchor(null);
       setUpperAnchor(null);
     };
+    const folderClick = () => {
+      history.push(path);
+      setAnchor(null);
+      setUpperAnchor(null);
+    };
     return (
       <Fragment>
-        <MenuItem ref={ref} onClick={e => setAnchor(e.target)}>
-          {label}
-          {<ArrowRightIcon />}
+        <MenuItem ref={ref}>
+          <div onClick={folderClick}>{label}</div>
+          <IconButton size="small" onClick={e => setAnchor(e.target)}>
+            <ArrowRightIcon />
+          </IconButton>
         </MenuItem>
         {
           <Menu
