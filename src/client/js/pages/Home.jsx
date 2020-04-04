@@ -4,7 +4,7 @@ import { Container, Grid } from "@material-ui/core";
 import Nav from "../components/Nav";
 import DemoWrapper from "../components/DemoWrapper";
 import ModuledStyleDemo from "../components/Home/ModuledStyleDemo";
-import DynamicImportDemo from "../components/Home/DynamicImportDemo";
+import DynamicImportDemo from "../components/Home/dynamic-import-demo";
 import ApolloGraphqlDemo from "../components/Home/apollo-graphql-demo";
 
 export default function Home(props) {
