@@ -2,17 +2,35 @@ import { schema, root } from "../utils/graphql";
 import { graphql } from "graphql";
 import { ApolloServer } from "apollo-server-koa";
 import { typeDefs, resolvers } from "../utils/graphql";
-
+import http from "http";
 /**
  * @deprecated
- * @param {Object} ctx 
+ * @param {Object} ctx
  */
-const graphqlMiddlewareKoa = async ctx => {
+const graphqlMiddlewareKoa = async (ctx) => {
   const { query } = ctx.request.body;
   console.log(query);
   ctx.body = await graphql(schema, query, root);
 };
 
-const graphqlMiddlewareKoa2 = new ApolloServer({ typeDefs, resolvers }).getMiddleware();
+const koaApolloServer = new ApolloServer({ typeDefs, resolvers });
 
-module.exports = { graphqlMiddlewareKoa, graphqlMiddlewareKoa2 };
+const graphqlMiddlewareKoa2 = koaApolloServer.getMiddleware();
+
+/**
+ * @deprecated
+ * @description generate a http server wrapper for koa server
+ * @param {Koa} koaServer koa server
+ */
+const getGraphqlSubscriptionsHttpServer = (koaServer) => {
+  const httpServer = http.createServer(koaServer);
+  koaApolloServer.installSubscriptionHandlers(httpServer);
+  return httpServer;
+};
+
+module.exports = {
+  graphqlMiddlewareKoa,
+  graphqlMiddlewareKoa2,
+  koaApolloServer,
+  getGraphqlSubscriptionsHttpServer,
+};

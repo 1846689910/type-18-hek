@@ -4,7 +4,11 @@ import serve from "koa-static";
 import Router from "koa-router";
 // import koaBody from "koa-body";
 import { middleware as ssrMiddleware } from "../express/ssr-middleware";
-import { graphqlMiddlewareKoa2 } from "./graphql-middleware-koa";
+import {
+  graphqlMiddlewareKoa2,
+  koaApolloServer,
+} from "./graphql-middleware-koa";
+import { publishServerTime } from "../utils/utils";
 
 import c2k from "koa-connect";
 import chalk from "chalk";
@@ -21,8 +25,17 @@ app.use(router.routes());
 
 app.use(c2k(ssrMiddleware));
 
-app.listen(PORT, () =>
+const httpServer = app.listen(PORT, () => {
   console.log(
-    chalk.bold.blue(`Koa server is running at http://localhost:${PORT}`)
-  )
-);
+    chalk.bold.blue(`Koa server is running at http://localhost:${PORT}`),
+  );
+  console.log(
+    chalk.yellow(`
+      - graphql at http://localhost:${PORT}${koaApolloServer.graphqlPath}
+      - apollo graphql subscriptions at ws://localhost:${PORT}${koaApolloServer.subscriptionsPath}
+  `),
+  );
+  publishServerTime();
+});
+
+koaApolloServer.installSubscriptionHandlers(httpServer);

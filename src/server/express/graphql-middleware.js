@@ -21,7 +21,8 @@ const expressApolloServer = new ApolloServer({
 const graphqlMiddleware2 = expressApolloServer.getMiddleware();
 
 /**
- * generate a http server wrapper for express server
+ * @deprecated
+ * @description generate a http server wrapper for express server
  * @param {Express} expressServer express server
  */
 const getGraphqlSubscriptionsHttpServer = expressServer => {
