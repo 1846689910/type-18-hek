@@ -20,6 +20,8 @@ import { getMainDefinition } from "apollo-utilities";
 import { MediaQueryProvider } from "./js/components/MediaQueryContext";
 import * as serviceWorker from "./js/serviceWorker";
 
+const isDev = process.env.NODE_ENV === "development";
+
 const useApolloClient = () => {
   const cache = new InMemoryCache();
   // Create a http link:
@@ -30,7 +32,7 @@ const useApolloClient = () => {
   const wsLink = new WebSocketLink({
     uri: "ws://localhost:3000/graphql",
     options: {
-      reconnect: true,
+      reconnect: !isDev,
     },
   });
   const link = split(

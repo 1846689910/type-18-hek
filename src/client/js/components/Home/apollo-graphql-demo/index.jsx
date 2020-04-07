@@ -2,6 +2,7 @@ import React from "react";
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import { LocalProvider } from "./LocalContext";
 import loadable from "@loadable/component";
+import ServerTime from "./ServerTime";
 
 const useStyles = makeStyles({
   outer: {
@@ -31,6 +32,7 @@ export default function ApolloGraphqlDemo() {
   const classes = useStyles();
   return (
     <LocalProvider>
+      <ServerTime />
       <Grid container justify="center" className={classes.outer}>
         <MapDemo />
         <MarkerSelectDemo />

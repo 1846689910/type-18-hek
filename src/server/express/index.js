@@ -3,7 +3,7 @@ import express from "express";
 import { middleware as ssrMiddleware } from "./ssr-middleware";
 import { graphqlMiddleware2, getGraphqlSubscriptionsHttpServer, expressApolloServer } from "./graphql-middleware";
 import chalk from "chalk";
-const { pubServerTime } = require("../utils/graphql/pubsub");
+import { pubServerTime } from "../utils/graphql/pubsub";
 
 const PORT = process.env.PORT || 3000;
 const app = express();

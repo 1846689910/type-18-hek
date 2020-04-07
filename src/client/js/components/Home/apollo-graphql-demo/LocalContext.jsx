@@ -137,8 +137,8 @@ export const LocalProvider = ({ children }) => {
       }
     }
   );
-  const { data: serverTime } = useSubscription(SERVER_TIME);
-  console.log(serverTime);
+  const isDev = process.env.NODE_ENV === "development";
+  const { data: serverTime } = isDev ? {} : useSubscription(SERVER_TIME);
   return (
     <Provider
       value={{
@@ -162,7 +162,9 @@ export const LocalProvider = ({ children }) => {
         updateLandmark,
         updateLandmarkData,
         deleteLandmark,
-        deleteLandmarkData
+        deleteLandmarkData,
+        isDev,
+        serverTime,
       }}
     >
       {children}
