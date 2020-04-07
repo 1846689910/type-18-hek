@@ -1,6 +1,6 @@
 import React, { useState, createContext, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useQuery, useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useQuery, useMutation, useApolloClient, useSubscription } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
 export const LANDMARKS = gql`
@@ -58,6 +58,12 @@ export const UPDATE_LANDMARK = gql`
       description
       coordinates
     }
+  }
+`;
+
+export const SERVER_TIME = gql`
+  subscription ServerTime {
+    serverTime
   }
 `;
 
@@ -131,6 +137,8 @@ export const LocalProvider = ({ children }) => {
       }
     }
   );
+  const { data: serverTime } = useSubscription(SERVER_TIME);
+  console.log(serverTime);
   return (
     <Provider
       value={{

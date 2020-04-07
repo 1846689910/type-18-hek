@@ -1,5 +1,6 @@
 const Fs = require("fs");
 const Path = require("path");
+const { pubsub } = require("./pubsub");
 
 let _landmarks;
 
@@ -50,6 +51,11 @@ module.exports = {
       if (idx < 0) return null;
       landmarks.splice(idx, 1, landmark);
       return landmark;
+    }
+  },
+  Subscription: {
+    serverTime: {
+      subscribe: () => pubsub.asyncIterator("serverTime")
     }
   }
 };

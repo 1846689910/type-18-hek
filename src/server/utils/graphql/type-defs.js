@@ -1,5 +1,6 @@
 const { gql } = require("apollo-boost");
 module.exports = gql`
+  # ----- QUERY ------
   type Query {
     hello: String
     landmarks: [Landmark]!
@@ -13,6 +14,7 @@ module.exports = gql`
     description: String!
     coordinates: [Float!]!
   }
+  # ----- MUTATION ------
   type Mutation { # CRUD operation
     createLandmark(landmark: LandmarkInput!): Landmark!
     deleteLandmark(id: ID!): Landmark!
@@ -25,5 +27,9 @@ module.exports = gql`
     url: String!
     description: String!
     coordinates: [Float!]!
+  }
+  # ----- SUBSCRIPTION ------
+  type Subscription {
+    serverTime: String! # convert number timestamp to string format
   }
 `;
