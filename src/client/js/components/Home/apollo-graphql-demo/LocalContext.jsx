@@ -138,7 +138,7 @@ export const LocalProvider = ({ children }) => {
     }
   );
   const isDev = process.env.NODE_ENV === "development";
-  const { data: serverTime } = isDev ? {} : useSubscription(SERVER_TIME);
+  const { data: serverTime } = isDev ? {} : useSubscription(SERVER_TIME, { shouldResubscribe: true });
   return (
     <Provider
       value={{

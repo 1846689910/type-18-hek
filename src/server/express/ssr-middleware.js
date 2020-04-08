@@ -30,36 +30,36 @@ function getExtractor() {
   return _extractor;
 }
 
-const getRenderedString = url => {
+const getRenderedString = (url) => {
   const html = Fs.readFileSync(Path.resolve("dist/index.html"), "utf8");
   const App = () => renderRoutes(routes);
   const store = configureStore(initialState);
   const extractor = getExtractor();
   const apolloClient = new ApolloClient({
-    uri: graphqlUri
+    uri: graphqlUri,
   });
   const markup = renderToString(
     extractor.collectChunks(
       <Provider store={store}>
-        <ApolloProvider client={apolloClient}>
-          <StaticRouter location={url} context={{}}>
+        <StaticRouter location={url} context={{}}>
+          <ApolloProvider client={apolloClient}>
             <MediaQueryProvider>
               <App />
             </MediaQueryProvider>
-          </StaticRouter>
-        </ApolloProvider>
-      </Provider>
-    )
+          </ApolloProvider>
+        </StaticRouter>
+      </Provider>,
+    ),
   );
 
   const preloadedState = parseHtml(
     `<script>window.__PRELOADED_STATE__=${serialize(initialState)}</script>`,
     {
-      script: true
-    }
+      script: true,
+    },
   );
   const dom = parseHtml(html, {
-    script: true
+    script: true,
   });
   dom.querySelector("#root").set_content(markup);
   dom.querySelector("body").appendChild(preloadedState);
@@ -73,7 +73,7 @@ const getRenderedString = url => {
       <p>Sorry, this webpage requires JavaScript to function correctly.</p>
       <p>Please enable JavaScript in your browser and reload the page.</p>
     </noscript>
-  `
+  `,
   );
 };
 
@@ -82,5 +82,5 @@ const middleware = (req, res) => {
 };
 module.exports = {
   middleware,
-  getRenderedString
+  getRenderedString,
 };

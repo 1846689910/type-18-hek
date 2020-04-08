@@ -63,16 +63,16 @@ const start = (App) => {
   loadableReady(() =>
     reactStart(
       <Provider store={store}>
-        <ApolloProvider client={apolloClient}>
-          <ThemeProvider theme={theme}>
-            <BrowserRouter>
+        <BrowserRouter>
+          <ApolloProvider client={apolloClient}>
+            <ThemeProvider theme={theme}>
               <CssBaseline />
               <MediaQueryProvider>
                 <App />
               </MediaQueryProvider>
-            </BrowserRouter>
-          </ThemeProvider>
-        </ApolloProvider>
+            </ThemeProvider>
+          </ApolloProvider>
+        </BrowserRouter>
       </Provider>,
       root,
     ),
