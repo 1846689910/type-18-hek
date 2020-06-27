@@ -1,6 +1,6 @@
 {
   "name": "type-18-hek",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
     "@babel/core": "7.10.3",
@@ -116,6 +116,18 @@
     "koa": "npm run build && node src/server koa",
     "hapi": "npm run build && node src/server hapi",
     "lint": "eslint src/* --ext .js,.jsx,.ts,.tsx --no-error-on-unmatched-pattern"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 2 chrome version",
+      "last 2 firefox version",
+      "last 2 safari version"
+    ]
   },
   "devDependencies": {
     "chai": "^4.2.0",
