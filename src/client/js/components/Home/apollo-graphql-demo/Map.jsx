@@ -40,18 +40,18 @@ export default function Map() {
   const mapRef = useRef();
   useEffect(() => {
     if (mapRef.current && !map) setMap(initMap(mapRef.current));
-  }, [mapRef]);
+  }, [mapRef]);  // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (map && greeting && greeting.hello && !baseLayer) {
       setBaseLayer(configureBaseLayer(map, greeting.hello));
     }
-  }, [map, greeting]);
+  }, [map, greeting]);  // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (map && landmarks) {
       if (markers) markers.forEach(x => map.removeLayer(x));
       setMarkers(configureMarkers(map, landmarks, setSelectedMarkerOption));
     }
-  }, [map, landmarks]);
+  }, [map, landmarks]);  // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <Fragment>
       <div className={classes.map} ref={mapRef} />
@@ -112,7 +112,7 @@ function Popup({ name, address, description, url }) {
     <div>
       <div className={popHeader}>
         <strong>
-          <a href={url} target="_blank">
+          <a href={url} rel="noreferrer" target="_blank">
             {name}
           </a>
         </strong>

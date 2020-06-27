@@ -46,7 +46,7 @@ export default function ReactSelectDemo() {
       dispatch(setSelectOptionsAction(_options));
       dispatch(setSelectedOptionAction(_options.filter((_) => _.isFixed)));
     })();
-  }, []);
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
   const handleChange = (selected, action) => {
     console.log(action);
     dispatch(setSelectedOptionAction(selected));
