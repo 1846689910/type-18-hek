@@ -16,6 +16,16 @@ const server = Hapi.server({
     require("inert") // configure plugin inert to load static resources
   ]);
 
+  await server.route([
+    {
+      method: "GET",
+      path: "/alive",
+      handler: async(request, h) => {
+        return h.response().code(200);
+      },
+    }
+  ]);
+
   await apolloServerHapi.applyMiddleware({ app: server });
 
   await server.start();

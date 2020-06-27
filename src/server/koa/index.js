@@ -2,6 +2,7 @@ import Path from "path";
 import Koa from "koa";
 import serve from "koa-static";
 import Router from "koa-router";
+import Status from "http-status";
 // import koaBody from "koa-body";
 import { middleware as ssrMiddleware } from "../express/ssr-middleware";
 import { graphqlMiddlewareKoa2 } from "./graphql-middleware-koa";
@@ -12,6 +13,10 @@ import chalk from "chalk";
 const PORT = process.env.PORT || 3000;
 const app = new Koa();
 const router = new Router(); // eslint-disable-line
+
+router.get("/alive", async (ctx) => {
+  ctx.status = Status.OK;
+});
 
 app.use(graphqlMiddlewareKoa2);
 
