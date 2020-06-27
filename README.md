@@ -1,4 +1,17 @@
-# **Type-18-hek**
+<h1>Type-18-hek</h1>
+
+- [**Install**](#install)
+  - [install dependencies](#install-dependencies)
+- [**Start Server**](#start-server)
+  - [start project in development mode](#start-project-in-development-mode)
+  - [start project in production mode](#start-project-in-production-mode)
+- [**Build Project**](#build-project)
+- [**Browser Automation**](#browser-automation)
+- [**Test**](#test)
+- [**Lint**](#lint)
+- [**Develop**](#develop)
+  - [**Apollo + GraphQL Demo structure**](#apollo--graphql-demo-structure)
+
 
 ## **Install**
 ### install dependencies
@@ -10,14 +23,14 @@ yarn
 
 ## **Start Server**
 
-#### start project in development mode
+### start project in development mode
 
 ```bash
 npm start
 # OR
 yarn start
 ```
-#### start project in production mode
+### start project in production mode
 
 ```bash
 npm run express
@@ -63,6 +76,16 @@ yarn test
 - enzyme configuration:
   - create `.enzyme.setup.js`
   - in `package.json` include `"setupFilesAfterEnv": ["<rootDir>/.enzyme.setup.js"]`
+
+## **Lint**
+
+use Eslint for code formatting
+
+```bash
+npm run lint
+# OR
+yarn run lint
+```
 
 ## **Develop**
 - The entry file is `./src/client/js/index.jsx`

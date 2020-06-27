@@ -7,7 +7,7 @@ export default function NoMatch() {
   const history = useHistory();
   useEffect(() => {
     setTimeout(() => history.push("/"), 1000);
-  }, []);
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <Fragment>
       <Nav />
