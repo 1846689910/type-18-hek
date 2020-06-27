@@ -1,9 +1,10 @@
 import Path from "path";
 import Hapi from "hapi";
 import chalk from "chalk";
+import { apolloServerHapi } from "./graphql-middleware-hapi";
+
 const PORT = process.env.PORT || 3000;
 const staticRoot = Path.resolve("dist");
-import { apolloServerHapi } from "./graphql-middleware-hapi";
 
 const server = Hapi.server({
   port: PORT,
