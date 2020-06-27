@@ -1,10 +1,11 @@
 module.exports = {
+  extends: "react-app",
   env: {
     node: true,
     es6: true,
     browser: true,
     mocha: true,
-    jest: true
+    jest: true,
   },
   parser: "babel-eslint",
   plugins: ["react"],
@@ -13,8 +14,8 @@ module.exports = {
       createClass: "createReactClass", // Regex for Component Factory to use, default to "createReactClass"
       pragma: "React", // Pragma to use, default to "React"
       version: "detect", // React version. "detect" automatically picks the version you have installed. You can also use `16.0`, `16.3`, etc
-      flowVersion: "0.53" // Flow version
-    }
+      flowVersion: "0.53", // Flow version
+    },
   },
   rules: {
     "no-undef": 2,
@@ -38,6 +39,6 @@ module.exports = {
     "react/prop-types": 1,
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1,
-    "react/react-in-jsx-scope": 1
-  }
+    "react/react-in-jsx-scope": 1,
+  },
 };
