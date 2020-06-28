@@ -23,7 +23,7 @@ notifications:
   email:
     recipients:
       - eric14706@gmail.com
-    on_success: change
+    on_success: never
     on_failure: always
 
 # before_install:

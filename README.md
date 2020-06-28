@@ -1,5 +1,7 @@
 <h1>Type-18-hek</h1>
 
+[![travis build][travis build]][travis build-url]
+
 #### [demo gh-pages](https://1846689910.github.io/type-18-hek/) 
 
 - `Apollo GraphQL Demo` will not work due to gh-pages hosting the static files. Also, the react-router reload page will not work since no plan to use `hashHistory`.Details [here](https://create-react-app.dev/docs/deployment/#notes-on-client-side-routing). Further movements expected.
@@ -131,3 +133,6 @@ define the end points in [webpackDevServer.config.js](./config/webpackDevServer.
     - use `resolvers` and `typeDefs` in `./src/server/utils/graphql`
     - use `apollo-server-hapi/koa/express` for hapi/koa/express server respectively
     - the used apollo middleware/server will read data from `./src/data/landmarks.geo.json` with node.js `fs` to mock up the process of data fetching.
+
+[travis build]: https://travis-ci.org/1846689910/type-18-hek.svg?branch=master
+[travis build-url]: https://travis-ci.org/1846689910/type-18-hek
