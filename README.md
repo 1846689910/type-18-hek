@@ -1,5 +1,11 @@
 <h1>Type-18-hek</h1>
 
+#### [demo gh-pages](https://1846689910.github.io/type-18-hek/) 
+
+- `Apollo GraphQL Demo` will not work due to gh-pages hosting the static files. Also, the react-router reload page will not work since no plan to use `hashHistory`.Details [here](https://create-react-app.dev/docs/deployment/#notes-on-client-side-routing). Further movements expected.
+
+<h2>contents</h2>
+
 - [**Install**](#install)
   - [install dependencies](#install-dependencies)
 - [**Start Server**](#start-server)
