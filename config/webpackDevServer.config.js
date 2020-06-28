@@ -7,6 +7,7 @@ const { graphqlMiddleware2 } = require("../src/server/express/graphql-middleware
 const ignoredFiles = require("react-dev-utils/ignoredFiles");
 const paths = require("./paths");
 const fs = require("fs");
+const Status = require("http-status");
 
 const protocol = process.env.HTTPS === "true" ? "https" : "http";
 const host = process.env.HOST || "0.0.0.0";
@@ -88,6 +89,10 @@ module.exports = function(proxy, allowedHost) {
         // This registers user provided middleware for proxy reasons
         require(paths.proxySetup)(app);
       }
+
+      app.get("/alive", (_, res) => {
+        res.status(Status.OK).end();
+      });
 
       app.use(graphqlMiddleware2);
 

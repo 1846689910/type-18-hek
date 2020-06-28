@@ -10,6 +10,7 @@
 - [**Test**](#test)
 - [**Lint**](#lint)
 - [**Develop**](#develop)
+  - [**end points**](#end-points)
   - [**Apollo + GraphQL Demo structure**](#apollo--graphql-demo-structure)
 
 
@@ -91,6 +92,19 @@ yarn run lint
 - The entry file is `./src/client/js/index.jsx`
 - The router and redux store, actions, reducers are defined in `./src/client/js/settings/`
 - The entry file in server is `./src/server/index.js`
+
+### **end points**
+
+- development server
+
+the `type-18-hek` was ejected from `create-react-app`, so the [webpack-dev-server](https://webpack.js.org/configuration/dev-server/) is used as dev server.
+
+define the end points in [webpackDevServer.config.js](./config/webpackDevServer.config.js). Refer to [webpack-dev-server/before](https://webpack.js.org/configuration/dev-server/#devserverbefore) as an example
+
+- production server
+  - `src/server/express`
+  - `src/server/hapi`
+  - `src/server/koa`
 
 ### **Apollo + GraphQL Demo structure**
 
