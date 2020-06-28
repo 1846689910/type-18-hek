@@ -1,0 +1,30 @@
+language: node_js
+node_js: 
+  - 13.14.0
+  - 12.18.1
+
+cache: yarn
+
+install:
+  - yarn install
+
+script:
+  - yarn test
+  - yarn run build
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GEIHUB_TOKEN
+  local_dir: dist
+  on:
+    branch: master
+
+# before_install:
+# install:
+# before_script:
+# script:
+# after_success:
+# after_failure:
+# after_script:
+# before_deploy:
