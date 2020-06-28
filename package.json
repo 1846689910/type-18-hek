@@ -1,6 +1,7 @@
 {
   "name": "type-18-hek",
   "version": "2.2.5",
+  "homepage": "https://1846689910.github.io/type-18-hek",
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
     "@babel/core": "7.10.3",
