@@ -19,6 +19,13 @@ deploy:
   on:
     branch: master
 
+notifications:
+  email:
+    recipients:
+      - eric14706@gmail.com
+    on_success: change
+    on_failure: always
+
 # before_install:
 # install:
 # before_script:
