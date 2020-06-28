@@ -1,8 +1,8 @@
 language: node_js
 node_js: 
-- 13.14.0
-- 12.18.1
-- 10.16.2
+  - 13.14.0
+  - 12.18.1
+
 cache: yarn
 
 install:
@@ -16,8 +16,9 @@ deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GEIHUB_TOKEN
+  local_dir: dist
   on:
-    branch: gh-pages
+    branch: master
 
 # before_install:
 # install:
