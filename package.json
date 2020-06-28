@@ -11,7 +11,9 @@
     "express": "npm run build && node src/server",
     "koa": "npm run build && node src/server koa",
     "hapi": "npm run build && node src/server hapi",
-    "lint": "eslint src/* --ext .js,.jsx,.ts,.tsx --no-error-on-unmatched-pattern"
+    "lint": "eslint src/* --ext .js,.jsx,.ts,.tsx --no-error-on-unmatched-pattern",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
