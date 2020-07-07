@@ -1,6 +1,6 @@
 {
   "name": "type-18-hek",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "homepage": "https://1846689910.github.io/type-18-hek",
   "scripts": {
     "start": "node scripts/start",
