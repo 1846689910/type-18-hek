@@ -18,16 +18,24 @@ export default function ModuledStyleDemo() {
   return (
     <Grid container justify="space-evenly">
       <CenteredGrid item {...itemProps}>
-        <strong className={css1.css}>CSS Module + CSS</strong>
+        <strong className={css1.css}>CSS Module</strong>
+        {" + "}
+        <strong className="css">CSS</strong>
       </CenteredGrid>
       <CenteredGrid item {...itemProps}>
-        <strong className={scss1.scss}>CSS Module + SCSS</strong>
+        <strong className={scss1.scss}>CSS Module</strong>
+        {" + "}
+        <strong className="scss">SCSS</strong>
       </CenteredGrid>
       <CenteredGrid item {...itemProps}>
-        <strong className={less1.less}>CSS Module + LESS</strong>
+        <strong className={less1.less}>CSS Module</strong>
+        {" + "}
+        <strong className="less">LESS</strong>
       </CenteredGrid>
       <CenteredGrid item {...itemProps}>
-        <strong className={stylus1.stylus}>CSS Module + STYLUS</strong>
+        <strong className={stylus1.stylus}>CSS Module</strong>
+        {" + "}
+        <strong className="stylus">STYLUS</strong>
       </CenteredGrid>
     </Grid>
   );
