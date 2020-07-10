@@ -19,6 +19,7 @@
 - [**Lint**](#lint)
 - [**Develop**](#develop)
   - [**end points**](#end-points)
+  - [**stylesheets**](#stylesheets)
   - [**Apollo + GraphQL Demo structure**](#apollo--graphql-demo-structure)
 
 
@@ -113,6 +114,28 @@ define the end points in [webpackDevServer.config.js](./config/webpackDevServer.
   - `src/server/express`
   - `src/server/hapi`
   - `src/server/koa`
+
+### **stylesheets**
+
+- global stylesheets(CSS, SASS/SCSS, LESS, STYLUS)
+
+import the global stylesheets like 
+
+```jsx
+import "../../../styles/App.css";
+```
+
+- local stylesheet(stylesheets with css modules applied)
+
+import the moduled stylesheet in needed component, like in `src/client/js/components/Home/ModuledStyleDemo.jsx`
+
+```jsx
+import css1 from "../../../styles/moduled/App.module.css";
+```
+
+- css in header
+
+import the external css CDN in `src/client/public/index.html`
 
 ### **Apollo + GraphQL Demo structure**
 
