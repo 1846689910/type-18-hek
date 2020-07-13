@@ -27,8 +27,8 @@ const start = App => {
     window.__PRELOADED_STATE__ && root.innerHTML ? hydrate : render;
   const cache = new InMemoryCache();
   const link = new HttpLink({
-    uri: "http://localhost:3000/graphql"
-  });
+    uri: "https://micro-bus.vercel.app/type-18-hek",
+  }); // use micro-bus web service https://github.com/1846689910/micro-bus
   const apolloClient = new ApolloClient({ cache, link });
   loadableReady(() =>
     reactStart(
