@@ -3,7 +3,7 @@
 const errorOverlayMiddleware = require("react-dev-utils/errorOverlayMiddleware");
 const evalSourceMapMiddleware = require("react-dev-utils/evalSourceMapMiddleware");
 const noopServiceWorkerMiddleware = require("react-dev-utils/noopServiceWorkerMiddleware");
-const { graphqlMiddleware2 } = require("../src/server/express/graphql-middleware");
+// const { graphqlMiddleware2 } = require("../src/server/express/graphql-middleware");
 const ignoredFiles = require("react-dev-utils/ignoredFiles");
 const paths = require("./paths");
 const fs = require("fs");
@@ -94,7 +94,8 @@ module.exports = function(proxy, allowedHost) {
         res.status(Status.OK).end();
       });
 
-      app.use(graphqlMiddleware2);
+      // no need for graphqlMiddleware for webpacke dev server, the graphql end points use micro-bus: https://github.com/1846689910/micro-bus
+      // app.use(graphqlMiddleware2);
 
       // This lets us fetch source contents from webpack for the error overlay
       app.use(evalSourceMapMiddleware(server));
