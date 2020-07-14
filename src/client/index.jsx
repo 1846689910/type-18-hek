@@ -21,7 +21,7 @@ import * as serviceWorker from "./js/serviceWorker";
 
 const store = configureStore();
 
-const start = App => {
+const start = (App) => {
   const root = document.querySelector("#root");
   const reactStart =
     window.__PRELOADED_STATE__ && root.innerHTML ? hydrate : render;
@@ -44,8 +44,8 @@ const start = App => {
           </ThemeProvider>
         </ApolloProvider>
       </Provider>,
-      root
-    )
+      root,
+    ),
   );
 };
 
