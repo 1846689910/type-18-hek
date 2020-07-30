@@ -16,7 +16,7 @@ export default function Demo2() {
     if (mainCounter !== counter && !isNaN(counter)) {
       dispatch(setCounterAction(counter));
     }
-  }, []);
+  }, []);  // eslint-disable-line
   return (
     <Fragment>
       <Nav />
