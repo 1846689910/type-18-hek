@@ -19,7 +19,7 @@ export default function Title({ classes }) {
         justify="space-between"
       >
         <Typography variant="h4" onClick={() => history.push("/")}>
-          Type 18 hek
+          Type 18 hek demo
         </Typography>
         <MediaChip />
       </Grid>
