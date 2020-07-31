@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from "react";
+import { version } from "../../../../../package.json";
 import { useSelector } from "react-redux";
 import {
   Container,
@@ -12,6 +13,7 @@ import TabButton from "./TabButton";
 import TabButtonGroup from "./TabButtonGroup";
 import MobileTabButton from "./MobileTabButton";
 import MediaQueryContext from "../MediaQueryContext";
+import AnnotatedText from "./AnnotatedText";
 
 const useStyles = makeStyles({
   root: {
@@ -80,7 +82,7 @@ export default function Nav() {
         <Grid container justify="center" className={classes.innerGrid}>
           <Typography variant="h6">
             <strong>
-              Type 18 hek<sub className={classes.innerSub}>{media}</sub>
+              <AnnotatedText supNote={`v${version}`} subNote={media}>{"Type 18 hek"}</AnnotatedText>
             </strong>
           </Typography>
         </Grid>

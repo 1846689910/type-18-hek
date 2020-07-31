@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { version } from "../../../../../package.json";
 import PropTypes from "prop-types";
 import { Container, Grid, Typography, Chip } from "@material-ui/core";
 import MediaQueryContext, { QUERY } from "../MediaQueryContext";
@@ -7,6 +8,7 @@ import SmartphoneIcon from "@material-ui/icons/Smartphone";
 import TabletMacIcon from "@material-ui/icons/TabletMac";
 import LaptopIcon from "@material-ui/icons/Laptop";
 import HdIcon from "@material-ui/icons/Hd";
+import AnnotatedText from "./AnnotatedText";
 
 export default function Title({ classes }) {
   const history = useHistory();
@@ -19,7 +21,7 @@ export default function Title({ classes }) {
         justify="space-between"
       >
         <Typography variant="h4" onClick={() => history.push("/")}>
-          Type 18 hek
+          <AnnotatedText supNote={`v${version}`}>{"Type 18 hek"}</AnnotatedText>
         </Typography>
         <MediaChip />
       </Grid>
@@ -28,7 +30,7 @@ export default function Title({ classes }) {
 }
 
 Title.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };
 
 function MediaChip() {
