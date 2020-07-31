@@ -9,5 +9,5 @@ shell.exec("npm run build", {
     PUBLIC_URL: "/", // after setting the `homepage`, the `publicUrl` is changed then the resource path is wrong.
   }),
 });
-
+if (process.argv.includes("--touch")) process.env.touch = true;
 shell.exec("node src/server koa");

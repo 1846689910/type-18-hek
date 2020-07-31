@@ -11,6 +11,7 @@ import c2k from "koa-connect";
 import chalk from "chalk";
 
 const PORT = process.env.PORT || 3000;
+const touch = process.env.touch;
 const app = new Koa();
 const router = new Router(); // eslint-disable-line
 
@@ -26,8 +27,12 @@ app.use(router.routes());
 
 app.use(c2k(ssrMiddleware));
 
-app.listen(PORT, () =>
+const running = app.listen(PORT, () => {
   console.log(
-    chalk.bold.blue(`Koa server is running at http://localhost:${PORT}`)
-  )
-);
+    chalk.bold.blue(`Koa server is running at http://localhost:${PORT}`),
+  );
+  if (touch && running.close) {
+    running.close();
+    process.exit(0);
+  }
+});

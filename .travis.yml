@@ -9,8 +9,11 @@ install:
 
 script:
   - yarn test
+  - yarn run express --touch
+  - yarn run koa --touch
+  - yarn run hapi --touch
   - yarn build
-
+  
 deploy:
   provider: pages
   skip_cleanup: true
