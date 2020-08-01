@@ -42,6 +42,8 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // Tools like Cloud9 rely on this.
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
+const open = process.argv.includes("--open");
+const touch = process.argv.includes("--touch");
 
 if (process.env.HOST) {
   console.log(
@@ -52,7 +54,7 @@ if (process.env.HOST) {
     )
   );
   console.log(
-    `If this was unintentional, check that you haven't mistakenly set it in your shell.`
+    "If this was unintentional, check that you haven't mistakenly set it in your shell."
   );
   console.log(
     `Learn more here: ${chalk.yellow("https://bit.ly/CRA-advanced-config")}`
@@ -127,7 +129,17 @@ checkBrowsers(paths.appPath, isInteractive)
       }
 
       console.log(chalk.cyan("Starting the development server...\n"));
-      openBrowser(urls.localUrlForBrowser);
+      if (touch) {
+        setTimeout(() => {
+          devServer.close();
+          process.exit();
+        }, 3000);
+      }
+      if (open) {
+        openBrowser(urls.localUrlForBrowser);
+      } else {
+        console.log(chalk.bold.yellow(`Auto open browser disabled, please visit: ${urls.localUrlForBrowser}`));
+      }
     });
 
     ["SIGINT", "SIGTERM"].forEach(function(sig) {
