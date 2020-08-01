@@ -20,7 +20,7 @@ deploy:
   github_token: $GITHUB_TOKEN
   local_dir: dist
   on:
-    branch: master
+    branch: e-fix
 
 notifications:
   email:
