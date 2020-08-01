@@ -20,6 +20,8 @@ import { MediaQueryProvider } from "./js/components/MediaQueryContext";
 import * as serviceWorker from "./js/serviceWorker";
 
 const store = configureStore();
+const isDev = process.env.NODE_ENV === "development";
+const apolloLink = isDev ? "http://localhost:3000/graphql" : "https://micro-bus.vercel.app/_api/type-18-hek";
 
 const start = (App) => {
   const root = document.querySelector("#root");
@@ -27,7 +29,7 @@ const start = (App) => {
     window.__PRELOADED_STATE__ && root.innerHTML ? hydrate : render;
   const cache = new InMemoryCache();
   const link = new HttpLink({
-    uri: "https://micro-bus.vercel.app/_api/type-18-hek",
+    uri: apolloLink,
   }); // use micro-bus web service https://github.com/1846689910/micro-bus
   const apolloClient = new ApolloClient({ cache, link });
   loadableReady(() =>
