@@ -11,8 +11,7 @@
     "koa": "node scripts/koa",
     "hapi": "node scripts/hapi",
     "lint": "eslint src/* --ext .js,.jsx,.ts,.tsx --no-error-on-unmatched-pattern",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "predeploy": "npm run build"
   },
   "browserslist": {
     "production": [
