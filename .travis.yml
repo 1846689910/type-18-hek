@@ -14,7 +14,6 @@ script:
   - yarn run express --skip-build --touch
   - yarn run koa --skip-build --touch
   - yarn run hapi --skip-build --touch
-  - yarn build
   
 notifications:
   email:
