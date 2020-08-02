@@ -2,10 +2,10 @@
 
 [![travis build][travis build]][travis build-url]
 
-#### [demo gh-pages](https://1846689910.github.io/type-18-hek/) 
+#### [Demo](https://type-18-hek.vercel.app/) 
 
 - ~~`Apollo GraphQL Demo` will not work due to gh-pages hosting the static files.~~ solved by using external micro-bus service
-- the react-router reload page will not work since no plan to use `hashHistory`.Details [here](https://create-react-app.dev/docs/deployment/#notes-on-client-side-routing). Further movements expected.
+- ~~the react-router reload page will not work since no plan to use `hashHistory`.Details [here](https://create-react-app.dev/docs/deployment/#notes-on-client-side-routing). Further movements expected.~~ use Vercel for deployment with `create-react-app` setup.
 
 <h2>contents</h2>
 
