@@ -1,6 +1,7 @@
 language: node_js
 node_js: 
   - 14.7.0
+  - 12.18.3
 
 cache: yarn
 
@@ -14,14 +15,6 @@ script:
   - yarn run hapi --touch
   - yarn build
   
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  local_dir: dist
-  on:
-    branch: master
-
 notifications:
   email:
     recipients:
