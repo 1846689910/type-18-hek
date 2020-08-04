@@ -1,7 +1,7 @@
-import React from "react";
+import * as React from "react";
+import { expect } from "chai";
 import { mount } from "enzyme";
 import { spy } from "sinon";
-import { expect } from "chai";
 import Foo from "./resources/Foo";
 import { Typography } from "@material-ui/core";
 

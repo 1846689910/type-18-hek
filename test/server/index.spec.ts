@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-expressions */
-import sinon from "sinon";
+import * as sinon from "sinon";
 import { expect } from "chai";
 describe("Sinon library", () => {
   it("fakes normally", async () => {
@@ -24,7 +23,7 @@ describe("Sinon library", () => {
     console.log(spy(123));
     expect(spy.called).be.true;
     const obj = {
-      fn
+      fn: (num, s) => num
     };
     const spy2 = sinon.spy(obj.fn);
     spy2(123, "hello");
@@ -33,7 +32,7 @@ describe("Sinon library", () => {
   });
   it("stubs normally", () => {
     class Obj {
-      fn(num) {
+      fn(num: number):number {
         return num;
       }
     }
