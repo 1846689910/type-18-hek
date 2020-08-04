@@ -5,27 +5,31 @@ import loadable from "@loadable/component";
 
 const useStyles = makeStyles({
   outer: {
-    position: "relative"
-  }
+    position: "relative",
+  },
 });
 
-const MapDemo = loadable(() => import(/* webpackChunkName: "MapDemo" */ "./Map"), {
-  ssr: false,
-  fallback: (
-    <Typography variant="h6">
-      {"<MapDemo/>"} is loading ...
-      </Typography>
-  )
-});
+const MapDemo = loadable(
+  () => import(/* webpackChunkName: "MapDemo" */ "./Map"),
+  {
+    ssr: false,
+    fallback: (
+      <Typography variant="h6">{"MapDemo"} is loading ...</Typography>
+    ),
+  },
+);
 
-const MarkerSelectDemo = loadable(() => import(/* webpackChunkName: "MarkerSelectDemo" */ "./MarkerSelect"), {
-  ssr: false,
-  fallback: (
-    <Typography variant="h6">
-      {"<MarkerSelectDemo/>"} is loading ...
+const MarkerSelectDemo = loadable(
+  () => import(/* webpackChunkName: "MarkerSelectDemo" */ "./MarkerSelect"),
+  {
+    ssr: false,
+    fallback: (
+      <Typography variant="h6">
+        {"MarkerSelectDemo"} is loading ...
       </Typography>
-  )
-});
+    ),
+  },
+);
 
 export default function ApolloGraphqlDemo() {
   const classes = useStyles();

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import PropTypes from "prop-types";
 import { Grid, makeStyles, IconButton } from "@material-ui/core";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
@@ -57,7 +56,8 @@ export default function MarkerSelect() {
         duration: 3,
         easeLinearity: 1
       });
-      await Promise.delay(3000);
+      // await Promise && Promise.delay(3000);// next.js issue, Promise undefined
+      await new Promise(resolve => setTimeout(resolve, 3000));
     }
     marker.fire("click");
     setSelectedMarkerOption(selected);
@@ -86,24 +86,24 @@ export default function MarkerSelect() {
     </Grid>
   );
 }
-function CustomOption({ children, ...props }) {
+function CustomOption({ children, ...props }: CustomOptionProps) {
   const { label } = props.data;
   const {
     setShowEditor,
     landmarks,
     setPrevFields,
-    deleteLandmark
+    deleteLandmark,
   } = useContext(LocalContext);
-  const handleUpdate = e => {
+  const handleUpdate = (e) => {
     e.stopPropagation();
-    const obj = landmarks.find(x => x.name === label);
+    const obj = landmarks.find((x) => x.name === label);
     const fields = Landmark.fromObject(obj).toFields();
     setPrevFields(fields);
     setShowEditor(true);
   };
-  const handleDelete = e => {
+  const handleDelete = (e) => {
     e.stopPropagation();
-    const { id } = landmarks.find(x => x.name === label);
+    const { id } = landmarks.find((x) => x.name === label);
     deleteLandmark({ variables: { id } });
   };
   return (
@@ -126,17 +126,21 @@ function CustomOption({ children, ...props }) {
     </components.Option>
   );
 }
-CustomOption.propTypes = {
-  children: PropTypes.string,
-  props: PropTypes.shape({
-    data: PropTypes.object
-  }),
-  data: PropTypes.object
+
+type CustomOptionProps = {
+  children: React.ReactElement | React.ReactElement[];
+  data: {
+    label: string;
+  }
 };
-function CustomIndicatorsContainer({ children, ...props }) {
+
+function CustomIndicatorsContainer({
+  children,
+  ...props
+}: CustomIndicatorsContainerProps) {
   const { setShowEditor, setPrevFields } = useContext(LocalContext);
   const classes = useStyles();
-  const handleClick = e => {
+  const handleClick = (e) => {
     e.stopPropagation();
     setPrevFields(undefined);
     setShowEditor(true);
@@ -157,7 +161,6 @@ function CustomIndicatorsContainer({ children, ...props }) {
     </div>
   );
 }
-CustomIndicatorsContainer.propTypes = {
-  children: PropTypes.array,
-  props: PropTypes.object
+type CustomIndicatorsContainerProps = {
+  children: React.ReactElement | React.ReactElement[];
 };

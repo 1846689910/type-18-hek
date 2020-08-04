@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useContext, Fragment } from "react";
-import PropTypes from "prop-types";
 import { renderToString } from "react-dom/server";
 import L from "leaflet";
 import { makeStyles } from "@material-ui/core";
@@ -40,18 +39,18 @@ export default function Map() {
   const mapRef = useRef();
   useEffect(() => {
     if (mapRef.current && !map) setMap(initMap(mapRef.current));
-  }, [mapRef]);  // eslint-disable-line react-hooks/exhaustive-deps
+  }, [mapRef]);
   useEffect(() => {
     if (map && greeting && greeting.hello && !baseLayer) {
       setBaseLayer(configureBaseLayer(map, greeting.hello));
     }
-  }, [map, greeting]);  // eslint-disable-line react-hooks/exhaustive-deps
+  }, [map, greeting]);
   useEffect(() => {
     if (map && landmarks) {
       if (markers) markers.forEach(x => map.removeLayer(x));
       setMarkers(configureMarkers(map, landmarks, setSelectedMarkerOption));
     }
-  }, [map, landmarks]);  // eslint-disable-line react-hooks/exhaustive-deps
+  }, [map, landmarks]);
   return (
     <Fragment>
       <div className={classes.map} ref={mapRef} />
@@ -64,7 +63,7 @@ export default function Map() {
  * @param {HTMLElement} dom
  * @returns {L.Map}
  */
-function initMap(dom) {
+function initMap(dom): L.Map {
   return L.map(dom, { zoomControl: false }).setView(initLatLng, initZoom);
 }
 /**
@@ -98,7 +97,7 @@ function configureMarkers(map, landmarks, setSelectedMarkerOption) {
     const [lng, lat] = coordinates;
     return L.marker(L.latLng(lat, lng))
       .bindPopup(renderToString(<Popup {...props} />))
-      .on("click", function() {
+      .on("click", function () {
         map.flyTo(this.getLatLng(), 18, { animate: true, duration: 3 });
         setSelectedMarkerOption({ value: this, label: props.name });
       })
@@ -106,13 +105,13 @@ function configureMarkers(map, landmarks, setSelectedMarkerOption) {
   });
 }
 
-function Popup({ name, address, description, url }) {
+function Popup({ name, address, description, url }: PopupProps) {
   const { popHeader, popContent } = useStyles();
   return (
     <div>
       <div className={popHeader}>
         <strong>
-          <a href={url} rel="noreferrer" target="_blank">
+          <a href={url} target="_blank">
             {name}
           </a>
         </strong>
@@ -126,9 +125,9 @@ function Popup({ name, address, description, url }) {
     </div>
   );
 }
-Popup.propTypes = {
-  name: PropTypes.string,
-  address: PropTypes.string,
-  description: PropTypes.string,
-  url: PropTypes.string
+type PopupProps = {
+  name: string;
+  address: string;
+  description: string;
+  url: string;
 };
