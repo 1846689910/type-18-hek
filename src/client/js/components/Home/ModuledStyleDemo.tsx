@@ -10,7 +10,9 @@ import stylus1 from "../../../styles/moduled/App.module.styl";
 import { Grid, styled } from "@material-ui/core";
 import MediaQueryContext from "../MediaQueryContext";
 
-const CenteredGrid = styled(Grid)({ textAlign: "center" });
+const CenteredGrid: React.ComponentType<{ item: boolean }> = styled(Grid)({
+  textAlign: "center",
+});
 
 export default function ModuledStyleDemo() {
   const { isTablet, isMobile } = useContext(MediaQueryContext);
