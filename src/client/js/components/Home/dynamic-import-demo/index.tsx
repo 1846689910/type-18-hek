@@ -24,7 +24,7 @@ const ReactWindowDemo = loadable(
   },
 );
 
-const DynamicImportDemo = (
+const DynamicImportDemo = () => (
   <>
     <ReactSelectDemo />
     <ReactWindowDemo />
