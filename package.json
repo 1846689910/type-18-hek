@@ -1,6 +1,6 @@
 {
   "name": "type-18-hek",
-  "version": "2.3.8",
+  "version": "3.0.0",
   "scripts": {
     "start": "node scripts/start",
     "build": "node scripts/build",
