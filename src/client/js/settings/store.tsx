@@ -10,14 +10,15 @@ import reducer from "./reducers";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 
-export const configureStore = initialState => {
+export const configureStore = (initialState?) => {
   const store = createStore(
     reducer,
     initialState,
-    applyMiddleware(thunk, logger)
+    applyMiddleware(thunk, logger),
   );
   if (module.hot) {
     module.hot.accept("./reducers", () => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const nextReducer = require("./reducers").default;
       store.replaceReducer(nextReducer);
     });

@@ -1,5 +1,4 @@
 module.exports = {
-  extends: "react-app",
   env: {
     node: true,
     es6: true,
@@ -9,6 +8,7 @@ module.exports = {
   },
   parser: "babel-eslint",
   plugins: ["react"],
+  extends: ["eslint:recommended"],
   settings: {
     react: {
       createClass: "createReactClass", // Regex for Component Factory to use, default to "createReactClass"
@@ -41,4 +41,16 @@ module.exports = {
     "react/jsx-uses-vars": 1,
     "react/react-in-jsx-scope": 1,
   },
+  overrides: [
+    {
+      files: ["**/*.ts", "**/*.tsx"],
+      parser: "@typescript-eslint/parser",
+      plugins: ["react", "@typescript-eslint"],
+      extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+      rules: {
+        "@typescript-eslint/explicit-function-return-type": 0,
+        "@typescript-eslint/explicit-module-boundary-types": 0,
+      },
+    },
+  ],
 };

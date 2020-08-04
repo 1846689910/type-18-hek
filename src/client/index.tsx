@@ -21,7 +21,7 @@ const apolloLink = isDev
   ? "http://localhost:3000/graphql"
   : "https://micro-bus.vercel.app/_api/type-18-hek";
 
-const start = (App) => {
+const start = (App: React.ComponentType) => {
   const root = document.querySelector("#root");
   const reactStart =
     "__PRELOADED_STATE__" in window && root.innerHTML ? hydrate : render;
@@ -53,6 +53,7 @@ start(() => renderRoutes(routes));
 
 if (module.hot) {
   module.hot.accept("./js/settings/routes", () => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { routes: r } = require("./js/settings/routes");
     start(() => renderRoutes(r));
   });

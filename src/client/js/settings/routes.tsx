@@ -8,13 +8,18 @@ import NoMatch from "../pages/NoMatch";
 import { withRouter } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
 
-const Root = props => {
+type RootProps = {
+  children: React.ReactElement | React.ReactElement[] | string;
+  route: RouteType;
+};
+
+const Root = (props: RootProps): React.ReactElement => {
   const { route, children } = props;
   console.log(props);
   return (
     <Fragment>
       {renderRoutes(route.routes, {
-        all: "I am accessible from all routes by `props.all`"
+        all: "I am accessible from all routes by `props.all`",
       })}
       {children}
     </Fragment>
@@ -23,10 +28,19 @@ const Root = props => {
 
 Root.propTypes = {
   route: propTypes.object,
-  children: propTypes.object
+  children: propTypes.object,
 };
 
-const routes = [
+type RouteType = {
+  path: string;
+  component: React.ComponentType;
+  key?: string;
+  routes?: RouteType[];
+  exact?: boolean;
+  partial?: Record<string, string>;
+};
+
+const routes: RouteType[] = [
   {
     path: "/",
     component: withRouter(Root),
@@ -35,7 +49,7 @@ const routes = [
         path: "/",
         exact: true,
         key: "/",
-        component: Home
+        component: Home,
       },
       {
         path: "/demo1",
@@ -43,14 +57,14 @@ const routes = [
         exact: true,
         component: Demo1,
         partial: {
-          abc: "I am accessible only at `/demo` route by `props.route.partial`"
-        }
+          abc: "I am accessible only at `/demo` route by `props.route.partial`",
+        },
       },
       {
         path: "/demo2/:id",
         key: "/demo2/:id",
         component: Demo2,
-        exact: true
+        exact: true,
       },
       {
         path: "/folders/:folderId",
@@ -62,14 +76,14 @@ const routes = [
         path: "/folders/:folderId/files/:fileId",
         key: "/folders/:folderId/files/:fileId",
         component: Folders,
-        exact: true
+        exact: true,
       },
       {
         path: "/*",
         key: "/*",
-        component: NoMatch
-      }
-    ]
-  }
+        component: NoMatch,
+      },
+    ],
+  },
 ];
 export { routes };

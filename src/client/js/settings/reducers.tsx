@@ -1,10 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { combineReducers } from "redux";
-import { ActionTypes } from "./actions";
+import { ActionTypes, IAction, ISelectOption } from "./actions";
 
-/**
- * one app maintain sinle centralized state
- * */
 export const initialState = {
   counter: { value: 0 },
   selectOptions: {
@@ -15,14 +11,24 @@ export const initialState = {
   }
 };
 
-const counter = (counter = initialState.counter, action) => {
+export interface IState<T> {
+  value: T;
+}
+
+const counter = (
+  counter = initialState.counter,
+  action: IAction<number>,
+): IState<number> => {
   if (action.type === ActionTypes.SET_COUNTER_ACTION) {
     counter.value = action.data;
   }
   return { ...counter };
 };
 
-const selectOptions = (selectOptions = initialState.selectOptions, action) => {
+const selectOptions = (
+  selectOptions = initialState.selectOptions,
+  action: IAction<ISelectOption[]>,
+): IState<ISelectOption[]> => {
   if (action.type === ActionTypes.SET_SELECT_OPTIONS_ACTION) {
     selectOptions.value = action.data;
   }
@@ -31,8 +37,8 @@ const selectOptions = (selectOptions = initialState.selectOptions, action) => {
 
 const selectedOption = (
   selectedOption = initialState.selectedOption,
-  action
-) => {
+  action: IAction<ISelectOption[]>,
+): IState<ISelectOption[]> => {
   if (action.type === ActionTypes.SET_SELECTED_OPTION_ACTION) {
     selectedOption.value = action.data;
   }
