@@ -8,13 +8,9 @@ import { renderRoutes } from "react-router-config";
 import { routes } from "./js/settings/routes";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
-import { theme } from "../client/styles/theme";
+import { theme } from "./styles/theme";
 import { loadableReady } from "@loadable/component";
-// import ApolloClient from "apollo-boost";
-import { ApolloClient } from "apollo-client";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { HttpLink } from "apollo-link-http";
-
+import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { MediaQueryProvider } from "./js/components/MediaQueryContext";
 import * as serviceWorker from "./js/serviceWorker";
@@ -28,9 +24,9 @@ const apolloLink = isDev
 const start = (App) => {
   const root = document.querySelector("#root");
   const reactStart =
-    window.__PRELOADED_STATE__ && root.innerHTML ? hydrate : render;
+    "__PRELOADED_STATE__" in window && root.innerHTML ? hydrate : render;
   const cache = new InMemoryCache();
-  const link = new HttpLink({
+  const link = createHttpLink({
     uri: apolloLink,
   });
   const apolloClient = new ApolloClient({ cache, link });
