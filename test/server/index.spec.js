@@ -10,21 +10,21 @@ describe("Sinon library", () => {
     expect(fn1).to.throw();
 
     const fn2 = sinon.fake.resolves(123);
-    await fn2().then(ret => expect(ret).to.equal(123));
+    await fn2().then((ret) => expect(ret).to.equal(123));
 
     const fn3 = sinon.fake.rejects(new Error());
-    await fn3().catch(e => expect(e).to.exist);
+    await fn3().catch((e) => expect(e).to.exist);
 
     const fn4 = sinon.fake(() => 123);
     expect(fn4()).to.equal(123);
   });
   it("spies normally", () => {
-    const fn = num => num;
+    const fn = (num) => num;
     const spy = sinon.spy(fn);
     console.log(spy(123));
     expect(spy.called).be.true;
     const obj = {
-      fn
+      fn,
     };
     const spy2 = sinon.spy(obj.fn);
     spy2(123, "hello");
@@ -43,10 +43,10 @@ describe("Sinon library", () => {
   });
   it("mocks normally", () => {
     const obj = {
-      fn: num => num,
+      fn: (num) => num,
       fn1: () => {
         throw new Error();
-      }
+      },
     };
     const mock1 = sinon.mock(obj);
     mock1.expects("fn1").throws();
@@ -97,7 +97,7 @@ describe("Jest Test", () => {
   });
 
   it("should throw error in async fn", async () => {
-    return await asyncFn().catch(e => {
+    return await asyncFn().catch((e) => {
       expect(e).to.equal(asyncFnError);
       expect(e).to.exist;
       expect({}).to.be.empty;
