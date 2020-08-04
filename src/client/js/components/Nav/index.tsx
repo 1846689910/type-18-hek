@@ -6,7 +6,7 @@ import {
   Grid,
   AppBar,
   makeStyles,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import Title from "./Title";
 import TabButton from "./TabButton";
@@ -17,46 +17,46 @@ import AnnotatedText from "./AnnotatedText";
 
 const useStyles = makeStyles({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   hc: {
-    height: "60px"
+    height: "60px",
   },
   hcg: {
-    height: "100%"
+    height: "100%",
   },
   menu: {
-    marginTop: "45px"
+    marginTop: "45px",
   },
   container_grid: {
     width: "100%",
     height: "50px",
-    position: "relative"
+    position: "relative",
   },
   btnGroup: {
     margin: "0 20px",
     textTransform: "none",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   btnGroup_btn: {
     fontWeight: "bold",
-    textTransform: "none"
+    textTransform: "none",
   },
   folders_btn: {
-    width: "20px"
+    width: "20px",
   },
   innerGrid: {
-    position: "absolute"
+    position: "absolute",
   },
   innerSub: {
     fontSize: "12px",
-    marginLeft: "5px"
-  }
+    marginLeft: "5px",
+  },
 });
 
 export default function Nav() {
   const classes = useStyles();
-  const counter = useSelector(state => state.counter);
+  const counter = useSelector((state) => state.counter);
   const tabs = [
     { path: "/", label: "Home", key: "/" },
     { path: "/demo1", label: "Demo1", key: "/demo1" },
@@ -67,14 +67,14 @@ export default function Nav() {
       routes: {
         path: "/folders/123/files/:fileId",
         key: "/folders/:folderId/files/:fileId",
-        fileIds: [123, 456, 789]
-      }
+        fileIds: [123, 456, 789],
+      },
     },
-    { path: `/demo2/${counter.value}`, label: "Demo2", key: "/demo2/:id" }
+    { path: `/demo2/${counter.value}`, label: "Demo2", key: "/demo2/:id" },
   ];
   const { media, isMobile, isTablet } = useContext(MediaQueryContext);
 
-  let inner;
+  let inner: React.ReactElement;
   if (isMobile || isTablet) {
     inner = (
       <Fragment>
@@ -82,7 +82,9 @@ export default function Nav() {
         <Grid container justify="center" className={classes.innerGrid}>
           <Typography variant="h6">
             <strong>
-              <AnnotatedText supNote={`v${version}`} subNote={media}>{"Type 18 hek"}</AnnotatedText>
+              <AnnotatedText supNote={`v${version}`} subNote={media}>
+                {"Type 18 hek"}
+              </AnnotatedText>
             </strong>
           </Typography>
         </Grid>

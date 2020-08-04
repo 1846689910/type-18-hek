@@ -1,20 +1,35 @@
 import React, { Fragment, useState } from "react";
-import PropTypes from "prop-types";
 import {
   makeStyles,
   Button,
   ButtonGroup,
   Menu,
-  MenuItem
+  MenuItem,
 } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { useHistory, useRouteMatch } from "react-router-dom";
+
+type TabButtonGroupProps = {
+  route: {
+    key?: string;
+    path: string;
+    label: string;
+    routes?: {
+      fileIds: number[];
+      path: string;
+    };
+  };
+  classes: Record<string, string>;
+};
 
 /**
  *
  * @description tab button with dropdown menu
  */
-export default function TabButtonGroup({ route, classes }) {
+export default function TabButtonGroup({
+  route,
+  classes,
+}: TabButtonGroupProps) {
   const [fileAnchor, setFileAnchor] = useState(null);
   const history = useHistory();
   const match = useRouteMatch(route.key);
@@ -32,7 +47,7 @@ export default function TabButtonGroup({ route, classes }) {
         <Button
           className={classes.folders_btn}
           variant="contained"
-          onClick={e => setFileAnchor(e.target)}
+          onClick={(e) => setFileAnchor(e.target)}
         >
           <ArrowDropDownIcon />
         </Button>
@@ -48,20 +63,22 @@ export default function TabButtonGroup({ route, classes }) {
     </Fragment>
   );
 }
-TabButtonGroup.propTypes = {
-  route: PropTypes.shape({
-    key: PropTypes.string,
-    label: PropTypes.string,
-    path: PropTypes.string,
-    routes: PropTypes.object
-  }),
-  classes: PropTypes.object
+
+type FolderDropdownProps = {
+  anchorEl: HTMLElement;
+  handleClose: () => void;
+  routes: {
+    fileIds: number[];
+    path: string;
+    key?: string;
+  };
+  classes: Record<string, string>;
 };
 
-function FolderDropdown(props) {
+function FolderDropdown(props: FolderDropdownProps) {
   const { anchorEl, handleClose, routes, classes } = props;
   const history = useHistory();
-  const handleClick = fileId => {
+  const handleClick = (fileId: number) => {
     handleClose();
     history.push(`/folders/123/files/${fileId}`);
   };
@@ -80,7 +97,7 @@ function FolderDropdown(props) {
           key={i}
           fileId={x}
           routeMatch={routeMatch}
-          onClick={() => handleClick(x, i)}
+          onClick={() => handleClick(x)}
         >
           {`File${x}`}
         </EachMenuItem>
@@ -88,37 +105,46 @@ function FolderDropdown(props) {
     </Menu>
   );
 }
-FolderDropdown.propTypes = {
-  anchorEl: PropTypes.object,
-  handleClose: PropTypes.func,
-  routes: PropTypes.object,
-  classes: PropTypes.object
-};
 
-const useStyles = makeStyles(theme => ({
-  subMenuItem: ({ routeMatch, fileId }) => ({
+const useStyles = makeStyles((theme) => ({
+  subMenuItem: ({ routeMatch, fileId }: SubMenuItemProps) => ({
     background:
       routeMatch && routeMatch.params.fileId === `${fileId}`
         ? theme.palette.secondary.main
         : "",
     color:
       routeMatch && routeMatch.params.fileId === `${fileId}` ? "white" : "",
-    fontWeight: "bold"
-  })
+    fontWeight: "bold",
+  }),
 }));
 
-const EachMenuItem = React.forwardRef(
-  ({ children, routeMatch, fileId, ...props }, ref) => {
+type SubMenuItemProps = {
+  fileId: number;
+  routeMatch: {
+    params: {
+      fileId: string;
+    };
+  };
+};
+
+type EachMenuItemProps = {
+  children: string | React.ReactElement | React.ReactElement[];
+  fileId: number;
+  routeMatch: {
+    params: {
+      fileId: number;
+    };
+  };
+  onClick: () => void;
+};
+
+const EachMenuItem = React.forwardRef<never, EachMenuItemProps>(
+  ({ children, routeMatch, fileId, ...props }: EachMenuItemProps, ref) => {
     const classes = useStyles({ routeMatch, fileId });
     return (
       <MenuItem ref={ref} className={classes.subMenuItem} {...props}>
         {children}
       </MenuItem>
     );
-  }
+  },
 );
-EachMenuItem.propTypes = {
-  children: PropTypes.string,
-  routeMatch: PropTypes.object,
-  fileId: PropTypes.number
-};

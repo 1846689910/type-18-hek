@@ -1,12 +1,11 @@
 import React, { Fragment, useState } from "react";
-import PropTypes from "prop-types";
 import clsx from "clsx";
 import {
   makeStyles,
   Button,
   Menu,
   MenuItem,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
@@ -14,20 +13,28 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   menu: {
-    marginLeft: "-20px"
+    marginLeft: "-20px",
   },
   menuItem: {
-    minWidth: "150px"
+    minWidth: "150px",
   },
   btn: {
     padding: "5px 0",
     minWidth: 0,
     width: "40px",
-    zIndex: 999
-  }
+    zIndex: 999,
+  },
 });
 
-export default function MobileTabButton({ classes, tabs }) {
+type MobileTabButtonProps = {
+  classes: Record<string, string>;
+  tabs: TabType[];
+};
+
+export default function MobileTabButton({
+  classes,
+  tabs,
+}: MobileTabButtonProps) {
   const [anchor, setAnchor] = useState(null);
   const mobileClasses = useStyles();
   return (
@@ -35,7 +42,7 @@ export default function MobileTabButton({ classes, tabs }) {
       <Button
         variant="contained"
         color="default"
-        onClick={e => setAnchor(e.target)}
+        onClick={(e) => setAnchor(e.target)}
         size="small"
         className={mobileClasses.btn}
       >
@@ -52,38 +59,60 @@ export default function MobileTabButton({ classes, tabs }) {
             <CustomMenuItemWithSubmenu key={i} tab={x} setAnchor={setAnchor} />
           ) : (
             <CustomMenuItem key={i} tab={x} />
-          )
+          ),
         )}
       </Menu>
     </Fragment>
   );
 }
-MobileTabButton.propTypes = {
-  classes: PropTypes.object,
-  tabs: PropTypes.array
+
+type TabType = {
+  label: string;
+  routes?: {
+    path: string;
+    fileIds: number[];
+  };
+  path: string;
 };
 
-const CustomMenuItem = React.forwardRef(({ tab }, ref) => {
-  const history = useHistory();
-  const { label, path } = tab;
-  return (
-    <Fragment>
-      <MenuItem ref={ref} onClick={() => history.push(path)}>
-        {label}
-      </MenuItem>
-    </Fragment>
-  );
-});
-CustomMenuItem.propTypes = {
-  tab: PropTypes.object
+type CustomMenuItemProps = {
+  tab: TabType;
+};
+
+const CustomMenuItem = React.forwardRef<
+  React.ComponentPropsWithRef<React.ElementType>,
+  CustomMenuItemProps
+>(
+  (
+    { tab }: CustomMenuItemProps,
+    ref: React.ComponentPropsWithRef<React.ElementType>,
+  ) => {
+    const history = useHistory();
+    const { label, path } = tab;
+    return (
+      <Fragment>
+        <MenuItem ref={ref} onClick={() => history.push(path)}>
+          {label}
+        </MenuItem>
+      </Fragment>
+    );
+  },
+);
+
+type CustomMenuItemWithSubmenuProps = {
+  tab: TabType;
+  setAnchor: (e: EventTarget) => void;
 };
 
 const CustomMenuItemWithSubmenu = React.forwardRef(
-  ({ tab, setAnchor: setUpperAnchor }, ref) => {
+  (
+    { tab, setAnchor: setUpperAnchor }: CustomMenuItemWithSubmenuProps,
+    ref: React.ComponentPropsWithRef<React.ElementType>,
+  ) => {
     const history = useHistory();
     const { label, routes, path } = tab;
     const [anchor, setAnchor] = useState(null);
-    const handleClick = x => {
+    const handleClick = (x) => {
       history.push(routes.path.replace(":fileId", x));
       setAnchor(null);
       setUpperAnchor(null);
@@ -97,7 +126,7 @@ const CustomMenuItemWithSubmenu = React.forwardRef(
       <Fragment>
         <MenuItem ref={ref}>
           <div onClick={folderClick}>{label}</div>
-          <IconButton size="small" onClick={e => setAnchor(e.target)}>
+          <IconButton size="small" onClick={(e) => setAnchor(e.target)}>
             <ArrowRightIcon />
           </IconButton>
         </MenuItem>
@@ -117,9 +146,5 @@ const CustomMenuItemWithSubmenu = React.forwardRef(
         }
       </Fragment>
     );
-  }
+  },
 );
-CustomMenuItemWithSubmenu.propTypes = {
-  tab: PropTypes.object,
-  setAnchor: PropTypes.func
-};

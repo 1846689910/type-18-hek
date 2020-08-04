@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { version } from "../../../../../package.json";
-import PropTypes from "prop-types";
 import { Container, Grid, Typography, Chip } from "@material-ui/core";
 import MediaQueryContext, { QUERY } from "../MediaQueryContext";
 import { useHistory } from "react-router-dom";
@@ -10,7 +9,11 @@ import LaptopIcon from "@material-ui/icons/Laptop";
 import HdIcon from "@material-ui/icons/Hd";
 import AnnotatedText from "./AnnotatedText";
 
-export default function Title({ classes }) {
+type TitleProps = {
+  classes: Record<string, string>;
+};
+
+export default function Title({ classes }: TitleProps) {
   const history = useHistory();
   return (
     <Container className={classes.hc} maxWidth="md">
@@ -29,13 +32,9 @@ export default function Title({ classes }) {
   );
 }
 
-Title.propTypes = {
-  classes: PropTypes.object,
-};
-
 function MediaChip() {
   const { media } = useContext(MediaQueryContext);
-  let icon;
+  let icon: React.ReactElement;
   switch (media) {
     case QUERY.MOBILE_S:
     case QUERY.MOBILE_M:
