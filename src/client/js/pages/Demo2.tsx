@@ -9,14 +9,16 @@ import { setCounterAction } from "../settings/actions";
 export default function Demo2() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const mainCounter = useSelector((state) => state.counter.value);
+  const mainCounter = useSelector(
+    (state: { counter: { value: number } }) => state.counter.value,
+  );
   const params = useParams();
   useEffect(() => {
     const counter = parseInt(get(params, "id", 0));
     if (mainCounter !== counter && !isNaN(counter)) {
       dispatch(setCounterAction(counter));
     }
-  }, []);  // eslint-disable-line
+  }, []); // eslint-disable-line
   return (
     <Fragment>
       <Nav />

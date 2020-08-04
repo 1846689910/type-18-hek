@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import PropTypes from "prop-types";
 import { Container, Grid } from "@material-ui/core";
 import Nav from "../components/Nav";
 import DemoWrapper from "../components/DemoWrapper";
@@ -7,7 +6,11 @@ import ModuledStyleDemo from "../components/Home/ModuledStyleDemo";
 import DynamicImportDemo from "../components/Home/dynamic-import-demo";
 import ApolloGraphqlDemo from "../components/Home/apollo-graphql-demo";
 
-export default function Home(props) {
+type HomeProps = {
+  all: string;
+};
+
+export default function Home(props: HomeProps) {
   console.log(props.all);
   return (
     <Fragment>
@@ -28,6 +31,3 @@ export default function Home(props) {
     </Fragment>
   );
 }
-Home.propTypes = {
-  all: PropTypes.string
-};

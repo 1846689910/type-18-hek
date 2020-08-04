@@ -1,12 +1,17 @@
 import React, { Fragment } from "react";
-import PropTypes from "prop-types";
 import { Grid, Container } from "@material-ui/core";
 import Nav from "../components/Nav";
 import DemoWrapper from "../components/DemoWrapper";
 import ReduxStateDemo from "../components/Demo1/ReduxStateDemo";
 import RecomposeDemo from "../components/Demo1/RecomposeDemo";
 
-export default function Demo1(props) {
+type Demo1Props = {
+  route: {
+    partial: Record<string, string>;
+  };
+};
+
+export default function Demo1(props: Demo1Props) {
   console.log(props.route.partial);
   return (
     <Fragment>
@@ -24,6 +29,3 @@ export default function Demo1(props) {
     </Fragment>
   );
 }
-Demo1.propTypes = {
-  route: PropTypes.object
-};

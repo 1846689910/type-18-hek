@@ -33,7 +33,7 @@ Root.propTypes = {
 
 type RouteType = {
   path: string;
-  component: React.ComponentType;
+  component: React.ComponentType<Record<string, unknown>>;
   key?: string;
   routes?: RouteType[];
   exact?: boolean;

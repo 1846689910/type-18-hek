@@ -7,7 +7,7 @@ export default function NoMatch() {
   const history = useHistory();
   useEffect(() => {
     setTimeout(() => history.push("/"), 1000);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Fragment>
       <Nav />
@@ -18,9 +18,7 @@ export default function NoMatch() {
               <Typography variant="h4">404 Not Found</Typography>
             </Grid>
             <Grid container justify="center">
-              <Typography variant="h5">
-                routing back to home page
-              </Typography>
+              <Typography variant="h5">routing back to home page</Typography>
             </Grid>
           </Grid>
         </Wrapper>
@@ -28,6 +26,10 @@ export default function NoMatch() {
     </Fragment>
   );
 }
-const Wrapper = styled(Grid)({
-  height: "60vh"
+const Wrapper: React.ComponentType<{
+  container: boolean;
+  justify: string;
+  alignItems: string;
+}> = styled(Grid)({
+  height: "60vh",
 });
