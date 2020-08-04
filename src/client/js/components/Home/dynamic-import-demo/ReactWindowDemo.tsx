@@ -1,28 +1,28 @@
 import React from "react";
 import { FixedSizeList } from "react-window";
-import PropTypes from "prop-types";
 import { Grid, makeStyles, MenuItem } from "@material-ui/core";
 
 const useStyles = makeStyles({
   outer: {
-    margin: "10px 0"
+    margin: "10px 0",
   },
   list: {
     border: "1px solid rgba(0,0,0,0.3)",
-    minWidth: "300px"
-  }
+    minWidth: "300px",
+  },
 });
 
-const Row = ({ data, index, style }) => {  // eslint-disable-line
-  return <MenuItem style={style}>Row {index}</MenuItem>;
-};
-Row.propTypes = {
-  data: PropTypes.object,
-  index: PropTypes.number,
-  style: PropTypes.object
+type RowProps = {
+  data?: Record<string, unknown>;
+  index: number;
+  style: Record<string, string>;
 };
 
-export default () => {
+const Row = ({ data, index, style }: RowProps) => { // eslint-disable-line
+  return <MenuItem style={style}>Row {index}</MenuItem>;
+};
+
+export default function ReactWindowDemo() {
   const classes = useStyles();
   return (
     <Grid className={classes.outer} container justify="center">
@@ -40,4 +40,4 @@ export default () => {
       </Grid>
     </Grid>
   );
-};
+}

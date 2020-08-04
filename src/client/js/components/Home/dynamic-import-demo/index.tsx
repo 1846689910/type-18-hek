@@ -9,8 +9,8 @@ const ReactSelectDemo = loadable(
       <Typography variant="h6">
         {"<ReactSelectDemo/>"} is loading ...
       </Typography>
-    )
-  }
+    ),
+  },
 );
 
 const ReactWindowDemo = loadable(
@@ -20,13 +20,15 @@ const ReactWindowDemo = loadable(
       <Typography variant="h6">
         {"<ReactWindowDemo/>"} is loading ...
       </Typography>
-    )
-  }
+    ),
+  },
 );
 
-export default () => (
+const DynamicImportDemo = (
   <>
     <ReactSelectDemo />
     <ReactWindowDemo />
   </>
 );
+
+export default DynamicImportDemo;
