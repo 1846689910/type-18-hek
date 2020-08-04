@@ -2,7 +2,7 @@ module.exports = {
   roots: ["<rootDir>/test/client", "<rootDir>/test/server"],
   collectCoverageFrom: ["client/**/*.{js,jsx,ts,tsx}", "!client/**/*.d.ts"],
   setupFiles: ["react-app-polyfill/jsdom"],
-  setupFilesAfterEnv: ["<rootDir>/.enzyme.setup.js"],
+  setupFilesAfterEnv: ["<rootDir>/test/.enzyme.setup.js"],
   testMatch: [
     "<rootDir>/test/{client,server}/**/__tests__/**/*.{js,jsx,ts,tsx}",
     "<rootDir>/test/{client,server}/**/*.{spec,test}.{js,jsx,ts,tsx}",
