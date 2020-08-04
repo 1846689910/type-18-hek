@@ -1,0 +1,18 @@
+client:
+  - src/client/**/*
+server:
+  - src/server/**/*
+config:
+  - config/**/*
+scripts:
+  - scripts/**/*
+browser-automation:
+  - browser-automation/**/*
+test:
+  - test/**/*
+readme:
+  - README.md
+dependencies:
+  - package.json
+  - package-lock.json
+  - yarn.lock
