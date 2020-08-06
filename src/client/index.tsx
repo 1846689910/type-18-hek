@@ -19,7 +19,7 @@ const store = configureStore();
 const isDev = process.env.NODE_ENV === "development";
 const apolloLink = isDev
   ? "http://localhost:3000/graphql"
-  : "https://micro-bus.vercel.app/_api/type-18-hek";
+  : "https://micro-bus-dpjqpau81.vercel.app/api/type-18-hek";
 
 const start = (App: React.ComponentType) => {
   const root = document.querySelector("#root");
