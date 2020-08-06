@@ -36,7 +36,6 @@ module.exports = {
     "no-floating-decimal": 1,
     "no-void": 1,
     "keyword-spacing": 1,
-    "react/prop-types": 1,
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1,
     "react/react-in-jsx-scope": 1,
@@ -50,6 +49,7 @@ module.exports = {
       rules: {
         "@typescript-eslint/explicit-function-return-type": 0,
         "@typescript-eslint/explicit-module-boundary-types": 0,
+        "react/prop-types": 0,
       },
     },
   ],
